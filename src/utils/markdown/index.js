@@ -5,10 +5,10 @@ import { useRef } from 'react';
 
 async function save({username,title,content}){
     if(!username||!title||!content){
+      //报错
       console.error('err');
       return;
     }
-    console.log(JSON.stringify({username,title,content}))
     const result=await fetch('http://localhost:7001/api/blob/save',{
       method:"POST",
       body:JSON.stringify({username,title,content}),
@@ -16,16 +16,14 @@ async function save({username,title,content}){
         'Content-Type': 'application/json'
       }
     });
-    console.log(result);
 }
+
 
 
 export default function Page() {
   const contentRef = useRef('');
   const titleRef=useRef('');
   const onClick = () => {
-    // console.log(contentRef.current.getText());
-    // console.log(titleRef.current.value)
     save({
       title:titleRef.current.value,
       content:contentRef.current.getText(),

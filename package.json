@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "devNext": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "devEgg": "npm run dev --prefix server",
+    "dev":"concurrently \"yarn run devEgg\" \"yarn run devNext \""
   },
   "dependencies": {
+    "concurrently": "^7.2.1",
     "highlight.js": "^11.5.1",
     "marked": "^4.0.16",
     "next": "12.1.6",

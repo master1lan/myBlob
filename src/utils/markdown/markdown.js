@@ -10,7 +10,7 @@ const onChange=(setText)=>{
 }
 
 
-const FixedMarkDown=forwardRef(({content='',mode='light'},ref)=>{
+const FixedMarkDown=forwardRef(({content='',mode='light',readOnly=false},ref)=>{
     const [text,setText]=useState(content);
     useImperativeHandle(ref,()=>{
         return{
@@ -24,6 +24,7 @@ const FixedMarkDown=forwardRef(({content='',mode='light'},ref)=>{
         onChange={onChange(setText)}
         defaultValue={text}
         dark={mode=='dark'}
+        readOnly={readOnly||false}
         />
     )
 })
