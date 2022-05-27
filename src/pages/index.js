@@ -1,7 +1,10 @@
 import MarkDownSection from "@utils/markdown/markdown"
 import styles from "./index.module.css";
+import { useViewport } from "@components/provider";
+import {useEffect} from "react";
 export default function Home({ sectionList }) {
-
+    const width=useViewport();
+    
     return (
         <>
         <main className={styles.main}>{<ul>
@@ -14,7 +17,7 @@ export default function Home({ sectionList }) {
                 />
             </li>))}
         </ul>}</main>
-        <aside className={styles.right}></aside>
+        <aside className={styles.right}>123123123</aside>
         </>
     )
 }

@@ -11,7 +11,6 @@
     "dev": "concurrently \"yarn run devEgg\" \"yarn run devNext \""
   },
   "dependencies": {
-    "antd": "^4.20.6",
     "concurrently": "^7.2.1",
     "highlight.js": "^11.5.1",
     "marked": "^4.0.16",

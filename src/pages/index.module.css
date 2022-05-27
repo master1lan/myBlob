@@ -1,31 +1,33 @@
 .container{
+    position: relative;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
 }
 .left{
     box-sizing: border-box;
     background-color:skyblue;
-    
+    display:flex;
 }
 .main{
     box-sizing: border-box;
-    display: block;
+    display: flex;
+    flex-flow:column nowrap;
+    padding:20px;
     flex:1;
     background-color:cadetblue;
 }
 .right{
     box-sizing: border-box;
-    display: block;
-    min-height: 100vh;
     border-left: 1px solid rgb(230, 230, 230);
     width: 394px;
     background-color:darkslategrey;
+    display:flex;
 }
 /* 普通大屏 */
 @media(min-width:1080px){
     .left{
         border-right:1px solid rgb(230,230,230);
-        flex-shrink: 1;
+        flex-shrink: 0;
         width:80px;
     }
 }
@@ -35,36 +37,29 @@
     .right{
         width:280px;
     }
-    .main{
-        flex-basis: 10px;
-        width:100%;
-        height:1000px;
-    }
 }
 
-/* 中等屏幕 */
-@media(min-width:700px) and (max-width:1080px){
+@media(max-width:1080px){
+    .container{
+        flex-direction: column;
+    }
     .left{
+        flex-direction: row;
+        height:56px;
+        top:0px;
+        position: fixed;
         width:100%;
-        padding:0 24px;
-        height:50px;
     }
     .main{
-        margin-bottom:56px;
+        margin-top:56px;
+        margin-bottom: 40px;
     }
     .right{
-        display: none;
-    }
-}
-
-/* 中小型屏幕 */
-@media(max-width:699.98px){
-    .left{
-        width:100%;
-        padding:0 24px;
+        flex-direction: row;
+        position: fixed;
+        bottom:0px;
         height:50px;
-    }
-    .right{
-        display: none;
+        width:100%;
+        border-left: 0px;
     }
 }
