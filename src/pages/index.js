@@ -1,9 +1,10 @@
 import MarkDownSection from "@utils/markdown/markdown"
-
+import styles from "./index.module.css";
 export default function Home({ sectionList }) {
 
     return (
-        <ul>
+        <>
+        <main className={styles.main}>{<ul>
             {sectionList.map(section=>(<li key={section._id}>
                 <p>{section.title}</p>
                 <p>{section.username}</p>
@@ -12,7 +13,9 @@ export default function Home({ sectionList }) {
                 readOnly={true}
                 />
             </li>))}
-        </ul>
+        </ul>}</main>
+        <aside className={styles.right}></aside>
+        </>
     )
 }
 
@@ -25,3 +28,13 @@ export async function getServerSideProps() {
         }
     }
 }
+
+// export default function Home() {
+
+//     return (
+//         <>
+//             <main className={styles.main}></main>
+//             <aside className={styles.right}></aside>
+//         </>
+//     )
+// }

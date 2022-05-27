@@ -31,4 +31,9 @@ yarn-error.log*
 # vercel
 .vercel
 
-/server
+index.html
+# 后端
+/server/logs
+
+# 开发环境环境变量
+.env.production
