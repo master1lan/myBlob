@@ -1,13 +1,8 @@
-import MarkDownSection from "@utils/markdown/markdown"
-import styles from "./index.module.css";
-import { useViewport } from "@components/provider";
-import {useEffect} from "react";
-export default function Home({ sectionList }) {
-    const width=useViewport();
-    
+import MarkDownSection from "@utils/markdown/markdown";
+import api from "@utils/api";
+export default function Home({ sectionList }) {    
     return (
-        <>
-        <main className={styles.main}>{<ul>
+        <>{<ul>
             {sectionList.map(section=>(<li key={section._id}>
                 <p>{section.title}</p>
                 <p>{section.username}</p>
@@ -16,14 +11,12 @@ export default function Home({ sectionList }) {
                 readOnly={true}
                 />
             </li>))}
-        </ul>}</main>
-        <aside className={styles.right}>123123123</aside>
-        </>
+        </ul>}</>
     )
 }
 
 export async function getServerSideProps() {
-    const data = await fetch(`http:localhost:7001/api/blob`);
+    const data = await fetch(api.articles);
     const json = await data.json();
     return {
         props: {
@@ -32,12 +25,3 @@ export async function getServerSideProps() {
     }
 }
 
-// export default function Home() {
-
-//     return (
-//         <>
-//             <main className={styles.main}></main>
-//             <aside className={styles.right}></aside>
-//         </>
-//     )
-// }

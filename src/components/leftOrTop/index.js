@@ -1,31 +1,42 @@
-import { useViewport } from "@components/provider"
-import LOGO, { Home, Stories, Lists, Write } from "@components/nav";
+import { useViewport } from "@components/provider";
+import LOGO, { Home, Stories, Lists, Write, UserLOGO } from "@components/nav";
 import styles from "./index.module.css";
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 const orderWidth = 1080;
 
+
+/**
+ * @description 一共需要三种模式，大屏模式，小屏模式和书写模式
+ * 书写模式从左到右分别是 LOGO,Draft in ${username},${saveState},publish,nofification,${userLOGO}
+ * 大屏模式从上到下分别是 LOGO,home,lists,Stories,write,${userLOGO}
+ * 小屏模式从左到右分别是 LOGO
+ */
 export default function Aside() {
-    const { width,height } = useViewport();
+    const { width, height } = useViewport();
+    const router=useRouter();
+    if(router.pathname==='/new-story')
+    return(
+        <h1>hello</h1>
+    )
     return width > orderWidth ? <Left height={height} /> : < Top />;
 }
 
 
-function Left({height}) {
-    const router=useRouter();
-    console.log(router.pathname);
+function Left({ height }) {
     return (
-        <div className={styles.container}>
-            <LOGO />
-            <div className={styles.left}
+        <div className={styles.container}
             style={{
-                height:height
+                height: height
             }}
-            >
-                <Home href='/' path={router.pathname} />
-                <Stories path={router.pathname} />
-                <Lists path={router.pathname} />
-                <Write href='/markEdit' path={router.pathname} />
+        >
+            <LOGO />
+            <div className={styles.left}>
+                <Home />
+                <Stories />
+                <Lists />
+                <Write />
             </div>
+            <UserLOGO />
         </div>
     )
 }

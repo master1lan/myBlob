@@ -1,8 +1,8 @@
 import styles from "./index.module.css";
-import "@styles/globals.css"
+import "@styles/globals.css";
 import ViewportProvider from "@components/provider";
-import LOT from "@components/leftOrTop"
-
+import LOT from "@components/leftOrTop";
+import ROB from "@components/rightOrBottom";
 import Head from 'next/head';
 
 
@@ -18,7 +18,12 @@ function MyApp({ Component, pageProps }) {
           <aside className={styles.left} >
             <LOT />
           </aside>
+          <main className={styles.main}>
           <Component {...pageProps} />
+          </main>
+          <aside className={styles.right}>
+            <ROB />
+          </aside>
         </div>
       </ViewportProvider>
     </>

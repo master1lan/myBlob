@@ -1,15 +1,30 @@
 .container{
-    position: relative;
+    position: sticky;
+    top:0;
     width:80px;
+    display:flex;
+    flex-flow:column nowrap;
+    justify-content: space-around;
+    min-height:482px;
 }
 .left{
-    position:sticky;
-    top:0px;
-    height:100%;
     display: flex;
     flex-flow:column nowrap;
     justify-content: space-evenly;
 }
+.left>*{
+    padding:30px 0;
+}
+.left>*:first-child{
+    padding-top:0px;
+}
+.left>*:last-child{
+    padding-bottom:0px;
+    border-top:1px solid #ddd;
+}
 .top{
-
+    position: relative;
+    top:8px;
+    width:44px;
+    margin:0 auto;
 }
