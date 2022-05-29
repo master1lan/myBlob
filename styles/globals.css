@@ -1,7 +1,7 @@
 /* 删除第一个输入框 */
-.ProseMirror:first-of-type {
+/* .ProseMirror:first-of-type {
     display: none;
-}
+} */
 
 /* 初始化css */
 blockquote,
@@ -37,3 +37,13 @@ a{
     color:#333;
 }
 
+*:focus-visible{
+    outline:none;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    letter-spacing:0;
+    font-style:normal;
+    text-rendering: optimizeLegibility;
+}

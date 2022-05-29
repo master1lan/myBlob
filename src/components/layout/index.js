@@ -1,9 +1,0 @@
-
-
-function Layout({children}){
-    return(
-        <>
-        
-        </>
-    )
-}

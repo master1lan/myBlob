@@ -4,7 +4,8 @@
         "paths":{
             "@components/*":["src/components/*"],
             "@utils/*":["src/utils/*"],
-            "@styles/*":["styles/*"]
+            "@styles/*":["styles/*"],
+            "@Dante/*":["node_modules/Dante3"]
         }
     }
 }

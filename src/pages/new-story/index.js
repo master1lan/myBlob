@@ -1,4 +1,6 @@
-
-export default function(){
-    return <h1>123</h1>
+import Marked from '@utils/markdown';
+export default function (){
+    return(
+        <Marked />
+    )
 }

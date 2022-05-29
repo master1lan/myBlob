@@ -1,5 +1,5 @@
 import { useViewport } from "@components/provider";
-import LOGO, { Home, Stories, Lists, Write, UserLOGO } from "@components/nav";
+import LOGO, { Home, Stories, Lists, Write, UserLOGO, Publish } from "@components/nav";
 import styles from "./index.module.css";
 import { useRouter } from 'next/router';
 const orderWidth = 1080;
@@ -13,12 +13,32 @@ const orderWidth = 1080;
  */
 export default function Aside() {
     const { width, height } = useViewport();
-    const router=useRouter();
-    if(router.pathname==='/new-story')
-    return(
-        <h1>hello</h1>
-    )
+    const router = useRouter();
+    if (router.pathname === '/new-story')
+        return (
+            <EditTop />
+        )
     return width > orderWidth ? <Left height={height} /> : < Top />;
+}
+
+function EditTop() {
+    return (
+        <nav
+            className={styles.nav}
+        >
+            <div
+                className={styles.leftAside}
+            >
+                <LOGO />
+                <div>Draft in master1lan</div>
+                <div>Saved</div>
+            </div>
+            <div className={styles.rightAside}>
+                <Publish />
+                <UserLOGO />
+            </div>
+        </nav>
+    )
 }
 
 

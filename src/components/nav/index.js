@@ -1,6 +1,7 @@
 import Link from "next/Link";
 import { useRouter } from 'next/router';
 import Image from "next/image";
+import styles from "./index.module.css";
 
 function Nav({ href = '/', children }) {
     return (
@@ -15,24 +16,20 @@ function Nav({ href = '/', children }) {
         </div>
     )
 }
-
+//网页LOGO
 export default function LOGO() {
     return (
-        <div style={{
-            boxSizing:"border-box",
-            width:"40px",
-            margin:"0 auto"
-        }}>
+        <div className={styles.logo}>
             <Nav href='/'>
-                <svg 
-                width="40"
-                height="40"
-                viewBox="0 0 1043.63 592.71" ><g ><g ><path d="M588.67 296.36c0 163.67-131.78 296.35-294.33 296.35S0 460 0 296.36 131.78 0 294.34 0s294.33 132.69 294.33 296.36M911.56 296.36c0 154.06-65.89 279-147.17 279s-147.17-124.94-147.17-279 65.88-279 147.16-279 147.17 124.9 147.17 279M1043.63 296.36c0 138-23.17 249.94-51.76 249.94s-51.75-111.91-51.75-249.94 23.17-249.94 51.75-249.94 51.76 111.9 51.76 249.94"></path></g></g></svg>
+                <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 1043.63 592.71" ><g ><g ><path d="M588.67 296.36c0 163.67-131.78 296.35-294.33 296.35S0 460 0 296.36 131.78 0 294.34 0s294.33 132.69 294.33 296.36M911.56 296.36c0 154.06-65.89 279-147.17 279s-147.17-124.94-147.17-279 65.88-279 147.16-279 147.17 124.9 147.17 279M1043.63 296.36c0 138-23.17 249.94-51.76 249.94s-51.75-111.91-51.75-249.94 23.17-249.94 51.75-249.94 51.76 111.9 51.76 249.94"></path></g></g></svg>
             </Nav>
         </div>
     )
 }
-
+//home图标
 export function Home({ href = '/' }) {
     const router = useRouter();
     if (router.pathname !== href)
@@ -55,7 +52,7 @@ export function Home({ href = '/' }) {
         </Nav>
     )
 }
-
+//stories图标，个人文章页
 export function Stories({ href = '/me/stories/drafts' }) {
     const router = useRouter();
     if (router.pathname !== href)
@@ -70,7 +67,7 @@ export function Stories({ href = '/me/stories/drafts' }) {
         </Nav>
     )
 }
-
+//list图标，保存文章页
 export function Lists({ href = '/me/lists' }) {
     const router = useRouter();
     if (router.pathname !== href)
@@ -85,7 +82,7 @@ export function Lists({ href = '/me/lists' }) {
         </Nav>
     )
 }
-
+//write图标，书写页
 export function Write() {
     return (
         <Nav href='/new-story'>
@@ -94,17 +91,43 @@ export function Write() {
     )
 }
 
-
-export function UserLOGO({height=30}) {
+//用户logo标签
+export function UserLOGO({ height = '30' }) {
     return (
         <div style={{
-            width:height,
-            height:height,
-            margin:"0 auto",
+            width: height,
+            height: height,
+            margin: "0 auto",
         }}>
             <Nav href="/me">
-            <Image style={{borderRadius:"50%"}} src="/images/UserLOGO.png" width={48} height={48} />
+                <Image style={{ borderRadius: "50%" }} src="/images/UserLOGO.png" width={48} height={48} />
             </Nav>
+        </div>
+    )
+}
+//publish标签
+export function Publish({ onclick }) {
+    return (
+        <div >
+            <button onClick={onclick} className={styles.button}>
+                <span className={styles.publish}>
+                    Publish
+                </span>
+            </button>
+        </div>
+    )
+}
+
+//addLists
+export function AddLists({width='26',height='26'}) {
+    return (
+        <div style={{
+            width:width,
+            height:height
+        }}>
+            <svg width={width} height={height} viewBox="0 0 24 24" fill="none" >
+                <path d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5v-2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V5.75z" fill="#000"></path>
+            </svg>
         </div>
     )
 }

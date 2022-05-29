@@ -1,4 +1,5 @@
 import MarkDownSection from "@utils/markdown/markdown";
+import Article from "@utils/article";
 import api from "@utils/api";
 export default function Home({ sectionList }) {    
     return (
@@ -10,6 +11,7 @@ export default function Home({ sectionList }) {
                 content={section.content}
                 readOnly={true}
                 />
+                {/* <Article /> */}
             </li>))}
         </ul>}</>
     )

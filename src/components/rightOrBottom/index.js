@@ -1,7 +1,6 @@
 import { useViewport } from "@components/provider";
 import LOGO, { Home, Stories, Lists, UserLOGO } from "@components/nav";
 import styles from "./index.module.css";
-import { useRouter } from 'next/router';
 const orderWidth = 1080;
 
 
@@ -14,16 +13,11 @@ const orderWidth = 1080;
 
 export default function Aside(){
     const {width}=useViewport();
-    const router=useRouter();
-    if(router.pathname==='/new-story')
-    return (
-        <h1>hello</h1>
-    )
     return width>orderWidth?<Right />:<Bottom />
 }
 
 function Right(){
-
+    return <></>
 }
 
 function Bottom(){
