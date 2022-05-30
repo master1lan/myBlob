@@ -18,13 +18,11 @@ async function save({username,title,content}){
     });
 }
 
-
-
-export default function Page() {
+export default function Page({onClickCallBack}) {
   const contentRef = useRef('');
   const titleRef=useRef('');
   const onClick = () => {
-    console.log({title:titleRef.current.value,content:contentRef.current.getText()});
+    onClickCallBack({title:titleRef.current.value,content:contentRef.current.getText()});
     // save({
     //   title:titleRef.current.value,
     //   content:contentRef.current.getText(),

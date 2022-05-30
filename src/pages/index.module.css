@@ -19,7 +19,8 @@
     box-sizing: border-box;
     display: flex;
     flex-flow: column nowrap;
-    padding:0 40px;
+    max-width:692px;
+    margin: 0 auto;
     flex: 1;
     background-color: white;
 }
@@ -30,6 +31,8 @@
     width: 394px;
     background-color: white;
     display: flex;
+    padding:0 32px;
+    position: relative;
 }
 
 .mainContainer {
@@ -90,5 +93,12 @@
         height: 50px;
         width: 100%;
         border-left: 0px;
+        padding:0;
+    }
+}
+
+@media (max-width:720px) {
+    .main{
+        margin:0 24px;
     }
 }

@@ -1,9 +1,13 @@
 import Markdown from "@utils/markdown/markdown";
 import styles from './index.module.css';
 import { UserLOGO, AddLists } from "@components/nav";
+import Head from 'next/head';
 export default function Post({ username, title, content }) {
     return (
         <>
+        <Head>
+            <title>{title}</title>
+        </Head>
             {/* 第一个框是作者的信息，包括作者的name，文章日期，阅读时长，作者其他平台链接，添加到收藏 */}
             <div className={styles.nameContainer}>
                 {/* 左边的玩意 */}

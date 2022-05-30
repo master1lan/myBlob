@@ -34,6 +34,7 @@ const FixedMarkDown=forwardRef(({content='',mode='light',readOnly=false},ref)=>{
         defaultValue={text}
         dark={mode==='dark'}
         readOnly={readOnly||false}
+        headingsOffset={1}
         />
     )
 })
