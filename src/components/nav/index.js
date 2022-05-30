@@ -106,10 +106,10 @@ export function UserLOGO({ height = '30' }) {
     )
 }
 //publish标签
-export function Publish({ onclick }) {
+export function Publish({ onClick }) {
     return (
         <div >
-            <button onClick={onclick} className={styles.button}>
+            <button onClick={onClick} className={styles.button}>
                 <span className={styles.publish}>
                     Publish
                 </span>

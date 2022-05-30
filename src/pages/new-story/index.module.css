@@ -17,3 +17,19 @@
     color:#4a4a4a;
     font-style: normal;
 }
+
+.top {
+    height: 65px;
+    top: 0px;
+    position: sticky;
+    width: 100%;
+    background-color: white;
+    margin:0 auto;
+    opacity: 0.9;
+}
+.mainmain{
+    box-sizing: border-box;
+    flex-flow: column nowrap;
+    padding: 10px 20px 0;
+    background-color: white;
+}

@@ -1,34 +1,17 @@
-import styles from "./index.module.css";
 import "@styles/globals.css";
 import ViewportProvider from "@components/provider";
-import LOT from "@components/leftOrTop";
-import ROB from "@components/rightOrBottom";
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-
+import Layout from "@components/layout";
 function MyApp({ Component, pageProps }) {
-  const router = useRouter();
-  const flag=router.pathname === '/new-story';
   return (
     <>
       <Head>
         <title>medium</title>
       </Head>
       <ViewportProvider>
-        <div className={flag?styles.mainContainer:styles.container}>
-          <aside className={flag?styles.top:styles.left} >
-            <LOT />
-          </aside>
-          <main className={flag?styles.mainmain:styles.main}>
-            <Component {...pageProps} />
-          </main>
-          {
-            flag ? null :
-              <aside className={styles.right}>
-                <ROB />
-              </aside>
-          }
-        </div>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ViewportProvider>
     </>
   )

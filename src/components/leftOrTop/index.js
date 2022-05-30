@@ -11,17 +11,17 @@ const orderWidth = 1080;
  * 大屏模式从上到下分别是 LOGO,home,lists,Stories,write,${userLOGO}
  * 小屏模式从左到右分别是 LOGO
  */
-export default function Aside() {
+export default function Aside({clickCallBack}) {
     const { width, height } = useViewport();
     const router = useRouter();
     if (router.pathname === '/new-story')
         return (
-            <EditTop />
+            <EditTop clickCallBack={clickCallBack} />
         )
     return width > orderWidth ? <Left height={height} /> : < Top />;
 }
 
-function EditTop() {
+function EditTop({clickCallBack}) {
     return (
         <nav
             className={styles.nav}
@@ -34,7 +34,7 @@ function EditTop() {
                 <div>Saved</div>
             </div>
             <div className={styles.rightAside}>
-                <Publish />
+                <Publish onClick={clickCallBack} />
                 <UserLOGO />
             </div>
         </nav>
