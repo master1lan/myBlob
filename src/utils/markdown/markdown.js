@@ -1,40 +1,42 @@
 import dynamic from 'next/dynamic';
-// import Dante from 'Dante2';
-// import Dante from "dante3";
 const Editor=dynamic(()=>import("rich-markdown-editor"),{ssr:false});
-import {useState,forwardRef,useImperativeHandle} from 'react';
+import {useState, useEffect,useRef,forwardRef,useImperativeHandle} from 'react';
 
 
-const onChange=(setText)=>{
+const onChange=(setText,setEditDom,EditDom)=>{
     return  function(data){
         setText(data);
+        if(!EditDom){
+            setEditDom(document.getElementsByClassName('ProseMirror')[0]);
+        }
     }
 }
 
 
-const FixedMarkDown=forwardRef(({content='',mode='light',readOnly=false},ref)=>{
+const FixedMarkDown=forwardRef(({content='',readOnly=false},ref)=>{
     const [text,setText]=useState(content);
+    const [EditDom,setEditDom]=useState(null);
+    const EditRef=useRef(null);
     useImperativeHandle(ref,()=>{
         return{
             getText(){
                 return text;
+            },
+            getDom(){
+                return EditDom;
             }
         }
     })
-    // return(
-    //     <Dante 
-    //     onUpdate={onChange(setText)}
-    //     // onChange={onChange(setText)}
-    //     content={text}
-    //     />
-    // )
+    useEffect(()=>{
+        return ()=>setEditDom(null);
+    },[]);
     return(
         <Editor 
-        onChange={onChange(setText)}
+        onChange={onChange(setText,setEditDom,EditDom)}
         defaultValue={text}
-        dark={mode==='dark'}
         readOnly={readOnly||false}
         headingsOffset={1}
+        ref={EditRef}
         />
     )
 })

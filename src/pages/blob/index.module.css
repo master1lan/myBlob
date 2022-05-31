@@ -12,6 +12,13 @@
 .leftContainer{
     display: flex;
 }
+.leftContainerWrapper{
+    width:50px;
+    margin:0 auto;
+}
+
+
+
 .pContainer{
     display: flex;
     flex-flow: column nowrap;

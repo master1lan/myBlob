@@ -1,19 +1,23 @@
 import MarkDownSection from "@utils/markdown/markdown";
-import Article from "@utils/article";
+import Article from "@components/article";
 import api from "@utils/api";
-export default function Home({ sectionList }) {    
+export default function Home({ sectionList }) {
     return (
-        <>{<ul>
-            {sectionList.map(section=>(<li key={section._id}>
-                <p>{section.title}</p>
-                <p>{section.username}</p>
-                <MarkDownSection 
-                content={section.content}
-                readOnly={true}
-                />
-                {/* <Article /> */}
-            </li>))}
-        </ul>}</>
+        <>
+            <div style={{
+                height:"200px",
+                backgroundColor:"black",
+            }}>
+
+            </div>
+            {sectionList.map(section=><Article
+             key={section._id} 
+             content={section.content}
+             title={section.title}
+             username={section.username}
+             _id={section._id}
+             />)}
+        </>
     )
 }
 

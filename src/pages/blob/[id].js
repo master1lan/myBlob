@@ -5,18 +5,15 @@ import Head from 'next/head';
 export default function Post({ username, title, content }) {
     return (
         <>
-        <Head>
-            <title>{title}</title>
-        </Head>
+            <Head>
+                <title>{title}</title>
+            </Head>
             {/* 第一个框是作者的信息，包括作者的name，文章日期，阅读时长，作者其他平台链接，添加到收藏 */}
             <div className={styles.nameContainer}>
                 {/* 左边的玩意 */}
                 <div className={styles.leftContainer}>
-                    <div style={{
-                        width: "50px",
-                        margin: "0 auto",
-                    }}>
-                        <UserLOGO height={50}/>
+                    <div className={styles.leftContainerWrapper}>
+                        <UserLOGO height={50} />
                     </div>
                     <div className={styles.pContainer}>
                         <p><span>{username}</span></p>

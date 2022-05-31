@@ -9,10 +9,10 @@ class HomeController extends Controller {
     const {ctx,app}=this;
     // const token=ctx.request.header.authorization;
     // const userInfo=await app.jwt.verify(token,app.config.jwt.secret);
-    const {username,title,content}=ctx.request.body;
+    const {username,title,content,description}=ctx.request.body;
     //生成文章id
     const _id=await nanoid();
-    const result=await ctx.service.blob.insertNewBlob({_id,username,title,content});
+    const result=await ctx.service.blob.insertNewBlob({_id,username,title,content,description});
     ctx.body={
       result
     }
@@ -53,7 +53,7 @@ class HomeController extends Controller {
       _id:item._id,
       username:item.username,
       title:item.title,
-      content: item.content.slice(0,100)
+      content: item.description,
     }))
     ctx.body=result;
   }

@@ -26,10 +26,15 @@
     background-color: white;
     margin:0 auto;
     opacity: 0.9;
+    z-index: 1;
 }
 .mainmain{
     box-sizing: border-box;
     flex-flow: column nowrap;
     padding: 10px 20px 0;
     background-color: white;
+}
+
+.section{
+    padding: 0 25px;
 }
