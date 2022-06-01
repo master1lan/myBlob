@@ -53,7 +53,7 @@ export function Home({ href = '/' }) {
     )
 }
 //stories图标，个人文章页
-export function Stories({ href = '/me/stories/drafts' }) {
+export function Stories({ href = '/me/stories' }) {
     const router = useRouter();
     if (router.pathname !== href)
         return (
@@ -119,11 +119,11 @@ export function Publish({ onClick }) {
 }
 
 //addLists
-export function AddLists({width='26',height='26'}) {
+export function AddLists({ width = '26', height = '26' }) {
     return (
         <div style={{
-            width:width,
-            height:height
+            width: width,
+            height: height
         }}>
             <svg width={width} height={height} viewBox="0 0 24 24" fill="none" >
                 <path d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5v-2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V5.75z" fill="#000"></path>
@@ -132,19 +132,42 @@ export function AddLists({width='26',height='26'}) {
     )
 }
 
-export function Follow(){
-    return(
+//
+export function ActionButton({message='',href='/'}) {
+    return (
+            <Link href={href}>
+                <a
+                style={{
+                    display:"block",
+                    height:"20px",
+                    padding:"8px 16px",
+                    backgroundColor:"rgb(26,137,23)",
+                    borderRadius:"99em",
+                    fontSize:"14px",
+                    lineHeight:"20px",
+                    color:"white",
+                }}
+                >
+                    {message}
+                </a>
+            </Link>
+    )
+}
+
+
+export function Follow() {
+    return (
         <div style={{
-            
+
         }}>
             <button style={{
-                color:"white",
-                backgroundColor:"rgb(15,115,12)",
-                border:"0",
-                height:"36px",
-                width:"72px",
-                padding:"8px 16px",
-                borderRadius:"99em",
+                color: "white",
+                backgroundColor: "rgb(15,115,12)",
+                border: "0",
+                height: "36px",
+                width: "72px",
+                padding: "8px 16px",
+                borderRadius: "99em",
             }}>Follow</button>
         </div>
     )

@@ -23,9 +23,15 @@ function Home({ children }) {
             <aside className={styles.left}>
                 <LOT />
             </aside>
-            <main className={styles.main}>
-                {children}
-            </main>
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                flexGrow:'1',
+            }}>
+                <main className={styles.main}>
+                    {children}
+                </main>
+            </div>
             <aside className={styles.right}>
                 <ROB />
             </aside>

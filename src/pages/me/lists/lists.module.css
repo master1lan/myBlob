@@ -1,0 +1,41 @@
+
+
+.top{
+    /* background-color:skyblue; */
+}
+
+.topWrapper{
+    display:flex;
+    flex-flow: row nowrap;
+    justify-content:space-between;
+    align-items:center;
+    height:131px;
+    padding-top:20px;
+    font-size: 14px;
+    border-bottom: 1px solid rgb(230,230,230);
+}
+
+.h1Wrapper{
+    height:28px;
+    line-height:28px;
+    font-size: 20px;
+    word-break:break-all ;
+    -webkit-line-clamp: 1;
+    display:-webkit-box;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+@media(max-width:720px){
+    .h1Wrapper{
+        font-size:12px;
+    }
+}
+
+.topRightWrapper{
+    display:flex;
+}
+.topRightWrapper>*{
+    margin:0 5px;
+}
+
