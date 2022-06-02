@@ -1,5 +1,5 @@
 import { UserLOGO } from "@components/nav";
-import Link from "next/link";
+import Link from "next/Link";
 import styles from "./article.module.css";
 
 export default function ({ title, username, content, _id }) {

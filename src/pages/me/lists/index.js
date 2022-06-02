@@ -53,17 +53,40 @@ function Lists(){
     return(
         <div style={{
             marginTop:"32px",
-            backgroundColor:"pink"
         }}>
-
+            <List />
+            <List />
+            <List />
+            <List />
+            <List />
+            <List />
+            <List />
         </div>
     )
 }
 
 function List(){
     return(
-        <div>
+        <div style={{
+            backgroundColor:"rgb(250,250,250)",
+            border:"1px solid rgb(230,230,230)",
+            borderRadius:"4px",
+            padding:"24px",
+            height:"70px",
+            marginBottom:"10px",
+            display:"flex",
+            flexFlow:"column nowrap",
+            justifyContent:"space-between",
+        }}>
+            <h3>react技术</h3>
+            <div style={{
+                display:"flex",
+                flexFlow:"row nowrap",
 
+            }}>
+                <p>2022-05-19更新</p>
+                <p>4篇文章</p>
+            </div>
         </div>
     )
 }
