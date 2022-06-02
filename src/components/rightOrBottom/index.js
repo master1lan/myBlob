@@ -2,7 +2,6 @@ import { useViewport } from "@components/provider";
 import LOGO, { Home, Stories, Lists, UserLOGO, Follow } from "@components/nav";
 import styles from "./index.module.css";
 import { useRouter } from 'next/router';
-import { useEffect, useState } from "react";
 const orderWidth = 1080;
 
 
@@ -18,64 +17,27 @@ export default function Aside() {
     return width > orderWidth ? <Right /> : <Bottom />
 }
 
-const scrollUp = (ele, targetHeight, setPosition, setTop) => {
-    let isRunning = false, oldScrollTop = 0;
-    return function () {
-        if (isRunning || !ele) return;
-        isRunning = true;
-        window.requestAnimationFrame(function () {
-            //下降
-            if (ele.scrollTop > oldScrollTop) {
-                setPosition('sticky');
-                setTop(`-${targetHeight}px`);
-            } else if (ele.scrollTop > targetHeight) {
-                // 上升但是没有上升多少
-            }
-            // console.log(ele.scrollTop);
-            isRunning = false;
-            oldScrollTop = ele.scrollTop;
-        });
-    }
-}
+
 
 function Right() {
-    //我估计最难的就是这里了
-    const [topHeight, setHeight] = useState(0);
-    const [scroll, setScroll] = useState(null);
-    const [position, setPosition] = useState('relative');
-    const [top, setTop] = useState('0px');
-    //获取滑动条位置
-    useEffect(() => {
-        setScroll(document.documentElement);
-    }, []);
-    //获取用户信息栏高度
-    useEffect(() => {
-        setHeight(document.getElementsByClassName(styles.rightTop)[0].offsetHeight);
-    }, []);
-    // useEffect(()=>{
-    //     let rollFunc=null;
-    //     new Promise(resolve =>{
-    //         rollFunc=scrollUp(scroll,topHeight);
-    //         resolve(rollFunc);
-    //     }).then((Func)=>{
-    //         window.addEventListener('scroll',Func);
-    //     });
-    //     return ()=>window.removeEventListener('scroll',rollFunc);
-    // },[topHeight]);
     const router = useRouter();
     const flag = router.pathname === '/blob/[id]';
     return (
-        <div className={styles.right}
-            style={{
-                position: position,
-                top: top
-            }}
-        >
-            <div className={styles.rightTop}>
-                {flag ? <UserInfo /> : <ReadIng />}
-            </div>
-            <div className={styles.rightBottom}>
-                {flag ? <Recommend /> : <UserRecommend />}
+        <div className={styles.right}>
+            <div style={{
+                height: "200px",
+                backgroundColor: "black",
+            }}></div>
+            <div style={{
+                position:"sticky",
+                top:"0px"
+            }}>
+                <div className={styles.rightTop}>
+                    {flag ? <UserInfo /> : <ReadIng />}
+                </div>
+                <div className={styles.rightBottom}>
+                    {flag ? <Recommend /> : <UserRecommend />}
+                </div>
             </div>
         </div>
     )
@@ -84,10 +46,6 @@ function Right() {
 function UserInfo() {
     return (
         <div className={styles.userInfo} >
-            <div style={{
-                height: "200px",
-                backgroundColor: "black",
-            }}></div>
             <UserLOGO height="88" />
             <h2>saber</h2>
             <p><span>you know,for search</span></p>
@@ -105,8 +63,6 @@ function Recommend() {
             <Section />
             <Section />
             <Section />
-            <Section />
-            <Section />
         </div>
     )
 }
@@ -114,10 +70,6 @@ function Recommend() {
 function ReadIng() {
     return (
         <div>
-            <div style={{
-                height: "100px",
-                backgroundColor: "black",
-            }}></div>
             <p>
                 <span className={styles.dot}></span>
                 <span>What We're Reading Today</span>

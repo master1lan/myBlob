@@ -1,16 +1,16 @@
 .right{
     width:100%;
+    position: relative;
 }
 .rightTop{
-    
     background-color:skyblue;
-    /* height:400px; */
     padding-bottom:24px ;
+    
 }
 .rightBottom{
-    
+    /* position:sticky; */
+    /* top:0px; */
     background-color:cadetblue;
-    /* height: 400px; */
 }
 
 .userInfo>*:not(:first-child){
