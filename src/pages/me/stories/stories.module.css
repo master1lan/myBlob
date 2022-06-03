@@ -36,6 +36,12 @@
 .topRightWrapper>*{
     margin:0 5px;
 }
+.topFlexCenter{
+    display:flex;
+    padding:2px 0;
+    overflow:hidden;
+    align-items:center;
+}
 
 .topBottom{
     min-width:max-content;
@@ -43,4 +49,30 @@
     padding-bottom: 16px;
     box-sizing: border-box;
     border-bottom: 1px solid rgb(41,41,41);
+}
+
+.articleWrapper{
+    padding:20px 0;
+    border-bottom: 1px solid rgb(230,230,230);
+}
+.articleH3Wrapper{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+.h3{
+    -webkit-line-clamp: 2;
+    max-height: 40px;
+    display:-webkit-box;
+    text-overflow: ellipsis;
+    overflow:hidden;
+    line-height:20px;
+}
+.h3Margin{
+    margin-top: 4px;
+}
+.h3.title{
+    color:rgb(41,41,41);
+}
+.h3.content{
+    color:rgb(117,117,117);
 }

@@ -1,44 +1,48 @@
-import MarkDown from './markdown';
-import { useRef } from 'react';
-import styles from './markdown.module.css';
+import dynamic from 'next/dynamic';
+const Editor=dynamic(()=>import("rich-markdown-editor"),{ssr:false});
+import {useState, useEffect,useRef,forwardRef,useImperativeHandle} from 'react';
 
 
-async function save({username,title,content}){
-    if(!username||!title||!content){
-      //报错
-      console.error('err');
-      return;
+const onChange=(setText,setEditDom,EditDom)=>{
+    return  function(data){
+        setText(data);
+        if(!EditDom){
+            setEditDom(document.getElementsByClassName('ProseMirror')[0]);
+        }
     }
-    const result=await fetch('http://localhost:7001/api/blob/save',{
-      method:"POST",
-      body:JSON.stringify({username,title,content}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
 }
 
-export default function Page({onClickCallBack}) {
-  const contentRef = useRef('');
-  const titleRef=useRef('');
-  const onClick = () => {
-    onClickCallBack({title:titleRef.current.value,content:contentRef.current.getText()});
-    // save({
-    //   title:titleRef.current.value,
-    //   content:contentRef.current.getText(),
-    //   username:"saber"
-    // })
-  }
-  return (
-      <main className={styles.main}>
-        <button onClick={onClick}>123</button>
-        <input placeholder='请输入标题' className={styles.input} ref={titleRef} />
-        <section style={{padding:"0 25px"}}>
-          <MarkDown ref={contentRef} />
-        </section>
-      </main>
-  )
-}
+
+const FixedMarkDown=forwardRef(({content='',readOnly=false},ref)=>{
+    const [text,setText]=useState(content);
+    const [EditDom,setEditDom]=useState(null);
+    const EditRef=useRef(null);
+    useImperativeHandle(ref,()=>{
+        return{
+            getText(){
+                return text;
+            },
+            getDom(){
+                return EditDom;
+            }
+        }
+    })
+    useEffect(()=>{
+        return ()=>setEditDom(null);
+    },[]);
+    return(
+        <Editor 
+        onChange={onChange(setText,setEditDom,EditDom)}
+        defaultValue={text}
+        readOnly={readOnly||false}
+        headingsOffset={1}
+        ref={EditRef}
+        />
+    )
+})
+
+
+export default FixedMarkDown;
 
 
 export function HTMLToString(domList){

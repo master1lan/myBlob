@@ -1,0 +1,30 @@
+.topWrapper{
+    display:flex;
+    flex-flow: row nowrap;
+    justify-content:space-between;
+    align-items:center;
+    height:131px;
+    font-size: 14px;
+}
+
+.h1Wrapper{
+    height:28px;
+    line-height:28px;
+    font-size: 20px;
+}
+
+
+.topBottom{
+    min-width:max-content;
+    margin-right:32px;
+    padding-bottom: 16px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgb(41,41,41);
+    cursor:pointer;
+}
+.topFlex{
+    display: flex;
+    padding:2px 0;
+    overflow-y:hidden;
+    align-items: center;
+}

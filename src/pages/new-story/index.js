@@ -1,4 +1,4 @@
-import MarkDown from '@utils/markdown/markdown';
+import MarkDown from '@utils/markdown';
 import LOT from "@components/leftOrTop";
 import { useRef,useState } from 'react';
 import styles from './index.module.css';

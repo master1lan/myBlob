@@ -1,3 +1,4 @@
+
 .container {
     position: relative;
     display: flex;
@@ -10,6 +11,13 @@
     background-color: white;
     display: flex;
 }
+.mainWrapper{
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+
 .mainmain{
     box-sizing: border-box;
     flex-flow: column nowrap;

@@ -1,4 +1,3 @@
-import MarkDownSection from "@utils/markdown/markdown";
 import Article from "@components/article";
 import api from "@utils/api";
 export default function Home({ sectionList }) {

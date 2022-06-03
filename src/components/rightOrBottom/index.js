@@ -1,6 +1,6 @@
 import { useViewport } from "@components/provider";
 import LOGO, { Home, Stories, Lists, UserLOGO, Follow } from "@components/nav";
-import styles from "./index.module.css";
+import styles from "./rightOrBottom.module.css";
 import { useRouter } from 'next/router';
 const orderWidth = 1080;
 
@@ -24,14 +24,8 @@ function Right() {
     const flag = router.pathname === '/blob/[id]';
     return (
         <div className={styles.right}>
-            <div style={{
-                height: "200px",
-                backgroundColor: "black",
-            }}></div>
-            <div style={{
-                position:"sticky",
-                top:"0px"
-            }}>
+            <div className={styles.rightLogo}></div>
+            <div className={styles.rightWrapper}>
                 <div className={styles.rightTop}>
                     {flag ? <UserInfo /> : <ReadIng />}
                 </div>

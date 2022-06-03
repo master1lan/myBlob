@@ -8,7 +8,7 @@ export default function () {
             <Top />
             {/* 这里是内容区 */}
             <div>
-                <Lists />
+                <ListsContent />
             </div>
         </div>
     )
@@ -34,26 +34,15 @@ function Top() {
 
 function ActionButton() {
     return (
-        <div style={{
-            display: "block",
-            height: "24px",
-            padding: "8px 20px",
-            backgroundColor: "rgb(26,137,23)",
-            borderRadius: "99em",
-            fontSize: "16px",
-            lineHeight: "24px",
-            color: "white",
-        }}>
+        <div className={styles.actionButton}>
             New list
         </div>
     )
 }
 
-function Lists(){
+export function ListsContent(){
     return(
-        <div style={{
-            marginTop:"32px",
-        }}>
+        <div className={styles.listsContent}>
             <List />
             <List />
             <List />
@@ -67,23 +56,9 @@ function Lists(){
 
 function List(){
     return(
-        <div style={{
-            backgroundColor:"rgb(250,250,250)",
-            border:"1px solid rgb(230,230,230)",
-            borderRadius:"4px",
-            padding:"24px",
-            height:"70px",
-            marginBottom:"10px",
-            display:"flex",
-            flexFlow:"column nowrap",
-            justifyContent:"space-between",
-        }}>
+        <div className={styles.listWrapper}>
             <h3>react技术</h3>
-            <div style={{
-                display:"flex",
-                flexFlow:"row nowrap",
-
-            }}>
+            <div className={styles.listFlex}>
                 <p>2022-05-19更新</p>
                 <p>4篇文章</p>
             </div>

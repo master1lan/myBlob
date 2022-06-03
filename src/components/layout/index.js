@@ -1,4 +1,4 @@
-import styles from "./index.module.css";
+import styles from "./layout.module.css";
 import LOT from "@components/leftOrTop";
 import ROB from "@components/rightOrBottom";
 import { useRouter } from 'next/router';
@@ -23,11 +23,7 @@ function Home({ children }) {
             <aside className={styles.left}>
                 <LOT />
             </aside>
-            <div style={{
-                display: "flex",
-                justifyContent: "center",
-                flexGrow:'1',
-            }}>
+            <div className={styles.mainWrapper}>
                 <main className={styles.main}>
                     {children}
                 </main>

@@ -1,6 +1,6 @@
 import { useViewport } from "@components/provider";
 import LOGO, { Home, Stories, Lists, Write, UserLOGO, Publish } from "@components/nav";
-import styles from "./index.module.css";
+import styles from "./leftOrTop.module.css";
 import { useRouter } from 'next/router';
 const orderWidth = 1080;
 

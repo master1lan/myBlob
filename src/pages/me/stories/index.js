@@ -8,7 +8,7 @@ export default function () {
                 <Top />
             {/* 这里是内容区 */}
             <div>
-                <Content />
+                <StroiesContent />
             </div>
         </div>
     )
@@ -18,8 +18,7 @@ export default function () {
 function Top() {
     return (
         <div className={styles.top}>
-            <div style={{
-            }}>
+            <div >
                 <div className={styles.topWrapper}>
                     <div className={styles.h1Wrapper}>
                         <h1>Your stories</h1>
@@ -29,13 +28,7 @@ function Top() {
                         <ActionButton message="Import a story" />
                     </div>
                 </div>
-                <div style={{
-                    display: "flex",
-                    padding: "2px 0",
-                    overflowY: "hidden",
-                    alignItems: "center",
-
-                }}>
+                <div className={styles.topFlexCenter}>
                     <div className={styles.topBottom}>
                         0篇草稿
                     </div>
@@ -48,7 +41,7 @@ function Top() {
     )
 }
 
-function Content(){
+export function StroiesContent(){
     return(
         <div>
             <Article />
@@ -62,38 +55,13 @@ function Content(){
 //草稿组件
 function Article(){
     return(
-        <div style={{
-            padding:"20px 0",
-            borderBottom:"1px solid rgb(230,230,230)",
-
-        }}>
-            <div style={{
-                overflowWrap:"break-word",
-                wordBreak:"break-word",
-            }}>
-                <h3 style={{
-                    WebkitLineClamp:"2",
-                    maxHeight:"40px",
-                    display:"-webkit-box",
-                    textOverflow:"ellipsis",
-                    overflow:"hidden",
-                    color:"rgb(41,41,41)",
-                    lineHeight:"20px"
-                }}>
+        <div className={styles.articleWrapper}>
+            <div className={styles.articleH3Wrapper}>
+                <h3 className={`${styles.h3} ${styles.title}`}>
                     这里显示文字草拟标题
                 </h3>
-                <div style={{
-                    marginTop:"4px",
-                }}>
-                    <h3 style={{
-                        WebkitLineClamp:"2",
-                        maxHeight:"40px",
-                        display:"-webkit-box",
-                        textOverflow:"ellipsis",
-                        overflow:"hidden",
-                        color:"rgb(117,117,117)",
-                        lineHeight:"20px"
-                    }}>
+                <div className={styles.h3Margin}>
+                    <h3 className={`${styles.h3} ${styles.content}`}>
                         这里写文章的前面的内容
                     </h3>
                 </div>

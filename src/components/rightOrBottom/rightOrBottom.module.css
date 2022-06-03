@@ -2,6 +2,16 @@
     width:100%;
     position: relative;
 }
+.rightLogo{
+    height: 200px;
+    background-color:black;
+}
+
+.rightWrapper{
+    position: sticky;
+    top:0px;
+}
+
 .rightTop{
     background-color:skyblue;
     padding-bottom:24px ;

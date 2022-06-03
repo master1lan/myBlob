@@ -1,7 +1,7 @@
 import Link from "next/Link";
 import { useRouter } from 'next/router';
 import Image from "next/image";
-import styles from "./index.module.css";
+import styles from "./nav.module.css";
 
 function Nav({ href = '/', children }) {
     return (
@@ -137,16 +137,7 @@ export function ActionButton({message='',href='/'}) {
     return (
             <Link href={href}>
                 <a
-                style={{
-                    display:"block",
-                    height:"20px",
-                    padding:"8px 16px",
-                    backgroundColor:"rgb(26,137,23)",
-                    borderRadius:"99em",
-                    fontSize:"14px",
-                    lineHeight:"20px",
-                    color:"white",
-                }}
+                className={styles.actionButtonA}
                 >
                     {message}
                 </a>
@@ -157,18 +148,8 @@ export function ActionButton({message='',href='/'}) {
 
 export function Follow() {
     return (
-        <div style={{
-
-        }}>
-            <button style={{
-                color: "white",
-                backgroundColor: "rgb(15,115,12)",
-                border: "0",
-                height: "36px",
-                width: "72px",
-                padding: "8px 16px",
-                borderRadius: "99em",
-            }}>Follow</button>
+        <div>
+            <button className={styles.followButton}>Follow</button>
         </div>
     )
 }

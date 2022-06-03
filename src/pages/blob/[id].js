@@ -1,4 +1,4 @@
-import Markdown from "@utils/markdown/markdown";
+import Markdown from "@utils/markdown";
 import styles from './index.module.css';
 import { UserLOGO, AddLists } from "@components/nav";
 import Head from 'next/head';
