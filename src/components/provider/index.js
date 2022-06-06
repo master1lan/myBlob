@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, createContext } from "react";
+import { useContext, useEffect, useState, createContext, useMemo } from "react";
 const viewportContext = createContext({});
 
 const ViewportProvider = ({ children }) => {

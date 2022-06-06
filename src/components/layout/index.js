@@ -4,8 +4,13 @@ import ROB from "@components/rightOrBottom";
 import { useRouter } from 'next/router';
 export default function Layout({ children }) {
     const router = useRouter();
-    const flag = router.pathname === '/new-story';
-    return flag ? <NewStory >{children}</NewStory> : <Home >{children}</Home>;
+    if(router.pathname==='/new-story'){
+        return <NewStory >{children}</NewStory> ;
+    }
+    if(router.pathname==='/login'){
+        return <>{children}</>
+    }
+    return <Home >{children}</Home>;
 }
 
 

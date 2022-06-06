@@ -45,15 +45,15 @@ const FixedMarkDown=forwardRef(({content='',readOnly=false},ref)=>{
 export default FixedMarkDown;
 
 
-export function HTMLToString(domList){
-  let ans=[],size=0;
-  for(let i=0,length=domList.length;i<length;i++){
-    const str=domList[i].innerHTML.replaceAll(/(<br>|&lt;br&gt;)/g,'');
-    ans.push(str);
-    size+=str.length;
-    if(size>300){
-      break;
-    }
-  }
-  return ans.join('').trim();
-}
+// export function HTMLToString(domList){
+//   let ans=[],size=0;
+//   for(let i=0,length=domList.length;i<length;i++){
+//     const str=domList[i].innerHTML.replaceAll(/(<br>|&lt;br&gt;)/g,'');
+//     ans.push(str);
+//     size+=str.length;
+//     if(size>300){
+//       break;
+//     }
+//   }
+//   return ans.join('').trim();
+// }

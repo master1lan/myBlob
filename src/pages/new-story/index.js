@@ -2,7 +2,7 @@ import MarkDown from '@utils/markdown';
 import LOT from "@components/leftOrTop";
 import { useRef,useState } from 'react';
 import styles from './index.module.css';
-import { HTMLToString } from '@utils/markdown';
+// import { HTMLToString } from '@utils/markdown';
 
 
 async function save({username,title,content,description}){
@@ -11,13 +11,13 @@ async function save({username,title,content,description}){
       console.error('err');
       return;
     }
-    const result=await fetch('http://localhost:7001/api/blob/save',{
-      method:"POST",
-      body:JSON.stringify({username,title,content,description}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    // const result=await fetch('http://localhost:7001/api/blob/save',{
+    //   method:"POST",
+    //   body:JSON.stringify({username,title,content,description}),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // });
 }
 
 
@@ -29,7 +29,7 @@ export default function () {
     const onClick = () =>{
         // console.log({title:titleRef.current.value,content:contentRef.current.getText()});.getElementByTagName('p')
         // console.log(HTMLToString(contentRef.current.getDom().getElementsByTagName('p')));
-        const description=HTMLToString(contentRef.current.getDom().getElementsByTagName('p'));
+        // const description=HTMLToString(contentRef.current.getDom().getElementsByTagName('p'));
         save({
             title:titleRef.current.value,
             content:contentRef.current.getText(),
