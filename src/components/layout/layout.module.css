@@ -58,6 +58,8 @@
     opacity: 0.9;
 }
 
+
+
 /* 普通大屏 */
 @media(min-width:1080px) {
     .left {

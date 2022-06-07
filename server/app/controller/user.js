@@ -45,7 +45,9 @@ class UserController extends Controller {
         code: 200,
         msg: '注册成功',
         data: {
-          token
+          token,
+          uuid,
+          username
         }
       }
     } else {

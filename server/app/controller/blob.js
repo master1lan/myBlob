@@ -14,7 +14,8 @@ class HomeController extends Controller {
     const _id=await nanoid();
     const result=await ctx.service.blob.insertNewBlob({_id,username,title,content,description});
     ctx.body={
-      result
+      result,
+      _id
     }
   }
   //查找文章

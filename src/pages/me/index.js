@@ -2,7 +2,7 @@ import styles from "./me.module.css";
 import { StroiesContent } from "./stories";
 import { ListsContent } from "./lists";
 import { useState } from "react";
-
+import { userLogin } from "@utils/context";
 export default function () {
     const [clickIndex, setClickIndex] = useState(0);
     const Click = (index) => {
@@ -22,13 +22,14 @@ export default function () {
 }
 
 function Top({ ClickCallBack }) {
+    const {  user } = userLogin();
     return (
         <div className={styles.top}>
             <div style={{
             }}>
                 <div className={styles.topWrapper}>
                     <div className={styles.h1Wrapper}>
-                        <h1>{'Saber'}</h1>
+                        <h1>{user.username}</h1>
                     </div>
                 </div>
                 <div className={styles.topFlex}>
