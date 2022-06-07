@@ -2,8 +2,27 @@ import styles from "./layout.module.css";
 import LOT from "@components/leftOrTop";
 import ROB from "@components/rightOrBottom";
 import { useRouter } from 'next/router';
+import api from "@utils/api";
+import {useEffect} from 'react';
+import { userLogin } from "@utils/context";
+import Cookie from "js-cookie"
 export default function Layout({ children }) {
+    const {setUser}=userLogin();
     const router = useRouter();
+    useEffect(()=>{
+        fetch(api.userLoginWithjwt,{
+            headers: {
+                'Authorization':Cookie.get('jwt')   
+            }
+        }).then(res=>res.json()).then(res=>{
+            if(res.code===200){
+                setUser({
+                    username:res.data.username,
+                    uuid:res.data.uuid
+                });
+            }
+        })
+    },[])
     if (router.pathname === '/new-story') {
         return <NewStory >{children}</NewStory>;
     }
