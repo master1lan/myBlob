@@ -2,6 +2,8 @@ import styles from "./me.module.css";
 import { StroiesContent } from "./stories";
 import { ListsContent } from "./lists";
 import { useState } from "react";
+import { userLogin } from "@utils/context";
+//这里目前页面拦截做的差不多了，主要就是数据的存储比较难搞
 export default function () {
     const [clickIndex, setClickIndex] = useState(0);
     const Click = (index) => {
@@ -20,12 +22,14 @@ export default function () {
 }
 
 function Top({ ClickCallBack }) {
+    const {user}=userLogin();
+    console.log(1);
     return (
         <div className={styles.top}>
             <div >
                 <div className={styles.topWrapper}>
                     <div className={styles.h1Wrapper}>
-                        <h1>{'user.username'}</h1>
+                        <h1>{user&&user.username}</h1>
                     </div>
                 </div>
                 <div className={styles.topFlex}>
@@ -54,7 +58,7 @@ function Content({ index = 0 }) {
 }
 
 //给我获取数据！
-export async function getServerSideProps(req){
+// export async function getServerSideProps(req){
     
-    console.log(req);
-}
+//     console.log(req);
+// }

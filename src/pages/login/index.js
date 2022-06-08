@@ -4,6 +4,7 @@ import { userLogin } from "@utils/context";
 import { useRouter } from "next/router";
 import api from "@utils/api";
 import Cookie from "js-cookie";
+import message from "@utils/message";
 export default function Home() {
   //reactHookForm api
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -13,6 +14,7 @@ export default function Home() {
   //登录函数
   const loginUser = data => {
     // console.log(JSON.stringify(data));
+    message.error('输入密码输入密码输入密码输入密码输入密码');
     fetch(api.userLogin,{
       method:"POST",
       headers:{
@@ -66,7 +68,6 @@ export default function Home() {
             <input {...register("password", { required: true,maxLength:30,minLength:5,pattern:/^\w+$/i })} />
           </label>
         </div>
-        {/* {errors.password && <span>This field is required</span>} */}
         <div className={styles.bottonContainer}>
           <button type="submit" onClick={handleSubmit(regiterUser)} >注册</button>
           <button type="submit" onClick={handleSubmit(loginUser)} >登录</button>
