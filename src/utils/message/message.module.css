@@ -1,16 +1,64 @@
-.MessageWrapper{
+.MessageWrapper {
     position: fixed;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-60%);
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
-.message{
-    background-color: aquamarine;
+.message {
+    background-color: rgb(255, 255, 255);
     border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
     padding: 12px 24px;
-    height:20px;
-    line-height:20px;
-    text-align:center;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
     margin-bottom: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    animation:in 0.1s linear ,out 0.1s linear 2.9s forwards;
+}
+
+
+@keyframes in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes out {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* svg设置 */
+.svgIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.svgIcon path,
+.svgIcon polygon,
+.svgIcon rect {
+    fill: #000000;
+}
+
+.svgIcon circle {
+    stroke: #000000;
+    stroke-width: 10;
 }
