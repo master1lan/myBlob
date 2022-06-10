@@ -4,6 +4,7 @@ import { ListsContent } from "./lists";
 import { useState } from "react";
 import { userLogin } from "@utils/context";
 //这里目前页面拦截做的差不多了，主要就是数据的存储比较难搞
+//接下来就是要引入redux了
 export default function () {
     const [clickIndex, setClickIndex] = useState(0);
     const Click = (index) => {
@@ -23,7 +24,6 @@ export default function () {
 
 function Top({ ClickCallBack }) {
     const {user}=userLogin();
-    console.log(1);
     return (
         <div className={styles.top}>
             <div >
@@ -56,9 +56,3 @@ function Content({ index = 0 }) {
         </>
     )
 }
-
-//给我获取数据！
-// export async function getServerSideProps(req){
-    
-//     console.log(req);
-// }
