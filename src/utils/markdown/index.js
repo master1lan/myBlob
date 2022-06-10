@@ -48,7 +48,7 @@ export default FixedMarkDown;
 export function HTMLToString(domList){
   let ans=[],size=0;
   for(let i=0,length=domList.length;i<length;i++){
-    const str=domList[i].innerHTML.replaceAll(/(<br>|&lt;br&gt;)/g,'');
+    const str=domList[i].innerText.replaceAll('\n','');
     ans.push(str);
     size+=str.length;
     if(size>300){

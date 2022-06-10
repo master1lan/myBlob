@@ -4,7 +4,7 @@ import { userLogin } from "@utils/context";
 import { useRouter } from "next/router";
 import api from "@utils/api";
 import Cookie from "js-cookie";
-import message from "@utils/message/test";
+import message from "@utils/message";
 export default function Home() {
   //reactHookForm api
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -14,20 +14,20 @@ export default function Home() {
   //登录函数
   const loginUser = data => {
     // console.log(JSON.stringify(data));
-    message.error('输入密码'+Math.random()*100);
-    message.warning('输入密码'+Math.random()*100);
-    message.success('输入密码'+Math.random()*100);
-    message.info('输入密码'+Math.random()*100);
-    // fetch(api.userLogin,{
-    //   method:"POST",
-    //   headers:{
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body:JSON.stringify(data)
-    // }).then(res=>res.json()).then(res=>{
-    //   console.log(res);
-    //   Datathen(res);
-    // })
+    // message.error('输入密码'+Math.random()*100);
+    // message.warning('输入密码'+Math.random()*100);
+    // message.success('输入密码'+Math.random()*100);
+    // message.info('输入密码'+Math.random()*100);
+    fetch(api.userLogin,{
+      method:"POST",
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify(data)
+    }).then(res=>res.json()).then(res=>{
+      console.log(res);
+      Datathen(res);
+    })
   };
   //注册函数
   const regiterUser=data=>{

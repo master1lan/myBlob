@@ -15,7 +15,7 @@ class BlobService extends Service{
             return null;
         }
     }
-    //搜索博客
+    //通过博客id搜索博客
     async findBlobById(params){
         const {app}=this;
         if(!params||!params._id){
@@ -37,6 +37,44 @@ class BlobService extends Service{
             return result;
         }catch(error){
             return [];
+        }
+    }
+    //个性化查找博客
+    async findBlobs(params){
+        const {app}=this;
+        try{
+            const result=await app.mysql.select('markdown',params);
+            return result;
+        }catch(error){
+            return [];
+        }
+    }
+    //用户更新博客
+    async updateBlobById(params){
+        const {app}=this;
+        try{
+            let result=await app.mysql.update('markdown',{
+                ...params
+            },{
+                where:{
+                    _id: params._id
+                }
+            });
+            return result;
+        }catch(error){
+            return error;
+        }
+    }
+    //根据id删除博客
+    async deleteBlobById(params){
+        const {app}=this;
+        try{
+            let result=await app.mysql.delete('markdown',{
+                _id: params._id
+            });
+            return result;
+        }catch(error){
+            return error;
         }
     }
 }

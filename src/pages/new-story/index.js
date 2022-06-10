@@ -33,7 +33,6 @@ export default function () {
     const { user } = userLogin();
     const router = useRouter();
     const onClick = () => {
-        // console.log(HTMLToString(contentRef.current.getDom().getElementsByTagName('p')));
         const description = HTMLToString(contentRef.current.getDom().getElementsByTagName('p'));
         save({
             title: titleRef.current.value,

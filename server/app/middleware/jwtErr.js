@@ -13,6 +13,7 @@ module.exports=(secret)=>{
         }else{
             try{
                 const decode=ctx.app.jwt.verify(token,secret); //验证token
+                ctx.info={...decode};
                 await next();
             }catch(err){
                 ctx.status=200;

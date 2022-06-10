@@ -1,5 +1,5 @@
 import styles from './lists.module.css';
-
+import message from '@utils/message';
 
 export default function () {
     return (
@@ -34,7 +34,7 @@ function Top() {
 
 function ActionButton() {
     return (
-        <div className={styles.actionButton}>
+        <div className={styles.actionButton} onClick={()=>{message.warning('该功能还未完成')}}>
             New list
         </div>
     )

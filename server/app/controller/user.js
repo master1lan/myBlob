@@ -2,7 +2,9 @@
 
 const { nanoid } = require('nanoid/async');
 const Controller = require('egg').Controller;
-
+/**
+ * 账号操作
+ */
 class UserController extends Controller {
   //注册程序
   async register() {
@@ -57,6 +59,7 @@ class UserController extends Controller {
       }
     }
   }
+  //常规登录
   async login() {
     // app 为全局属性，相当于所有的插件方法都植入到了 app 对象
     const { ctx, app } = this;
@@ -119,37 +122,51 @@ class UserController extends Controller {
   async editUserInfo() {
     const { ctx, app } = this;
     const { password } = ctx.request.body;
-    try{
-      const token=ctx.request.header.authorization;
+    try {
+      const token = ctx.request.header.authorization;
       const decode = await app.jwt.verify(token, app.config.jwt.secret);
       const userInfo = await ctx.service.user.getUserByName(decode.username);
       const result = await ctx.service.user.editUserInfo({
         ...userInfo,
-       password
+        password
       });
-      ctx.body={
-        code:200,
-        msg:"修改成功",
+      ctx.body = {
+        code: 200,
+        msg: "修改成功",
       }
-    }catch(err){
-      ctx.body={
-        code:500,
-        msg:"服务器繁忙"
+    } catch (err) {
+      ctx.body = {
+        code: 500,
+        msg: "服务器繁忙"
       }
     }
   }
   //根据token登录
-  async loginWithjwt(){
-    const {app,ctx}=this;
+  async loginWithjwt() {
+    const { app, ctx } = this;
+    //因为在中间件之间就将token解析完毕，所以可以直接返回信息
+    // console.log(ctx.info);
+    // const token=ctx.request.header.authorization;
+    // const decode=await app.jwt.verify(token,app.config.jwt.secret);
+    if (ctx.info) {
+      ctx.body = {
+        code: 200,
+        msg: "jwt登录成功",
+        data: {
+          ...ctx.info
+        }
+      };
+      return;
+    }
     const token=ctx.request.header.authorization;
     const decode=await app.jwt.verify(token,app.config.jwt.secret);
     ctx.body={
-      code:200,
-      msg:"jwt登录成功",
-      data:{
-        ...decode
-      }
-    }
+      code: 200,
+        msg: "jwt登录成功",
+        data: {
+          ...decode
+        }
+    };
   }
 }
 

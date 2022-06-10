@@ -1,6 +1,6 @@
 import { ActionButton } from "@components/nav";
 import styles from "./stories.module.css";
-
+import message from "@utils/message";
 export default function () {
     return (
         <div>
@@ -29,10 +29,10 @@ function Top() {
                     </div>
                 </div>
                 <div className={styles.topFlexCenter}>
-                    <div className={styles.topBottom}>
+                    <div className={styles.topBottom} onClick={()=>{message.info('该功能还未完成')}}>
                         0篇草稿
                     </div>
-                    <div className={styles.topBottom}>
+                    <div className={styles.topBottom} onClick={()=>{message.success('该功能还未完成')}}>
                         0篇已发布
                     </div>
                 </div>
