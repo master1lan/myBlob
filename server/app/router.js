@@ -18,8 +18,8 @@ module.exports = app => {
   router.post('/api/user/edit_userinfo', _jwt, controller.user.editUserInfo); // 修改用户个性签名
   router.get('/api/user/login_jwt', _jwt, controller.user.loginWithjwt); //使用jwt登录
   //用户个人博客操作接口
-  router.post('/api/userBlob/getPublishBlob', _jwt, controller.userBlob.getUserBlobPublished);  //已发布文章
-  router.post('/api/userBlob/getDraftBlob', _jwt, controller.userBlob.getUserBlobDrafted);  //未发表文章
+  router.get('/api/userBlob/getPublishBlob', _jwt, controller.userBlob.getUserBlobPublished);  //已发布文章
+  router.get('/api/userBlob/getDraftBlob', _jwt, controller.userBlob.getUserBlobDrafted);  //未发表文章
   router.post('/api/userBlob/updateBlob', _jwt, controller.userBlob.userBlobUpdate);  //更新文章
   router.post('/api/userBlob/deleteBlob', _jwt, controller.userBlob.userBlobDelete);  //删除文章
 };

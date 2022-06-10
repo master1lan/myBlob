@@ -40,3 +40,22 @@
     padding:8px 16px;
     border-radius: 99em;
 }
+
+.userHome{
+    color:black;
+    background-color:inherit;
+    height:36px;
+    font-size: 14px;
+    font-weight: 900;
+    padding: 0 10px;
+    border:1.5px solid black;
+    border-radius:99em;
+    cursor:pointer;
+}
+.userHome>svg{
+    width:14px;
+    height: 14px;
+}
+.userHome>svg>path{
+    fill:black;
+}
