@@ -3,26 +3,34 @@ import LOT from "@components/leftOrTop";
 import ROB from "@components/rightOrBottom";
 import { useRouter } from 'next/router';
 import api from "@utils/api";
-import {useEffect} from 'react';
-import { userLogin } from "@utils/context";
-import Cookie from "js-cookie"
+import { useEffect } from 'react';
+import Cookie from "js-cookie";
+
+
+//test user redux
+import {  useDispatch } from "react-redux";
+import { login, logout } from "@features/user/userSlice";
+
 export default function Layout({ children }) {
-    const {setUser}=userLogin();
     const router = useRouter();
-    useEffect(()=>{
-        fetch(api.userLoginWithjwt,{
+    const dispatch = useDispatch();
+    useEffect(() => {
+        fetch(api.userLoginWithjwt, {
             headers: {
-                'Authorization':Cookie.get('jwt')   
+                'Authorization': Cookie.get('jwt')
             }
-        }).then(res=>res.json()).then(res=>{
-            if(res.code===200){
-                setUser({
-                    username:res.data.username,
-                    uuid:res.data.uuid
-                });
+        }).then(res => res.json()).then(res => {
+            if (res.code === 200) {
+                dispatch(login({
+                    username: res.data.username,
+                    uuid: res.data.uuid
+                }));
+            }else{
+                dispatch(logout());
             }
         })
-    },[])
+    }, []);
+
     if (router.pathname === '/new-story') {
         return <NewStory >{children}</NewStory>;
     }
