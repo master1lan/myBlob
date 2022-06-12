@@ -68,6 +68,7 @@
     text-overflow: ellipsis;
     overflow:hidden;
     line-height:20px;
+    -webkit-box-orient:vertical;
 }
 .h3Margin{
     margin-top: 4px;

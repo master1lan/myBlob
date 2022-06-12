@@ -1,31 +1,41 @@
 import styles from "./me.module.css";
 import { StroiesContent } from "./stories";
 import { ListsContent } from "./lists";
-import { useState,memo } from "react";
-import { UserHome } from "@components/nav";
+import { useState, memo } from "react";
 
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectUserInfo } from "@features/user/userSlice";
+import { useFetchPublishBlobs } from "@utils/fetchData";
+
+
+const contentList_title = ['文章', '收藏', '私信', '消息', '个人信息'];
+const contentList_content = [
+    <StroiesContent />,
+    <ListsContent />,
+    <div>占位</div>,
+    <div>消息占位</div>,
+    <div>个人信息占位</div>
+];
 
 export default function () {
     const [clickIndex, setClickIndex] = useState(0);
+    useFetchPublishBlobs();
     return (
         <div>
             {/* 头部区 */}
-            {/* <Top setClickIndex={setClickIndex} /> */}
             <TOPMemo setClickIndex={setClickIndex} />
             {/* 内容区 */}
             <div>
-                <Content index={clickIndex} />
+                {contentList_content[clickIndex]}
             </div>
         </div>
     )
 }
 
-const TOPMemo=memo(({ setClickIndex })=><Top setClickIndex={setClickIndex}/>)
+const TOPMemo = memo(({ setClickIndex }) => <Top setClickIndex={setClickIndex} />)
 function Top({ setClickIndex }) {
-    const user=useSelector(selectUserInfo);
-    const ClickFunc=(index)=>()=>setClickIndex(index);
+    const user = useSelector(selectUserInfo);
+    const ClickFunc = (index) => () => setClickIndex(index);
     return (
         <div className={styles.top}>
             <div >
@@ -33,29 +43,22 @@ function Top({ setClickIndex }) {
                     <div className={styles.h1Wrapper}>
                         <h1>{user.username}</h1>
                     </div>
-                    <div><UserHome /></div>
                 </div>
                 <div className={styles.topFlex}>
-                    <div className={styles.topBottom}
-                        onClick={ClickFunc(0)}
-                    >
-                        文章
-                    </div>
-                    <div className={styles.topBottom}
-                        onClick={ClickFunc(1)}
-                    >
-                        收藏
-                    </div>
+                    {
+                        contentList_title.map((item, index) =>
+                            <div key={index}
+                                className={styles.topBottom}
+                                onClick={ClickFunc(index)}>
+                                {item}
+                            </div>)
+                    }
                 </div>
             </div>
         </div>
     )
 }
 
-function Content({ index = 0 }) {
-    return (
-        <>
-            {index === 0 ? <StroiesContent /> : <ListsContent />}
-        </>
-    )
-}
+
+
+

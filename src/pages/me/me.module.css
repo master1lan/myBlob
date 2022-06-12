@@ -22,6 +22,11 @@
     border-bottom: 1px solid rgb(41,41,41);
     cursor:pointer;
 }
+
+
+.topBottom:last-of-type{
+    margin-left:auto;
+}
 .topFlex{
     display: flex;
     padding:2px 0;

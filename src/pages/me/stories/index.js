@@ -1,30 +1,33 @@
 import { ActionButton } from "@components/nav";
 import styles from "./stories.module.css";
 import Link from "next/Link";
-import Cookie from "js-cookie";
-import api from "@utils/api";
-import { useState, useEffect,memo } from "react";
+import { useState, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUserBlobsPublish, selectUserBlobDraft, setPublishBlobs, setDraftBlobs } from "@features/user/userSlice";
-
+import { selectUserBlobsPublish, selectUserBlobDraft } from "@features/user/userSlice";
+import { useFetchDraftBlobs,useFetchPublishBlobs } from "@utils/fetchData";
 export default function () {
     const [index, setIndex] = useState(0);
+    const dispatch = useDispatch();
+    useFetchDraftBlobs();
+    useFetchPublishBlobs();
     return (
         <div>
             {/* 这里是上面 */}
-            {/* <Top setIndex={setIndex} /> */}
             <TOPMemo setIndex={setIndex} />
             {/* 这里是内容区 */}
             <div>
-                {index===0?<StoriesMemo/>:<DraftMemo/>}
+                {index === 0 ? <StoriesMemo /> : <DraftMemo />}
             </div>
         </div>
     )
 }
 
-const TOPMemo=memo(({setIndex})=><Top setIndex={setIndex} />,()=>true);
+const TOPMemo = memo(({ setIndex }) => <Top setIndex={setIndex} />);
 function Top({ setIndex }) {
     const ClickFunc = (index) => () => setIndex(index);
+
+    const drafts = useSelector(selectUserBlobDraft);
+    const publishs = useSelector(selectUserBlobsPublish);
     return (
         <div className={styles.top}>
             <div >
@@ -39,10 +42,10 @@ function Top({ setIndex }) {
                 </div>
                 <div className={styles.topFlexCenter}>
                     <div className={styles.topBottom} onClick={ClickFunc(0)}>
-                        0篇已发布
+                        {publishs.length}篇已发布
                     </div>
                     <div className={styles.topBottom} onClick={ClickFunc(1)}>
-                        0篇草稿
+                        {drafts.length}篇草稿
                     </div>
                 </div>
             </div>
@@ -50,45 +53,21 @@ function Top({ setIndex }) {
     )
 }
 
-const DraftMemo=memo(()=><DraftContent />);
+const DraftMemo = memo(() => <DraftContent />);
 
 function DraftContent() {
     const lists = useSelector(selectUserBlobDraft);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        fetch(api.userDraftedBlob, {
-            headers: {
-                'Authorization': Cookie.get('jwt')
-            }
-        }).then(res => res.json()).then(res => {
-            if(res.data.toString()!==lists.toString()){
-                dispatch(setDraftBlobs(res.data));
-            }
-        });
-    }, []);
     return (
         <div>
-            {lists.map(item => <Article key={item._id} title={item.title+'1231231'} description={item.description} _id={item._id} />)}
+            {lists.map(item => <Article key={item._id} title={item.title + '1231231'} description={item.description} _id={item._id} />)}
         </div>
     )
 }
 
-const StoriesMemo=memo(()=><StroiesContent />);
+const StoriesMemo = memo(() => <StroiesContent />);
 
 export function StroiesContent() {
     const lists = useSelector(selectUserBlobsPublish);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        fetch(api.userPublishedBlob, {
-            headers: {
-                'Authorization': Cookie.get('jwt')
-            }
-        }).then(res => res.json()).then(res => {
-            if(res.data.toString()!==lists.toString()){
-                dispatch(setPublishBlobs(res.data));
-            };
-        });
-    }, []);
     return (
         <div>
             {lists.map(item => <Article key={item._id} title={item.title} description={item.description} _id={item._id} />)}
@@ -97,7 +76,7 @@ export function StroiesContent() {
 }
 
 //草稿组件
-function Article({ title = '标题丢失', description = '描述丢失', _id }) {
+function Article({ title = '标题丢失', description = '描述丢失', _id='/' }) {
     return (
         <div className={styles.articleWrapper}>
             <Link href={`/blob/${_id}`} >
