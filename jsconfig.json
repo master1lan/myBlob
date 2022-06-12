@@ -5,7 +5,7 @@
             "@components/*":["src/components/*"],
             "@utils/*":["src/utils/*"],
             "@styles/*":["styles/*"],
-            "@Dante/*":["node_modules/Dante3"]
+            "@features/*":["src/features/*"],
         }
     }
 }
