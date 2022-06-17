@@ -4,8 +4,8 @@ import { ListsContent } from "./lists";
 import { useState, memo } from "react";
 
 import { useSelector } from "react-redux";
-import { selectUserInfo } from "@features/user/userSlice";
-import { useFetchPublishBlobs } from "@utils/fetchData";
+import { selectUserInfo } from "@features/user";
+import { useFetchPublishBlobs, useFetchLists } from "@utils/fetchData";
 
 
 const contentList_title = ['文章', '收藏', '私信', '消息', '个人信息'];
@@ -20,6 +20,7 @@ const contentList_content = [
 export default function () {
     const [clickIndex, setClickIndex] = useState(0);
     useFetchPublishBlobs();
+    useFetchLists();
     return (
         <div>
             {/* 头部区 */}

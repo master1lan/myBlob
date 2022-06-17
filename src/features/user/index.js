@@ -15,7 +15,7 @@ export const userSlice=createSlice({
             githubUrl:undefined,
             //掘金地址
             juejinUrl:undefined,
-            //思否定制
+            //思否地址
             sfUrl:undefined,
         },
         //文章草稿
@@ -48,11 +48,15 @@ export const userSlice=createSlice({
         //未发布文章
         setDraftBlobs:(state,action)=>{
             state.blobDrafts=action.payload;
-        }
+        },
+        //收藏夹
+        setFavorLists:(state,action)=>{
+            state.lists=action.payload;
+        },
     }
 });
 
-export const {login,logout,setUserInfo,setDraftBlobs,setPublishBlobs}=userSlice.actions;
+export const {login,logout,setUserInfo,setDraftBlobs,setPublishBlobs,setFavorLists}=userSlice.actions;
 //获取用户信息
 export const selectUserInfo=state=>state.user.userInfo;
 //获取用户已发表文章

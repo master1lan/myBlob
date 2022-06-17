@@ -57,7 +57,7 @@ module.exports = appInfo => {
         db:1
       }
     }
-  }
+  };
   config.security = {
     csrf: {
       enable: false,

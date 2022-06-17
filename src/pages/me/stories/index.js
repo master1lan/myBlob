@@ -3,7 +3,7 @@ import styles from "./stories.module.css";
 import Link from "next/Link";
 import { useState, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUserBlobsPublish, selectUserBlobDraft } from "@features/user/userSlice";
+import { selectUserBlobsPublish, selectUserBlobDraft } from "@features/user";
 import { useFetchDraftBlobs,useFetchPublishBlobs } from "@utils/fetchData";
 export default function () {
     const [index, setIndex] = useState(0);

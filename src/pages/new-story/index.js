@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import api from "@utils/api";
 import message from '@utils/message';
 import {  useSelector } from "react-redux";
-import {selectUserInfo} from "@features/user/userSlice";
+import {selectUserInfo} from "@features/user";
 import Cookies from 'js-cookie';
 
 

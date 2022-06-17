@@ -2,7 +2,7 @@ import { useViewport } from "@components/provider";
 import LOGO, { Home, Stories, Lists, Write, UserLOGO, Publish } from "@components/nav";
 import styles from "./leftOrTop.module.css";
 import { useRouter } from 'next/router';
-import {selectUserInfo} from "@features/user/userSlice";
+import {selectUserInfo} from "@features/user";
 import { useSelector } from "react-redux";
 const orderWidth = 1080;
 

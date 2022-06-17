@@ -3,7 +3,7 @@ import Cookie from 'js-cookie';
 import api from "@utils/api";
 import message from '@utils/message';
 import { useDispatch } from "react-redux";
-import { login, logout, setPublishBlobs, setDraftBlobs } from "@features/user/userSlice";
+import { login, logout, setPublishBlobs, setDraftBlobs,setFavorLists } from "@features/user";
 
 //根据jwt进行登录检查
 //我靠，不能使用cookie，必须使用localstorage
@@ -109,3 +109,17 @@ export function useFetchPublishBlobs() {
     }, []);
 }
 
+//获取用户收藏夹
+export function useFetchLists(){
+    const dispatch=useDispatch();
+    useEffect(()=>{
+        fetch(api.userLists,{
+            headers: {
+                'Authorization': Cookie.get('jwt')
+            }
+        }).then(res=>res.json()).then(res=>{
+            // console.log(res);
+            dispatch(setFavorLists(res.lists));
+        })
+    },[]);
+}

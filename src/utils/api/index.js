@@ -1,7 +1,9 @@
+const baseUrl=`http://127.0.0.1:7001/api`;
+const articlePath=`${baseUrl}/blob`;
+const userPath=`${baseUrl}/user`;
+const userBlobPath=`${baseUrl}/userBlob`;
+const userListsPath=`${baseUrl}/userList`;
 
-const articlePath=`http://127.0.0.1:7001/api/blob`;
-const userPath=`http://127.0.0.1:7001/api/user`;
-const userBlobPath=`http://127.0.0.1:7001/api/userBlob`;
 export default{
     "articleSave":`${articlePath}/save`,
     "articleSearch":`${articlePath}/search`,
@@ -15,5 +17,11 @@ export default{
     "userPublishedBlob":`${userBlobPath}/getPublishBlob`,
     "userDraftedBlob":`${userBlobPath}/getDraftBlob`,
     "userBlobUpdate":`${userBlobPath}/updateBlob`,
-    "userBlobDelete":`${userBlobPath}/deleteBlob`
+    "userBlobDelete":`${userBlobPath}/deleteBlob`,
+    "userLists":`${userListsPath}`,
+    "userdirectList":`${userListsPath}/getList`,
+    "userListsCreate":`${userListsPath}/newList`,
+    "userListsDelete":`${userListsPath}/deleteList`,
+    "userListsFavor":`${userListsPath}/favorBlob`,
+    "userListsUnfavor":`${userListsPath}/unfavorBlob`
 }
