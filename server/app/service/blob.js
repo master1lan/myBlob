@@ -30,10 +30,26 @@ class BlobService extends Service{
         }
     }
     //所有博客的_id
+    async findAllBlobId(){
+        const {app}=this;
+        try{
+            const result=await app.mysql.select('markdown',{
+                columns:['_id']
+            });
+            return result;
+        }catch(error){
+            console.log('查找所有博客的id时出错了',error);
+            return [];
+        }
+    }
+    //所有博客的_id和简短描述
     async findAllBlob(){
         const {app}=this;
         try{
-            const result=await app.mysql.select('markdown',{});
+            const result=await app.mysql.select('markdown',{
+                where:{status:'publish'},
+                columns:['_id','description','username','title','last_edit_time']
+            });
             return result;
         }catch(error){
             return [];

@@ -19,7 +19,7 @@ async function save({ username, title, content, description }) {
     }
     let ans = await fetch(api.articleSave, {
         method: "POST",
-        body: JSON.stringify({ username, title, content, description }),
+        body: JSON.stringify({ username, title, content, description,status:'publish' }),
         headers: {
             'Content-Type': 'application/json',
             'Authorization':Cookies.get('jwt'),

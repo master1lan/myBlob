@@ -5,6 +5,8 @@ const Controller = require('egg').Controller;
 /**
  * 账号操作
  */
+
+const tokenLiveTime = 60 * 60 * 24;
 class UserController extends Controller {
   //注册程序
   async register() {
@@ -41,7 +43,7 @@ class UserController extends Controller {
       const token = app.jwt.sign({
         uuid,
         username: username,
-        exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60) // token 有效期为 24 小时
+        exp: Math.floor(Date.now() / 1000) + tokenLiveTime
       }, app.config.jwt.secret);
       ctx.body = {
         code: 200,
@@ -51,7 +53,9 @@ class UserController extends Controller {
           uuid,
           username
         }
-      }
+      };
+      //因为是注册所以可以直接在redis里面存token
+      await ctx.service.redis.setToken(username, token, tokenLiveTime);
     } else {
       ctx.body = {
         code: 500,
@@ -62,7 +66,7 @@ class UserController extends Controller {
   //常规登录
   async login() {
     // app 为全局属性，相当于所有的插件方法都植入到了 app 对象
-    const { ctx, app } = this;
+    const { ctx } = this;
     const { username, password } = ctx.request.body;
     // 根据用户名，在数据库查找相对应的uuid操作
     const userInfo = await ctx.service.user.getUserByName(username);
@@ -81,12 +85,8 @@ class UserController extends Controller {
       }
       return;
     }
-    //生成token
-    const token = app.jwt.sign({
-      uuid: userInfo.uuid,
-      username: userInfo.username,
-      exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60) // token 有效期为 24 小时
-    }, app.config.jwt.secret);
+    //这个函数将自动保持token的一致性
+    const token = await ctx.service.redis.OnlyToken(userInfo.username, userInfo.uuid, tokenLiveTime);
     ctx.body = {
       code: 200,
       msg: "登录成功",
@@ -99,7 +99,7 @@ class UserController extends Controller {
   }
   //获取用户信息
   async getUserInfo() {
-    const { ctx, app } = this;
+    const { ctx } = this;
     const { username } = ctx.request.query;
     const userInfo = await ctx.service.user.getUserByName(username);
     if (!userInfo) {
@@ -121,14 +121,14 @@ class UserController extends Controller {
   // 修改用户信息
   async editUserInfo() {
     const { ctx, app } = this;
-    const { password } = ctx.request.body;
     try {
-      const token = ctx.request.header.authorization;
-      const decode = await app.jwt.verify(token, app.config.jwt.secret);
-      const userInfo = await ctx.service.user.getUserByName(decode.username);
+      const { editInfo } = ctx.request.body;
+      // console.log(editInfo);
+      const { username } = ctx.info;
+      const userInfo = await ctx.service.user.getUserByName(username);
       const result = await ctx.service.user.editUserInfo({
         ...userInfo,
-        password
+        ...editInfo
       });
       ctx.body = {
         code: 200,
@@ -143,30 +143,18 @@ class UserController extends Controller {
   }
   //根据token登录
   async loginWithjwt() {
-    const { app, ctx } = this;
+    const { ctx } = this;
     //因为在中间件之间就将token解析完毕，所以可以直接返回信息
-    // console.log(ctx.info);
-    // const token=ctx.request.header.authorization;
-    // const decode=await app.jwt.verify(token,app.config.jwt.secret);
-    if (ctx.info) {
-      ctx.body = {
-        code: 200,
-        msg: "jwt登录成功",
-        data: {
-          ...ctx.info
-        }
-      };
-      return;
-    }
-    const token=ctx.request.header.authorization;
-    const decode=await app.jwt.verify(token,app.config.jwt.secret);
-    ctx.body={
+    const token = await ctx.service.redis.OnlyToken(ctx.info.username, ctx.info.uuid, tokenLiveTime);
+    ctx.body = {
       code: 200,
-        msg: "jwt登录成功",
-        data: {
-          ...decode
-        }
+      msg: "jwt登录成功",
+      data: {
+        ...ctx.info,
+        token
+      }
     };
+    return;
   }
 }
 

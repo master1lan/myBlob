@@ -11,7 +11,6 @@ import { useFetchJWTLogin } from "@utils/fetchData";
 export default function Layout({ children }) {
     const router = useRouter();
     useFetchJWTLogin();
-
     if (router.pathname === '/new-story') {
         return <NewStory >{children}</NewStory>;
     }

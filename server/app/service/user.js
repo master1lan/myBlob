@@ -25,7 +25,7 @@ class UserService extends Service{
     }
     //修改用户信息
     async editUserInfo(params){
-        const { ctx, app } = this;
+        const {  app } = this;
         try {
             // 通过 app.mysql.update 方法，指定 user 表，
             let result = await app.mysql.update('user', {

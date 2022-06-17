@@ -3,23 +3,33 @@ import Cookie from 'js-cookie';
 import api from "@utils/api";
 import message from '@utils/message';
 import { useDispatch } from "react-redux";
-import { login, logout, selectUserBlobsPublish, selectUserBlobDraft, setPublishBlobs, setDraftBlobs } from "@features/user/userSlice";
+import { login, logout, setPublishBlobs, setDraftBlobs } from "@features/user/userSlice";
 
 //根据jwt进行登录检查
+//我靠，不能使用cookie，必须使用localstorage
 export function useFetchJWTLogin() {
     const dispatch = useDispatch();
     useEffect(() => {
+        const token = localStorage.getItem('jwt');
         fetch(api.userLoginWithjwt, {
             headers: {
-                'Authorization': Cookie.get('jwt')
+                'Authorization': token
             }
         }).then(res => res.json()).then(res => {
             if (res.code === 200) {
+                //实现长效登录
+                Cookie.set('jwt', res.data.token, {
+                    'sameSite': "None"
+                });
                 dispatch(login({
                     username: res.data.username,
                     uuid: res.data.uuid
                 }));
+                if (res.data.token !== token) {
+                    localStorage.setItem('jwt', res.data.token);
+                }
             } else {
+                // localStorage.removeItem('jwt');
                 dispatch(logout());
             }
         })
@@ -27,13 +37,16 @@ export function useFetchJWTLogin() {
 }
 
 //在登录和注册函数中使用
-const Datathen = (res,router,dispatch) => {
+const Datathen = (res, router, dispatch) => {
     if (res.code === 500) {
         //显示错误原因
         message.error(res.msg);
     } else if (res.code === 200) {
         //先设置好cookie
-        Cookie.set('jwt', res.data.token);
+        localStorage.setItem('jwt', res.data.token);
+        Cookie.set('jwt', res.data.token, {
+            'sameSite': "Lax"
+        });
         dispatch(login({
             username: res.data.username,
             uuid: res.data.uuid
@@ -43,7 +56,7 @@ const Datathen = (res,router,dispatch) => {
 }
 
 //登录函数
-export const FetchLogin=(router,dispatch)=>(data)=> {
+export const FetchLogin = (router, dispatch) => (data) => {
     fetch(api.userLogin, {
         method: "POST",
         headers: {
@@ -51,12 +64,12 @@ export const FetchLogin=(router,dispatch)=>(data)=> {
         },
         body: JSON.stringify(data)
     }).then(res => res.json()).then(res => {
-        Datathen(res,router,dispatch);
+        Datathen(res, router, dispatch);
     })
 }
 
 //注册函数
-export const FetchRegiter=(router,dispatch)=>(data)=> {
+export const FetchRegiter = (router, dispatch) => (data) => {
     fetch(api.userRegister, {
         method: "POST",
         headers: {
@@ -64,7 +77,7 @@ export const FetchRegiter=(router,dispatch)=>(data)=> {
         },
         body: JSON.stringify(data)
     }).then(res => res.json()).then(res => {
-        Datathen(res,router,dispatch);
+        Datathen(res, router, dispatch);
     })
 }
 
@@ -77,9 +90,7 @@ export function useFetchDraftBlobs() {
                 'Authorization': Cookie.get('jwt')
             }
         }).then(res => res.json()).then(res => {
-
             dispatch(setDraftBlobs(res.data));
-
         });
     }, []);
 }
@@ -93,9 +104,7 @@ export function useFetchPublishBlobs() {
                 'Authorization': Cookie.get('jwt')
             }
         }).then(res => res.json()).then(res => {
-
             dispatch(setPublishBlobs(res.data));
-
         });
     }, []);
 }

@@ -18,7 +18,7 @@ module.exports = appInfo => {
   // add your middleware config here
   config.middleware = [];
   config.jwt = {
-    secret: 'Nick'
+    secret: 'Nick',
   };
   config.mysql = {
     // 单数据库信息配置
@@ -32,23 +32,38 @@ module.exports = appInfo => {
       // 密码
       password: 'suxiaobai2014',
       // 数据库名
-      database: 'markdown-test',
-      charset:'utf8mb4',
+      database: 'blob',
+      charset: 'utf8mb4',
     },
     // 是否加载到 app 上，默认开启
     app: true,
     // 是否加载到 agent 上，默认关闭
     agent: false,
   };
-  config.redis={
-    
+  config.redis = {
+    clients: {
+      //存放token的
+      token: {
+        port: 6379,
+        host: '127.0.0.1',
+        password: "suxiaobai",
+        db: 0
+      },
+      //存放用户收藏夹的
+      lists:{
+        port:6379,
+        host: '127.0.0.1',
+        password: "suxiaobai",
+        db:1
+      }
+    }
   }
   config.security = {
     csrf: {
       enable: false,
       ignoreJSON: true
     },
-    domainWhiteList: [ '*' ], // 配置白名单
+    domainWhiteList: ['*'], // 配置白名单
   };
 
   config.cors = {

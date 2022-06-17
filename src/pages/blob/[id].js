@@ -2,7 +2,8 @@ import Markdown from "@utils/markdown";
 import styles from './index.module.css';
 import { UserLOGO, AddLists } from "@components/nav";
 import Head from 'next/head';
-export default function Post({ username, title, content }) {
+import api from "@utils/api";
+export default function Post({ username, title, content,last_edit_time}) {
     return (
         <>
             <Head>
@@ -18,7 +19,7 @@ export default function Post({ username, title, content }) {
                     <div className={styles.pContainer}>
                         <p><span>{username}</span></p>
                         <div className={styles.spanContainer}>
-                            <p><span>Dec 24, 2021</span></p>
+                            <p><span>{last_edit_time}</span></p>
                             <p><span>4 min read</span></p>
                         </div>
                     </div>
@@ -44,19 +45,21 @@ export default function Post({ username, title, content }) {
 export async function getStaticPaths() {
     const data = await fetch("http://localhost:7001/api/blob/id");
     const json = await data.json();
+    // console.log(json);
     return {
-        paths: json._id.map(value => { return { params: { id: value } } }),
-        fallback: false
+        paths: json._id.map(value => { return { params: { id: value['_id'] } } }),
+        fallback: true
     }
 }
 
 export async function getStaticProps({ params }) {
-    const { username, title, content } = await getPostData(params.id);
+    const { username, title, content,last_edit_time } = await getPostData(params.id);
     return {
         props: {
             username,
             title,
-            content
+            content,
+            last_edit_time
         }
     }
 }

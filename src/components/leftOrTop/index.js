@@ -2,6 +2,8 @@ import { useViewport } from "@components/provider";
 import LOGO, { Home, Stories, Lists, Write, UserLOGO, Publish } from "@components/nav";
 import styles from "./leftOrTop.module.css";
 import { useRouter } from 'next/router';
+import {selectUserInfo} from "@features/user/userSlice";
+import { useSelector } from "react-redux";
 const orderWidth = 1080;
 
 
@@ -22,6 +24,7 @@ export default function Aside({clickCallBack}) {
 }
 
 function EditTop({clickCallBack}) {
+    const {username}=useSelector(selectUserInfo);
     return (
         <nav
             className={styles.nav}
@@ -30,7 +33,7 @@ function EditTop({clickCallBack}) {
                 className={styles.leftAside}
             >
                 <LOGO />
-                <div>Draft in master1lan</div>
+                <div>Draft in {username}</div>
                 <div>Saved</div>
             </div>
             <div className={styles.rightAside}>

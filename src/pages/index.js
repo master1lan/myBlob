@@ -11,10 +11,11 @@ export default function Home({ sectionList }) {
             </div>
             {sectionList.map(section=><Article
              key={section._id} 
-             content={section.content}
+             content={section.description}
              title={section.title}
              username={section.username}
              _id={section._id}
+             time={section.last_edit_time}
              />)}
         </>
     )
