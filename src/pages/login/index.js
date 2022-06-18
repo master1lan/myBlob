@@ -17,12 +17,12 @@ export default function Home() {
         <div >
           <label className={styles.label}>
             <span>账号</span>
-            <input  {...register("username", { required: true, pattern: /[\w\u4e00-\u9fa5]{2,12}/ })} />
+            <input  type="text" {...register("username", { required: true, pattern: /[\w\u4e00-\u9fa5]{2,12}/ })} />
             {errors.username&&message.error('账号格式错误!')}
           </label>
           <label className={styles.label}>
             <span>密码</span>
-            <input {...register("password", { required: true, maxLength: 30, minLength: 5, pattern: /^\w+$/i })} />
+            <input type="password" {...register("password", { required: true, maxLength: 30, minLength: 5, pattern: /^\w+$/i })} />
             {errors.password&&message.error('密码格式错误!')}
           </label>
         </div>

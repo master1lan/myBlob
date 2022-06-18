@@ -31,15 +31,22 @@ class UserListController extends Controller {
     //这里也要进行拦截
     const { ctx } = this;
     const {
-      username, title,
+     title,
       last_edit_time = new Date().toLocaleDateString('fr-CA'),
+      description=''
     } = ctx.request.body;
+    const {username}=ctx.info;
     const _id = await nanoid();
-    const result = await ctx.service.list.createList({ username, title, _id, last_edit_time });
+    const result = await ctx.service.list.createList({ username, title, _id, last_edit_time,description });
     if (result) {
       ctx.body = {
         code: 200,
-        data: result
+        data: {
+          _id,
+          content:[],
+          title,
+          last_edit_time
+        }
       };
     } else {
       ctx.body = {
@@ -54,10 +61,11 @@ class UserListController extends Controller {
     const { ctx } = this;
     //这里后面要进行判断是不是自己的收藏夹
     const {
-      username, _id
+       _id
     } = ctx.request.body;
     const result = await ctx.service.list.deleteList(_id);
     ctx.body = {
+      code:200,
       data: result
     };
   }

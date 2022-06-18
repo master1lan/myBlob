@@ -29,7 +29,6 @@ export function useFetchJWTLogin() {
                     localStorage.setItem('jwt', res.data.token);
                 }
             } else {
-                // localStorage.removeItem('jwt');
                 dispatch(logout());
             }
         })
@@ -118,8 +117,56 @@ export function useFetchLists(){
                 'Authorization': Cookie.get('jwt')
             }
         }).then(res=>res.json()).then(res=>{
-            // console.log(res);
             dispatch(setFavorLists(res.lists));
         })
     },[]);
+}
+
+//新增收藏夹
+export const createList=async(title,description)=>{
+    if(title.trim().length<5){
+        message.error('标题至少5个字!');
+        return null;
+    }
+    const data=await fetch(api.userListsCreate,{
+        method:'POST',
+        headers:{
+            'Authorization':Cookie.get('jwt'),
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+            title,
+            description
+        })
+    });
+    const res=await data.json();
+    if(res.code===500||res.code===400){
+        message.error(res.msg.toString());
+    }else if(res.code===200){
+        message.success(`新收藏夹创建成功!`);
+        return res.data;
+    }else{
+        message.error('服务器异常，请稍后重试');
+    }
+    return null;
+}
+
+//删除收藏夹
+export const removeList=async(_id)=>{
+    const data= await fetch(api.userListsDelete,{
+        method:"POST",
+        headers:{
+            'Authorization':Cookie.get('jwt'),
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({_id}),
+    })
+    const res=await data.json();
+    if(res.code===200){
+        message.success('收藏夹删除成功!');
+        return true;
+    }else{
+        message.error('服务器发生错误!');
+        return false;
+    }
 }

@@ -1,7 +1,7 @@
 import styles from "./message.module.css";
 import React, { useEffect } from "react";
 import { render } from "react-dom";
-import { nanoid } from "nanoid";
+import { nanoid } from "@reduxjs/toolkit";
 
 //图标
 const svgType = (() => {

@@ -1,8 +1,8 @@
 import styles from './lists.module.css';
-import message from '@utils/message';
-import { useFetchLists } from '@utils/fetchData';
-import { selectUserLists } from '@features/user';
-import { useSelector } from 'react-redux';
+import { useFetchLists, createList, removeList } from '@utils/fetchData';
+import { autoTextarea } from '@utils/tools';
+import { selectUserLists, removeFavorList, addFavorList } from '@features/user';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef, useEffect } from 'react';
 export default function () {
     return (
@@ -46,10 +46,11 @@ function ActionButton() {
     )
 }
 
-function AddList({clickFunc}) {
+function AddList({ clickFunc }) {
     const [listname, setlistname] = useState('');
     const [description, setdescription] = useState('');
     const textareaRef = useRef('');
+    const dispatch = useDispatch();
     useEffect(() => {
         autoTextarea(textareaRef.current);
     }, []);
@@ -63,6 +64,13 @@ function AddList({clickFunc}) {
             setdescription(e.target.value);
         }
     };
+    const createFunc = async () => {
+        const res = await createList(listname, description);
+        if (res !== null) {
+            dispatch(addFavorList(res));
+            clickFunc();
+        }
+    };
     return (
         <div className={styles.addList}>
             <div><h3><span>创建新收藏夹</span></h3></div>
@@ -70,89 +78,23 @@ function AddList({clickFunc}) {
                 <input placeholder="收藏夹名" value={listname} onChange={listnameChange} />
                 <span>{listname.length}/20</span>
             </div>
-                <div className={styles.textWrapper}>
-                    <textarea placeholder="描述"
-                        ref={textareaRef}
-                        value={description}
-                        onChange={descriptionChange}
-                    />
-                    <span>{description.length}/280</span>
-                </div>
-                <div>
-                    <button className={styles.addListButton} onClick={clickFunc}>取消创建</button>
-                    <button className={styles.addListButton}>创建</button>
-                </div>
+            <div className={styles.textWrapper}>
+                <textarea placeholder="描述"
+                    ref={textareaRef}
+                    value={description}
+                    onChange={descriptionChange}
+                />
+                <span>{description.length}/280</span>
+            </div>
+            <div>
+                <button className={styles.addListButton} onClick={clickFunc}>取消创建</button>
+                <button className={styles.addListButton} onClick={createFunc}>创建</button>
+            </div>
         </div>
     )
 }
-/**
 
-* 文本框根据输入内容自适应高度
-
-* @param                {HTMLElement}        输入框元素
-
-* @param                {Number}                设置光标与输入框保持的距离(默认0)
-
-* @param                {Number}                设置最大高度(可选)
-
-*/
-
-function autoTextarea(elem, extra, maxHeight) {
-    extra = extra || 0;
-    let isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
-        isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
-        addEvent = function (type, callback) {
-            elem.addEventListener ?
-                elem.addEventListener(type, callback, false) :
-                elem.attachEvent('on' + type, callback);
-        },
-        getStyle = elem.currentStyle ? function (name) {
-            let val = elem.currentStyle[name];
-            if (name === 'height' && val.search(/px/i) !== 1) {
-                let rect = elem.getBoundingClientRect();
-                return rect.bottom - rect.top -
-                    parseFloat(getStyle('paddingTop')) -
-                    parseFloat(getStyle('paddingBottom')) + 'px';
-            };
-            return val;
-        } : function (name) {
-            return getComputedStyle(elem, null)[name];
-        },
-        minHeight = parseFloat(getStyle('height'));
-    const change = function () {
-        let scrollTop, height,
-            padding = 0,
-            style = elem.style;
-        if (elem._length === elem.value.length) return;
-        elem._length = elem.value.length;
-        if (!isFirefox && !isOpera) {
-            padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
-        };
-        scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-        elem.style.height = minHeight + 'px';
-        if (elem.scrollHeight > minHeight) {
-            if (maxHeight && elem.scrollHeight > maxHeight) {
-                height = maxHeight - padding;
-                style.overflowY = 'auto';
-            } else {
-                height = elem.scrollHeight - padding;
-                style.overflowY = 'hidden';
-            };
-            style.height = height + extra + 'px';
-            scrollTop += parseInt(style.height) - elem.currHeight;
-            document.body.scrollTop = scrollTop;
-            document.documentElement.scrollTop = scrollTop;
-            elem.currHeight = parseInt(style.height);
-        };
-    };
-    addEvent('propertychange', change);
-    addEvent('input', change);
-    addEvent('focus', change);
-    change();
-};
-
-
-
+//收藏夹们组件
 export function ListsContent() {
     const favorLists = useSelector(selectUserLists);
     return (
@@ -162,19 +104,60 @@ export function ListsContent() {
                     title={item.title}
                     last_edit_time={item.last_edit_time}
                     many={item.content.length}
+                    _id={item._id}
                 />)}
         </div>
     )
 }
 
-function List({ title = 'title', last_edit_time, many = 0 }) {
+//单收藏夹组件
+function List({ title = 'title', last_edit_time, many = 0, _id }) {
+    const [showPop, setShowPop] = useState(false);
+    const dispatch = useDispatch();
+    const changeshowPop = () => {
+        setShowPop(!showPop);
+    }
+    const deleteFunc = async () => {
+        const res = await removeList(_id);
+        if (res) {
+            dispatch(removeFavorList({ _id }));
+        }
+    }
+    useEffect(()=>{
+        if(showPop){
+            setTimeout(()=>setShowPop(false),2500);
+        };
+    },[showPop]);
     return (
         <div className={styles.listWrapper}>
             <h3>{title}</h3>
             <div className={styles.listFlex}>
                 <p>{many}篇文章</p>
                 <p>{last_edit_time}最后修改</p>
+                <div className={styles.last_For_Delete}>
+                    {showPop &&<PopInfo clickFunc={ deleteFunc}/>}
+                    <button className={styles.last_delete_button}
+                        onClick={changeshowPop}
+                    >
+                        {/* 这个svg太丑了，后面需要更换 */}
+                        <svg width="25" height="25">
+                            <line y2="20" x2="20" y1="5" x1="5" stroke="#000" fill="none" strokeWidth="2" />
+                            <line stroke="#000" y2="20" x2="5" y1="5" x1="20" fill="none" strokeWidth="2" />
+                        </svg>
+                    </button>
+                </div>
             </div>
+        </div>
+    )
+}
+
+//popinfo组件
+function PopInfo({ clickFunc }) {
+    return (
+        <div className={styles.sure_Popinfo}>
+            <div className={styles.popInfo_ing}></div>
+            <p>确认删除？</p>
+            <button onClick={clickFunc}>确认</button>
         </div>
     )
 }

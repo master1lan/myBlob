@@ -18,7 +18,7 @@ module.exports=(secret)=>{
             }catch(err){
                 ctx.status=200;
                 ctx.body={
-                    code:500,
+                    code:400,
                     msg:"token已过期，请重新登录",
                 }
                 return;

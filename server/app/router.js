@@ -25,9 +25,9 @@ module.exports = app => {
   //用户收藏夹操作接口
   router.get('/api/userList',_jwt,controller.userList.findUserLists); //用户收藏夹
   router.get('/api/userList/getList',controller.userList.findListsById); //根据收藏夹id返回收藏文章列表
-  router.post('/api/userList/newList',controller.userList.createList);  //新建收藏夹
-  router.post('/api/userList/deleteList',controller.userList.deleteList); //删除收藏夹
-  router.post('/api/userList/favorBlob',controller.userList.favorBlob); //在收藏夹收藏某篇文章
-  router.post('/api/userList/unfavorBlob',controller.userList.unfavorBlob); //在收藏夹取消收藏某篇文章
+  router.post('/api/userList/newList',_jwt,controller.userList.createList);  //新建收藏夹
+  router.post('/api/userList/deleteList',_jwt,controller.userList.deleteList); //删除收藏夹
+  router.post('/api/userList/favorBlob',_jwt,controller.userList.favorBlob); //在收藏夹收藏某篇文章
+  router.post('/api/userList/unfavorBlob',_jwt,controller.userList.unfavorBlob); //在收藏夹取消收藏某篇文章
   
 };
