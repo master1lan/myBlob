@@ -2,12 +2,11 @@ import { ActionButton } from "@components/nav";
 import styles from "./stories.module.css";
 import Link from "next/Link";
 import { useState, memo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectUserBlobsPublish, selectUserBlobDraft } from "@features/user";
 import { useFetchDraftBlobs,useFetchPublishBlobs } from "@utils/fetchData";
-export default function () {
+export default function Index() {
     const [index, setIndex] = useState(0);
-    const dispatch = useDispatch();
     useFetchDraftBlobs();
     useFetchPublishBlobs();
     return (

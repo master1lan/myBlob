@@ -4,7 +4,7 @@ import { autoTextarea } from '@utils/tools';
 import { selectUserLists, removeFavorList, addFavorList } from '@features/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef, useEffect } from 'react';
-export default function () {
+export default function Index () {
     return (
         <div>
             {/* 这里是上面 */}

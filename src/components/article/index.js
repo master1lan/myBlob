@@ -2,7 +2,7 @@ import { UserLOGO } from "@components/nav";
 import Link from "next/Link";
 import styles from "./article.module.css";
 
-export default function ({ title, username, content, _id,time }) {
+export default function Index({ title, username, content, _id,time }) {
     return (
         <div className={styles.article}>
             <div className={styles.container}>

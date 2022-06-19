@@ -45,7 +45,6 @@ export default function Post({ username, title, content,last_edit_time}) {
 export async function getStaticPaths() {
     const data = await fetch("http://localhost:7001/api/blob/id");
     const json = await data.json();
-    // console.log(json);
     return {
         paths: json._id.map(value => { return { params: { id: value['_id'] } } }),
         fallback: true

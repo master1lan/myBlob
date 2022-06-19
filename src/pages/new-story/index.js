@@ -31,7 +31,7 @@ async function save({ username, title, content, description }) {
 
 
 
-export default function () {
+export default function Index() {
     const contentRef = useRef('');
     const titleRef = useRef('');
     const [click, setclick] = useState(false);

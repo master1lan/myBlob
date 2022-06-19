@@ -17,7 +17,7 @@ const contentList_content = [
     <div>个人信息占位</div>
 ];
 
-export default function () {
+export default function Index() {
     const [clickIndex, setClickIndex] = useState(0);
     useFetchPublishBlobs();
     useFetchLists();
