@@ -43,7 +43,7 @@ export default function Post({ username, title, content,last_edit_time}) {
 
 
 export async function getStaticPaths() {
-    const data = await fetch("http://localhost:7001/api/blob/id");
+    const data = await fetch(api.articleIds);
     const json = await data.json();
     return {
         paths: json._id.map(value => { return { params: { id: value['_id'] } } }),
@@ -64,7 +64,7 @@ export async function getStaticProps({ params }) {
 }
 
 async function getPostData(id) {
-    const data = await fetch(`http://localhost:7001/api/blob/search?_id=${id}`);
+    const data = await fetch(`${api.articleSearch}?_id=${id}`);
     const json = await data.json();
     return {
         ...json

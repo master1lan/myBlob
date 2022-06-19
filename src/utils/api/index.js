@@ -1,4 +1,6 @@
-const baseUrl=`http://127.0.0.1:7001/api`;
+import getConfig from 'next/config';
+const {hostname}=getConfig().publicRuntimeConfig;
+const baseUrl=`http://${hostname}/api`;
 const articlePath=`${baseUrl}/blob`;
 const userPath=`${baseUrl}/user`;
 const userBlobPath=`${baseUrl}/userBlob`;
