@@ -9,7 +9,7 @@
     "devEgg": "npm run dev --prefix server",
     "proEgg": "npm run start --prefix server",
     "dev": "concurrently \"yarn run devEgg\" \"yarn run devNext \"",
-    "pro":"run-s proEgg build start"
+    "pro": "run-s proEgg build start"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.2",
@@ -32,5 +32,8 @@
   "devDependencies": {
     "eslint": "8.16.0",
     "eslint-config-next": "12.1.6"
+  },
+  "resolutions": {
+    "prosemirror-model": "1.8.2"
   }
 }
