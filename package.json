@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "devEgg": "npm run dev --prefix server",
-    "dev": "concurrently \"yarn run devEgg\" \"yarn run devNext \""
+    "dev": "concurrently \"yarn run devEgg\" \"yarn run devNext \"",
+    "product":"concurrently \"yarn run start\" \"npm run start --prefix server\""
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.2",
