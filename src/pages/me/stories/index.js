@@ -1,6 +1,6 @@
 import { ActionButton } from "@components/nav";
 import styles from "./stories.module.css";
-import Link from "next/Link";
+import Link from "next/link";
 import { useState, memo } from "react";
 import { useSelector } from "react-redux";
 import { selectUserBlobsPublish, selectUserBlobDraft } from "@features/user";
