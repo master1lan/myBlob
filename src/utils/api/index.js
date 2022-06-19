@@ -1,5 +1,8 @@
 import getConfig from 'next/config';
-const {hostname}=getConfig().publicRuntimeConfig;
+const isDevMode=process.env.NODE_ENV === 'development';
+const localHost='127.0.0.1:7001';
+const proHost='106.52.210.180:7001'
+const hostname=isDevMode?localHost:proHost;
 const baseUrl=`http://${hostname}/api`;
 const articlePath=`${baseUrl}/blob`;
 const userPath=`${baseUrl}/user`;
