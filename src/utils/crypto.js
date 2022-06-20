@@ -1,5 +1,4 @@
 import CryptoJS from 'crypto-js';
-//  const CryptoJS=require('crypto-JS');
 export default {
     //随机生成指定数量的16进制key
     generatekey(num) {

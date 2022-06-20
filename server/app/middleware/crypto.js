@@ -1,5 +1,5 @@
 'use strict'
- const CryptoJS=require('crypto-JS');
+const CryptoJS=require('crypto-js');
 function decrypt(word, keyStr) {
     keyStr = keyStr ? keyStr : 'XXXXXXXXXXXXX';
     const key = CryptoJS.enc.Utf8.parse(keyStr);
