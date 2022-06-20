@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "devNext": "next dev",
+    "stop":"node kill.js",
     "build": "next build",
     "start": "next start",
-    "proNext": "NODE_ENV=production node src/server.js",
     "devEgg": "npm run dev --prefix server",
     "proEgg": "npm run start --prefix server",
     "dev": "concurrently \"yarn run devEgg\" \"yarn run devNext \"",
-    "pro": "run-s proEgg build start"
+    "product": "run-s stop proEgg build start"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.2",
