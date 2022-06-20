@@ -5,6 +5,7 @@ import { useState, memo } from "react";
 import { useSelector } from "react-redux";
 import { selectUserBlobsPublish, selectUserBlobDraft } from "@features/user";
 import { useFetchDraftBlobs,useFetchPublishBlobs } from "@utils/fetchData";
+import { jwtLogin } from "@utils/middleware";
 export default function Index() {
     const [index, setIndex] = useState(0);
     useFetchDraftBlobs();
@@ -94,3 +95,15 @@ function Article({ title = '标题丢失', description = '描述丢失', _id='/'
     )
 }
 
+//如果不进行ssg渲染则nextjs将会认为这是一个静态页面，只将渲染一次！
+export async function getServerSideProps(context){
+    const isLogin=await jwtLogin(context.req);
+    if(!isLogin){
+        return {
+            redirect:{
+                destination:'/login'
+            }
+        }
+    }
+    return {};
+}

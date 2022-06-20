@@ -4,6 +4,8 @@ import api from "@utils/api";
 import message from '@utils/message';
 import { useDispatch } from "react-redux";
 import { login, logout, setPublishBlobs, setDraftBlobs,setFavorLists } from "@features/user";
+import crypto from '@utils/crypto';
+
 
 //根据jwt进行登录检查
 //我靠，不能使用cookie，必须使用localstorage
@@ -51,17 +53,28 @@ const Datathen = (res, router, dispatch) => {
             uuid: res.data.uuid
         }))
         router.push("/");
+        // router.reload();
     }
 }
 
+
+//加密字符串
+const passwordCrypto=(pass)=>{
+    const key=crypto.generatekey(8);
+    const password=crypto.encrypt(pass,key);
+    return {password,key};
+}
+
+
 //登录函数
 export const FetchLogin = (router, dispatch) => (data) => {
+    const cryptoEd=passwordCrypto(data.password);
     fetch(api.userLogin, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({...data,...cryptoEd})
     }).then(res => res.json()).then(res => {
         Datathen(res, router, dispatch);
     })
@@ -69,12 +82,13 @@ export const FetchLogin = (router, dispatch) => (data) => {
 
 //注册函数
 export const FetchRegiter = (router, dispatch) => (data) => {
+    const cryptoEd=passwordCrypto(data.password);
     fetch(api.userRegister, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({...data,...cryptoEd})
     }).then(res => res.json()).then(res => {
         Datathen(res, router, dispatch);
     })
