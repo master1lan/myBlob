@@ -92,6 +92,7 @@
     .main {
         /* margin: 56px 24px 70px; */
         padding:56px 24px 70px;
+        width: 100%;
     }
 
     .right {
