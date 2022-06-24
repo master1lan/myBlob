@@ -1,3 +1,5 @@
+import { jwtLogin } from "@utils/middleware";
+
 /**
 * 文本框根据输入内容自适应高度
 * @param                {HTMLElement}        输入框元素
@@ -57,3 +59,23 @@ export function autoTextarea(elem, extra, maxHeight) {
     addEvent('focus', change);
     change();
 };
+
+
+
+/**
+ * 页面路由拦截，用在登录上
+ * @param {上下文} context 
+ */
+export const middlewareWithLogin=async(context)=>{
+    const isLogin=await jwtLogin(context.req);
+    if(!isLogin){
+        return{
+            redirect:{
+                destination:"/login"
+            }
+        }
+    }
+    return{
+        props:{}
+    } 
+}

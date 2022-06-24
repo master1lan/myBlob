@@ -1,10 +1,9 @@
 import styles from './lists.module.css';
 import { useFetchLists, createList, removeList } from '@utils/fetchData';
-import { autoTextarea } from '@utils/tools';
+import { autoTextarea, middlewareWithLogin } from '@utils/tools';
 import { selectUserLists, removeFavorList, addFavorList } from '@features/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef, useEffect } from 'react';
-import { jwtLogin } from "@utils/middleware";
 export default function Index () {
     return (
         <div>
@@ -164,14 +163,4 @@ function PopInfo({ clickFunc }) {
 }
 
 //如果不进行ssg渲染则nextjs将会认为这是一个静态页面，只将渲染一次！
-export async function getServerSideProps(context){
-    const isLogin=await jwtLogin(context.req);
-    if(!isLogin){
-        return {
-            redirect:{
-                destination:'/login'
-            }
-        }
-    }
-    return {};
-}
+export const getServerSideProps=middlewareWithLogin;

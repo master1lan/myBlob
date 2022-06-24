@@ -46,8 +46,12 @@ body {
     letter-spacing: 0;
     font-style: normal;
     text-rendering: optimizeLegibility;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
 }
-
+::-webkit-scrollbar {
+    display: none;
+  }
 .heading-actions {
     display: none !important;
 }

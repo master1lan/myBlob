@@ -21,7 +21,7 @@ export function useFetchJWTLogin() {
             if (res.code === 200) {
                 //实现长效登录
                 Cookie.set('jwt', res.data.token, {
-                    'sameSite': "None"
+                    'sameSite': "strict"
                 });
                 dispatch(login({
                     username: res.data.username,
@@ -46,14 +46,13 @@ const Datathen = (res, router, dispatch) => {
         //先设置好cookie
         localStorage.setItem('jwt', res.data.token);
         Cookie.set('jwt', res.data.token, {
-            'sameSite': "Lax"
+            'sameSite': "strict"
         });
         dispatch(login({
             username: res.data.username,
             uuid: res.data.uuid
         }))
         router.push("/");
-        // router.reload();
     }
 }
 

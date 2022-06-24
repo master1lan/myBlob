@@ -12,10 +12,14 @@ import Cookies from 'js-cookie';
 
 
 async function save({ username, title, content, description }) {
+    if(!description||!content||description.length<40){
+        message.info('字数太少，未达到发表要求');
+        return null;
+    }
     if (!username || !title || !content || !description) {
         //报错
        message.error('发生错误！');
-        return;
+        return null;
     }
     let ans = await fetch(api.articleSave, {
         method: "POST",
@@ -34,23 +38,24 @@ async function save({ username, title, content, description }) {
 export default function Index() {
     const contentRef = useRef('');
     const titleRef = useRef('');
-    const [click, setclick] = useState(false);
     const user=useSelector(selectUserInfo);
     const router = useRouter();
-    const onClick = () => {
+    const onClick = async() => {
         const description = HTMLToString(contentRef.current.getDom().getElementsByTagName('p'));
-        save({
+        const res=await save({
             title: titleRef.current.value,
             content: contentRef.current.getText(),
             username: user.username,
             description: description
-        }).then(res => router.push(`/blob/${res}`));
-        setclick(true);
+        });
+        if(res){
+            router.push(`/blob/${res}`)
+        }
     }
     return (
         <>
             <aside className={styles.top}>
-                <LOT clickCallBack={!click ? onClick : null} />
+                <LOT clickCallBack={onClick} />
             </aside>
             <main className={styles.mainmain}>
                 <main className={styles.main}>

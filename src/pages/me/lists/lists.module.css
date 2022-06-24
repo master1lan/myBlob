@@ -54,6 +54,7 @@
 .addList{
     position: absolute;
     transform: translate(-50%,0);
+    z-index: 1;
     top:max(12%,60px);
     left:50%;
     background-color: white;

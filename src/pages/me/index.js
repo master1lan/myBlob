@@ -6,7 +6,7 @@ import { useState, memo } from "react";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@features/user";
 import { useFetchPublishBlobs, useFetchLists } from "@utils/fetchData";
-import { jwtLogin } from "@utils/middleware";
+import { middlewareWithLogin } from '@utils/tools';
 
 
 const contentList_title = ['文章', '收藏', '私信', '消息', '个人信息'];
@@ -65,14 +65,4 @@ function Top({ setClickIndex }) {
 
 
 //如果不进行ssg渲染则nextjs将会认为这是一个静态页面，只将渲染一次！
-export async function getServerSideProps(context){
-    const isLogin=await jwtLogin(context.req);
-    if(!isLogin){
-        return {
-            redirect:{
-                destination:'/login'
-            }
-        }
-    }
-    return {};
-}
+export const getServerSideProps=middlewareWithLogin;

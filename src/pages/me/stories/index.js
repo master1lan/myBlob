@@ -5,7 +5,7 @@ import { useState, memo } from "react";
 import { useSelector } from "react-redux";
 import { selectUserBlobsPublish, selectUserBlobDraft } from "@features/user";
 import { useFetchDraftBlobs,useFetchPublishBlobs } from "@utils/fetchData";
-import { jwtLogin } from "@utils/middleware";
+import { middlewareWithLogin } from '@utils/tools';
 export default function Index() {
     const [index, setIndex] = useState(0);
     useFetchDraftBlobs();
@@ -59,7 +59,7 @@ function DraftContent() {
     const lists = useSelector(selectUserBlobDraft);
     return (
         <div>
-            {lists.map(item => <Article key={item._id} title={item.title + '1231231'} description={item.description} _id={item._id} />)}
+            {lists.map(item => <Article key={item._id} title={item.title} description={item.description} _id={item._id} />)}
         </div>
     )
 }
@@ -85,9 +85,9 @@ function Article({ title = '标题丢失', description = '描述丢失', _id='/'
                         {title}
                     </h3>
                     <div className={styles.h3Margin}>
-                        <h3 className={`${styles.h3} ${styles.content}`}>
+                        <h5 className={`${styles.h3} ${styles.content}`}>
                             {description}
-                        </h3>
+                        </h5>
                     </div>
                 </div>
             </Link>
@@ -96,14 +96,4 @@ function Article({ title = '标题丢失', description = '描述丢失', _id='/'
 }
 
 //如果不进行ssg渲染则nextjs将会认为这是一个静态页面，只将渲染一次！
-export async function getServerSideProps(context){
-    const isLogin=await jwtLogin(context.req);
-    if(!isLogin){
-        return {
-            redirect:{
-                destination:'/login'
-            }
-        }
-    }
-    return {};
-}
+export const getServerSideProps=middlewareWithLogin;

@@ -47,7 +47,7 @@ export async function getStaticPaths() {
     const json = await data.json();
     return {
         paths: json._id.map(value => { return { params: { id: value['_id'] } } }),
-        fallback: true
+        fallback: false
     }
 }
 

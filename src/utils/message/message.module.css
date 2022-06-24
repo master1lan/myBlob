@@ -3,6 +3,8 @@
     top: 10px;
     left: 50%;
     transform: translate(-50%, 0);
+    /* 消息提示的优先级应该是最高的！ */
+    z-index: 9999;
 }
 
 .message {
