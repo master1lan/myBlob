@@ -18,8 +18,11 @@ export default function Index() {
     const router = useRouter();
     const onClick = async() => {
         const data=contentRef.current.getText();
+        contentRef.current.setTimer();
         const res=await blobUpdate(data);
         if(res){
+            sessionStorage.removeItem('_id');
+            sessionStorage.removeItem('draft');
             router.push(`/blob/${res}`);
         }
     }

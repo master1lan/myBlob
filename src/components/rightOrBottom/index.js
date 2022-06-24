@@ -20,7 +20,6 @@ export default function Aside() {
 function Right() {
     const router = useRouter();
     const flag = router.pathname === '/blob/[id]';
-    console.log('right rerender');
     return (
         <div className={styles.right}>
             <div className={styles.rightLogo}></div>

@@ -29,6 +29,10 @@ const FixedEditPage = forwardRef(({ content = '', title = '', username }, ref) =
                     content: text, description: HTMLToString(document.getElementsByClassName('ProseMirror')[0]), status: 'publish',
                     publish:true
                 }
+            },
+            setTimer(){
+                clearTimeout(timer);
+                setTimer(null);
             }
         }
     });
@@ -37,7 +41,6 @@ const FixedEditPage = forwardRef(({ content = '', title = '', username }, ref) =
         draftText&&setText(draftText);
         return () => {
             clearTimeout(timer);
-            sessionStorage.clear();
         }
     },[]);
     return (
