@@ -29,7 +29,8 @@
     display: flex;
     flex-flow: column nowrap;
     max-width:840px;
-    margin:0 24px;
+    /* margin:0 24px; */
+    padding:0 24px;
     flex: 1;
     background-color: white;
 }
@@ -89,7 +90,8 @@
     }
 
     .main {
-        margin: 56px 24px 70px;
+        /* margin: 56px 24px 70px; */
+        padding:56px 24px 70px;
     }
 
     .right {
