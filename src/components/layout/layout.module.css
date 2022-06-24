@@ -1,4 +1,9 @@
-
+/* newstory */
+.mainContainer {
+    position: relative;
+    margin-bottom: 40px;
+}
+/* home */
 .container {
     position: relative;
     display: flex;
@@ -10,6 +15,7 @@
     box-sizing: border-box;
     background-color: white;
     display: flex;
+    justify-content: center;
 }
 .mainWrapper{
     display: flex;
@@ -18,17 +24,12 @@
 }
 
 
-.mainmain{
-    box-sizing: border-box;
-    flex-flow: column nowrap;
-    padding: 0 20px;
-    background-color: white;
-}
 .main {
     box-sizing: border-box;
     display: flex;
     flex-flow: column nowrap;
-    max-width:692px;
+    max-width:840px;
+    margin:0 24px;
     flex: 1;
     background-color: white;
 }
@@ -36,17 +37,13 @@
 .right {
     box-sizing: border-box;
     border-left: 1px solid rgb(230, 230, 230);
-    width: 394px;
+    width: 420px;
     background-color: white;
     display: flex;
     padding:0 32px;
     position: relative;
 }
 
-.mainContainer {
-    position: relative;
-    margin-bottom: 40px;
-}
 
 .top {
     height: 65px;
@@ -65,14 +62,14 @@
     .left {
         border-right: 1px solid rgb(230, 230, 230);
         flex-shrink: 0;
-        width: 80px;
+        width: 90px;
     }
 }
 
 /* 直接给你缩！ */
 @media(max-width:1240px) {
     .right {
-        width: 280px;
+        width: 320px;
     }
 }
 
@@ -92,28 +89,17 @@
     }
 
     .main {
-        margin-top: 56px;
-        margin-bottom: 40px;
+        margin: 56px 24px 70px;
     }
 
     .right {
         flex-direction: row;
         position: fixed;
         bottom: 0px;
-        height: 50px;
+        height: 70px;
         width: 100%;
         border-left: 0px;
         padding:0;
     }
 }
 
-@media (max-width:720px) {
-    .main{
-        margin:56px 24px 70px;
-        max-width:100%;
-        width:80%;
-    }
-    .right{
-        height:70px;
-    }
-}

@@ -19,7 +19,7 @@
 }
 
 .top {
-    height: 65px;
+    height: 85px;
     top: 0px;
     position: sticky;
     width: 100%;
@@ -27,6 +27,7 @@
     margin:0 auto;
     opacity: 0.9;
     z-index: 1;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px -2px 10px;
 }
 .mainmain{
     box-sizing: border-box;

@@ -1,6 +1,5 @@
-.main{
-    max-width: 740px;
-    margin: 0 auto;
+.section{
+    padding: 0 25px;
 }
 .input{
     display:block;

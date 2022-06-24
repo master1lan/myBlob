@@ -78,7 +78,8 @@ class BlobService extends Service{
             });
             return result;
         }catch(error){
-            return error;
+            // return error;
+            return null;
         }
     }
     //根据id删除博客

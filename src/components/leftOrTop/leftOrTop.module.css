@@ -1,11 +1,12 @@
 .container{
-    position: sticky;
+    position: fixed;
     top:0;
     width:80px;
     display:flex;
     flex-flow:column nowrap;
     justify-content: space-around;
-    min-height:482px;
+    min-height:425px;
+    height:100vh;
 }
 .left{
     display: flex;

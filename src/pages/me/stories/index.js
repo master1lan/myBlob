@@ -4,8 +4,14 @@ import Link from "next/link";
 import { useState, memo } from "react";
 import { useSelector } from "react-redux";
 import { selectUserBlobsPublish, selectUserBlobDraft } from "@features/user";
-import { useFetchDraftBlobs,useFetchPublishBlobs } from "@utils/fetchData";
+import { useFetchDraftBlobs, useFetchPublishBlobs } from "@utils/fetchData";
 import { middlewareWithLogin } from '@utils/tools';
+
+const Lists=[
+    <StroiesContent />,
+    <DraftContent />
+]
+
 export default function Index() {
     const [index, setIndex] = useState(0);
     useFetchDraftBlobs();
@@ -16,16 +22,16 @@ export default function Index() {
             <TOPMemo setIndex={setIndex} />
             {/* 这里是内容区 */}
             <div>
-                {index === 0 ? <StoriesMemo /> : <DraftMemo />}
+                {Lists[index]}
             </div>
-        </div>
+        </div >
     )
 }
 
+//顶部组件
 const TOPMemo = memo(({ setIndex }) => <Top setIndex={setIndex} />);
 function Top({ setIndex }) {
     const ClickFunc = (index) => () => setIndex(index);
-
     const drafts = useSelector(selectUserBlobDraft);
     const publishs = useSelector(selectUserBlobsPublish);
     return (
@@ -53,8 +59,7 @@ function Top({ setIndex }) {
     )
 }
 
-const DraftMemo = memo(() => <DraftContent />);
-
+//草稿分栏组件
 function DraftContent() {
     const lists = useSelector(selectUserBlobDraft);
     return (
@@ -64,8 +69,7 @@ function DraftContent() {
     )
 }
 
-const StoriesMemo = memo(() => <StroiesContent />);
-
+//文章分栏组件
 export function StroiesContent() {
     const lists = useSelector(selectUserBlobsPublish);
     return (
@@ -75,8 +79,8 @@ export function StroiesContent() {
     )
 }
 
-//草稿组件
-function Article({ title = '标题丢失', description = '描述丢失', _id='/' }) {
+//展示文章组件
+function Article({ title = '标题丢失', description = '描述丢失', _id = '/' }) {
     return (
         <div className={styles.articleWrapper}>
             <Link href={`/blob/${_id}`} >
@@ -85,9 +89,9 @@ function Article({ title = '标题丢失', description = '描述丢失', _id='/'
                         {title}
                     </h3>
                     <div className={styles.h3Margin}>
-                        <h5 className={`${styles.h3} ${styles.content}`}>
+                        <h4 className={`${styles.h3} ${styles.content}`}>
                             {description}
-                        </h5>
+                        </h4>
                     </div>
                 </div>
             </Link>
@@ -96,4 +100,4 @@ function Article({ title = '标题丢失', description = '描述丢失', _id='/'
 }
 
 //如果不进行ssg渲染则nextjs将会认为这是一个静态页面，只将渲染一次！
-export const getServerSideProps=middlewareWithLogin;
+export const getServerSideProps = middlewareWithLogin;

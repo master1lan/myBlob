@@ -1,23 +1,46 @@
-import styles from "./layout.module.css";
+import { useRouter } from 'next/router';
+import Head from "next/head";
+
 import LOT from "@components/leftOrTop";
 import ROB from "@components/rightOrBottom";
-import { useRouter } from 'next/router';
-
-
-
-
 import { useFetchJWTLogin } from "@utils/fetchData";
+
+import styles from "./layout.module.css";
+
+
+
 
 export default function Layout({ children }) {
     const router = useRouter();
     useFetchJWTLogin();
     if (router.pathname === '/new-story') {
-        return <NewStory >{children}</NewStory>;
+        return (
+            <>
+                <Head>
+                    <title>new-story</title>
+                </Head>
+                <NewStory >{children}</NewStory>
+            </>
+        );
     }
     if (router.pathname === '/login') {
-        return <Login >{children}</Login>
+        return (
+            <>
+                <Head>
+                    <title>登录</title>
+                </Head>
+                <Login >{children}</Login>
+            </>
+        );
     }
-    return <Home >{children}</Home>;
+    return (
+        <>
+            <Head>
+                <title>master1lan的博客</title>
+            </Head>
+            <Home >{children}</Home>
+        </>
+    );
 }
 
 

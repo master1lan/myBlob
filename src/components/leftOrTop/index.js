@@ -4,7 +4,6 @@ import styles from "./leftOrTop.module.css";
 import { useRouter } from 'next/router';
 import {selectUserInfo} from "@features/user";
 import { useSelector } from "react-redux";
-const orderWidth = 1080;
 
 
 /**
@@ -14,13 +13,13 @@ const orderWidth = 1080;
  * 小屏模式从左到右分别是 LOGO
  */
 export default function Aside({clickCallBack}) {
-    const { width, height } = useViewport();
+    const { typePC } = useViewport();
     const router = useRouter();
     if (router.pathname === '/new-story')
         return (
             <EditTop clickCallBack={clickCallBack} />
         )
-    return width > orderWidth ? <Left height={height} /> : < Top />;
+    return typePC ? <Left  /> : < Top />;
 }
 
 function EditTop({clickCallBack}) {
@@ -45,12 +44,9 @@ function EditTop({clickCallBack}) {
 }
 
 
-function Left({ height }) {
+function Left() {
     return (
         <div className={styles.container}
-            style={{
-                height: height
-            }}
         >
             <LOGO />
             <div className={styles.left}>

@@ -26,13 +26,19 @@
 
 @media(max-width:720px){
     .h1Wrapper{
-        font-size:12px;
+        font-size:16px;
     }
 }
 
 .topRightWrapper{
     display:flex;
 }
+@media(max-width:1080px){
+    .topRightWrapper>*:not(:first-child){
+        display: none;
+    }
+}
+
 .topRightWrapper>*{
     margin:0 5px;
 }

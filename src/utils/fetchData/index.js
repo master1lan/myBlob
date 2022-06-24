@@ -4,8 +4,7 @@ import api from "@utils/api";
 import message from '@utils/message';
 import { useDispatch } from "react-redux";
 import { login, logout, setPublishBlobs, setDraftBlobs,setFavorLists } from "@features/user";
-import crypto from '@utils/crypto';
-
+import { Datathen,passwordCrypto } from './func';
 
 //根据jwt进行登录检查
 //我靠，不能使用cookie，必须使用localstorage
@@ -37,34 +36,6 @@ export function useFetchJWTLogin() {
     }, []);
 }
 
-//在登录和注册函数中使用
-const Datathen = (res, router, dispatch) => {
-    if (res.code === 500) {
-        //显示错误原因
-        message.error(res.msg);
-    } else if (res.code === 200) {
-        //先设置好cookie
-        localStorage.setItem('jwt', res.data.token);
-        Cookie.set('jwt', res.data.token, {
-            'sameSite': "strict"
-        });
-        dispatch(login({
-            username: res.data.username,
-            uuid: res.data.uuid
-        }))
-        router.push("/");
-    }
-}
-
-
-//加密字符串
-const passwordCrypto=(pass)=>{
-    const key=crypto.generatekey(8);
-    const password=crypto.encrypt(pass,key);
-    return {password,key};
-}
-
-
 //登录函数
 export const FetchLogin = (router, dispatch) => (data) => {
     const cryptoEd=passwordCrypto(data.password);
@@ -92,6 +63,10 @@ export const FetchRegiter = (router, dispatch) => (data) => {
         Datathen(res, router, dispatch);
     })
 }
+
+
+
+
 
 //获取用户未发表博客
 export function useFetchDraftBlobs() {
@@ -183,3 +158,53 @@ export const removeList=async(_id)=>{
         return false;
     }
 }
+
+
+
+
+//保存文章，所有的方式！
+export const blobUpdate=async ({ givenID,username, title, content, description,status='draft',publish=false })=> {  
+    const _id=sessionStorage.getItem('_id');
+    if(!publish){
+        const resNoJSON=await fetch(api.userBlobUpdate, {
+            method: "POST",
+            body: JSON.stringify({ _id,username, title, content, description,status }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization':Cookie.get('jwt'),
+            }
+        });
+        const res=await resNoJSON.json();
+        if(res.code===200){
+            sessionStorage.setItem('_id',res.data._id);
+            message.success("草稿已在云端保存");
+        }else{
+            message.error(res.data.msg.toString());
+        }
+        return null;
+    }
+    if(!title){
+        message.info('标题不可为空');
+        return null;
+    }
+    if(!description||!content||description.length<40){
+        message.info('字数太少，未达到发表要求');
+        return null;
+    };
+    if (!username || !title || !content || !description) {
+        //报错
+       message.error('发生错误！');
+        return null;
+    };
+    let ans = await fetch(api.userBlobUpdate, {
+        method: "POST",
+        body: JSON.stringify({ _id:givenID?givenID:_id,username, title, content, description,status }),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':Cookie.get('jwt'),
+        }
+    });
+    let json = await ans.json();
+    return json.data._id;
+}
+

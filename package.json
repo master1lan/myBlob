@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "devNext": "next dev",
-    "stop":"node kill.js",
+    "stop": "node kill.js",
     "build": "next build",
     "start": "next start",
     "devEgg": "npm run dev --prefix server",
     "proEgg": "npm run start --prefix server",
-    "proNext":"run-s build start",
+    "proNext": "run-s build start",
     "dev": "concurrently \"yarn run devEgg\" \"yarn run devNext \"",
     "product": "run-s stop proEgg proNext"
   },

@@ -2,7 +2,7 @@ import { useViewport } from "@components/provider";
 import LOGO, { Home, Stories, Lists, UserLOGO, Follow } from "@components/nav";
 import styles from "./rightOrBottom.module.css";
 import { useRouter } from 'next/router';
-const orderWidth = 1080;
+
 
 
 /**
@@ -11,17 +11,16 @@ const orderWidth = 1080;
  * 大屏模式从上到下分别是 HotStories，RecommendedTopics，WhoToFollow
  * 小屏模式从左到右分别是 home，Stroies，Lists，${userLOGO}
  */
-
 export default function Aside() {
-    const { width } = useViewport();
-    return width > orderWidth ? <Right /> : <Bottom />
+    const { typePC } = useViewport();
+    return typePC?<Right />:<Bottom />
 }
-
 
 
 function Right() {
     const router = useRouter();
     const flag = router.pathname === '/blob/[id]';
+    console.log('right rerender');
     return (
         <div className={styles.right}>
             <div className={styles.rightLogo}></div>

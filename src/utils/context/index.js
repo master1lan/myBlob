@@ -7,6 +7,9 @@ const userContext=createContext({
     setUser:null
 });
 /**
+ * 2022-6-24更新：已使用redux，此context弃用
+ */
+/**
  * 这个proview的目的就是不用redux，直接将用户状态放里面
  */
 const UserProview=({children})=>{
@@ -44,8 +47,8 @@ const UserProview=({children})=>{
          </userContext.Provider>
     )
 }
-export const userLogin=()=>{
-    return useContext(userContext);
-}
+// export const userLogin=()=>{
+//     return useContext(userContext);
+// }
 
-export default UserProview;
+// export default UserProview;

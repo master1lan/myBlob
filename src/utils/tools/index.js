@@ -79,3 +79,15 @@ export const middlewareWithLogin=async(context)=>{
         props:{}
     } 
 }
+
+/**
+ * 获取简述
+ * @param {dom节点列表} domList 
+ * @returns 
+ */
+export function HTMLToString(domList){
+    if(!domList){
+      return '';
+    }
+    return domList.innerText.replaceAll('\n','').trim();
+  }
