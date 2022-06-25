@@ -77,7 +77,8 @@ module.exports = appInfo => {
   const userConfig = {
     // myAppName: 'egg',
     userLOGOuploadDir: 'app/public/userlogo',
-    uploadDir:'app/public/upload'
+    uploadDir:'app/public/upload',
+    hostUrl:'http://127.0.0.1:7001'
   };
   config.multipart = {
     mode: 'file',

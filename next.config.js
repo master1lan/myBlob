@@ -11,7 +11,7 @@ const nextConfig = {
   },
   publicRuntimeConfig:{
     hostname:isDevMode?localHost:proHost
-  }
+  },
 }
 
 module.exports = nextConfig

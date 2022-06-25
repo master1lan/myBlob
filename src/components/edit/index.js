@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 const Editor = dynamic(() => import("rich-markdown-editor"), { ssr: false });
 import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import styles from "./edit.module.css";
-import { blobUpdate } from '@utils/fetchData';
+import { blobUpdate,uploadImg } from '@utils/fetchData';
 import { HTMLToString } from '@utils/tools';
 
 
@@ -11,6 +11,7 @@ const FixedEditPage = forwardRef(({ content = '', title = '', username }, ref) =
     const [timer,setTimer]=useState(null);
     const titleRef = useRef(null);
     const onChange = (data) => {
+        return;
         setText(data);
         clearTimeout(timer);
         //直接丢到sessionStorage里面
@@ -51,6 +52,7 @@ const FixedEditPage = forwardRef(({ content = '', title = '', username }, ref) =
                     onChange={onChange}
                     defaultValue={text}
                     headingsOffset={1}
+                    uploadImage={uploadImg}
                 />
             </section>
         </>

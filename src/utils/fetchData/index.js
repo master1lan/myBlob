@@ -208,3 +208,15 @@ export const blobUpdate=async ({ givenID,username, title, content, description,s
     return json.data._id;
 }
 
+
+//上传图片
+export const uploadImg=async(file)=>{
+    let data=new FormData();
+    data.append('file',file);
+    const res=await fetch(api.uploadImg, {
+        method:"POST",
+        body:data
+    });
+    const json=await res.json();
+    return json.res[0];
+}

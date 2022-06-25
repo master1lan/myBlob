@@ -16,6 +16,19 @@ function Nav({ href = '/', children }) {
         </div>
     )
 }
+
+//再次封装image
+const MYOWNLOADER=({src})=>`http://127.0.0.1:7001/${src}`;
+
+export const Imagewrapper=(props)=>{
+    return (
+        <Image 
+        loader={MYOWNLOADER}
+        {...props}
+        />
+    )
+}
+
 //网页LOGO
 export default function LOGO() {
     return (
@@ -92,15 +105,15 @@ export function Write() {
 }
 
 //用户logo标签
-export function UserLOGO({ height = '30' }) {
+export function UserLOGO({ height = '30',src="public/userlogo/UserLOGO.png",href='/me' }) {
     return (
         <div style={{
             width: height,
             height: height,
             margin: "0 auto",
         }}>
-            <Nav href="/me">
-                <Image style={{ borderRadius: "50%" }} src="/images/UserLOGO.png" width={height} height={height} />
+            <Nav href={href}>
+                <Imagewrapper style={{ borderRadius: "50%" }} src={src} width={height} height={height} />
             </Nav>
         </div>
     )
