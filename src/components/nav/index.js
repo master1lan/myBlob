@@ -105,7 +105,7 @@ export function Write() {
 }
 
 //用户logo标签
-export function UserLOGO({ height = '30',src="public/userlogo/UserLOGO.png",href='/me' }) {
+export function UserLOGO({ height = '30',src="public/userlogo/userLOGO.png",href='/me' }) {
     return (
         <div style={{
             width: height,
