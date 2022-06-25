@@ -32,4 +32,5 @@
     padding:2px 0;
     overflow-y:hidden;
     align-items: center;
+    overflow-x: hidden;
 }

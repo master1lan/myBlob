@@ -16,7 +16,6 @@ export const URL=`http://${hostname}`;
 
 
 export default {
-    "articleSave": `${articlePath}/save`,
     "articleSearch": `${articlePath}/search`,
     "articles": `${articlePath}/`,
     "articleIds": `${articlePath}/id`,

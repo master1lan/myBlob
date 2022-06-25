@@ -1,24 +1,29 @@
 import dynamic from 'next/dynamic';
 const Editor = dynamic(() => import("rich-markdown-editor"), { ssr: false });
-import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
+import { useState, useEffect,  forwardRef, useImperativeHandle } from 'react';
 import styles from "./edit.module.css";
 import { blobUpdate,uploadImg } from '@utils/fetchData';
 import { HTMLToString } from '@utils/tools';
 
 
+
+
 const FixedEditPage = forwardRef(({ content = '', title = '', username }, ref) => {
     const [text, setText] = useState(content);
+    const [titleText,setTitle]=useState(title);
     const [timer,setTimer]=useState(null);
-    const titleRef = useRef(null);
+    const titleChange=(e)=>{
+        setTitle(e.target.value);
+        sessionStorage.setItem('title',e.target.value);
+    }
     const onChange = (data) => {
-        return;
         setText(data);
         clearTimeout(timer);
         //直接丢到sessionStorage里面
         sessionStorage.setItem('draft',data());
         setTimer(setTimeout(blobUpdate, 5000,
             {
-                username, title: titleRef.current.value,
+                username, title: titleText,
                 content: text, description: HTMLToString(document.getElementsByClassName('ProseMirror')[0]), status: 'draft'
             }));
     }
@@ -26,7 +31,7 @@ const FixedEditPage = forwardRef(({ content = '', title = '', username }, ref) =
         return {
             getText() {
                 return {
-                    username, title: titleRef.current.value,
+                    username, title: titleText,
                     content: text, description: HTMLToString(document.getElementsByClassName('ProseMirror')[0]), status: 'publish',
                     publish:true
                 }
@@ -40,13 +45,15 @@ const FixedEditPage = forwardRef(({ content = '', title = '', username }, ref) =
     useEffect(() => {
         const draftText=sessionStorage.getItem('draft');
         draftText&&setText(draftText);
+        const titleText=sessionStorage.getItem('title');
+        titleText&&setTitle(titleText);
         return () => {
             clearTimeout(timer);
         }
     },[]);
     return (
         <>
-            <input placeholder='请输入标题' className={styles.input} defaultValue={title} ref={titleRef} />
+            <input placeholder='请输入标题' className={styles.input} defaultValue={titleText}  onChange={titleChange} />
             <section className={styles.section}>
                 <Editor
                     onChange={onChange}

@@ -8,7 +8,6 @@ module.exports = app => {
   const _jwt = middleware.jwtErr(app.config.jwt.secret); // 传入加密字符串
   const _crypto=middleware.crypto(); //加密解密字符串
   //文章操作接口
-  router.post('/api/blob/save', _jwt, controller.blob.saveBlob);//保存文章
   router.get('/api/blob/search', controller.blob.searchBlob);//查找文章
   router.get('/api/blob/id', controller.blob.findAllBlobId);//所有文章id
   router.get('/api/blob/', controller.blob.findAllBlob);//所有文章的简短描述

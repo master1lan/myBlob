@@ -218,5 +218,6 @@ export const uploadImg=async(file)=>{
         body:data
     });
     const json=await res.json();
+    // console.log(json.res);
     return json.res[0];
 }
