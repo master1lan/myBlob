@@ -12,6 +12,8 @@ module.exports = app => {
   router.get('/api/blob/search', controller.blob.searchBlob);//查找文章
   router.get('/api/blob/id', controller.blob.findAllBlobId);//所有文章id
   router.get('/api/blob/', controller.blob.findAllBlob);//所有文章的简短描述
+  //文件上传获取接口
+  router.post('/api/img/uploadUserLOGO',controller.upload.uploadUserLOGO);  //测试接口！
   //用户操作接口
   router.post('/api/user/register',_crypto, controller.user.register);  //注册
   router.post('/api/user/login',_crypto, controller.user.login);  //登录

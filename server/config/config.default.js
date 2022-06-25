@@ -76,10 +76,12 @@ module.exports = appInfo => {
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
-    uploadDir: 'app/public/upload'
+    userLOGOuploadDir: 'app/public/userlogo',
+    uploadDir:'app/public/upload'
   };
   config.multipart = {
-    mode: 'file'
+    mode: 'file',
+    fileSize:'10mb'
   };
 
 
