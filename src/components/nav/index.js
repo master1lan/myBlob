@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 import Image from "next/image";
 import styles from "./nav.module.css";
-
+import {URL} from "@utils/api";
 function Nav({ href = '/', children }) {
     return (
         <div style={{
@@ -18,7 +18,7 @@ function Nav({ href = '/', children }) {
 }
 
 //再次封装image
-const MYOWNLOADER=({src})=>`http://127.0.0.1:7001/${src}`;
+const MYOWNLOADER=({src})=>`${URL}/${src}`;
 
 export const Imagewrapper=(props)=>{
     return (
