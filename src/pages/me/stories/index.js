@@ -43,7 +43,6 @@ function Top({ setIndex }) {
                     </div>
                     <div className={styles.topRightWrapper}>
                         <ActionButton message="Write a story" href="/new-story" />
-                        <ActionButton message="Import a story" />
                     </div>
                 </div>
                 <div className={styles.topFlexCenter}>

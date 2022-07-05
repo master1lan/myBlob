@@ -33,11 +33,7 @@
 .topRightWrapper{
     display:flex;
 }
-@media(max-width:1080px){
-    .topRightWrapper>*:not(:first-child){
-        display: none;
-    }
-}
+
 
 .topRightWrapper>*{
     margin:0 5px;

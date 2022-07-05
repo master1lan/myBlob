@@ -11,7 +11,7 @@ class ListService extends Service {
                 where: { username },
                 columns: ['_id', 'title', 'content', 'last_edit_time']
             });
-            return result.map(item=> {return {...item,content:transforArray(item.content)}});
+            return result.map(item=>{return{...item,content:JSON.parse(item.content)}});
         } catch (error) {
             console.log(error);
             return [];
@@ -22,7 +22,7 @@ class ListService extends Service {
         const { app } = this;
         try {
             await app.mysql.query('SET NAMES utf8mb4');
-            const result = await app.mysql.insert('userlist', {...params,content:`[]`});
+            const result = await app.mysql.insert('userlist', {...params,content:JSON.stringify([])});
             return result;
         } catch (error) {
             console.log(error);
@@ -45,7 +45,7 @@ class ListService extends Service {
         const{app}=this;
         try{
             const result= await app.mysql.get('userlist',{_id:listId});
-            return {...result,content:transforArray(result.content)};
+            return {...result,content:JSON.parse(result.content)};
         }catch(error){
             console.log(error);
             return {content:[]};
@@ -56,8 +56,10 @@ class ListService extends Service {
        const{app}=this;
        try{
         const {content}=await this.findListByListId(listId);
+        const contentJSON=new Set(content);
+        contentJSON.add(blobId);
         const result=await app.mysql.update('userlist',{
-            content:`${transforArrayAddItem(content,blobId)}`,
+            content:JSON.stringify([...contentJSON]),
             last_edit_time : new Date().toLocaleDateString('fr-CA')
         },{
             where:{_id:listId}
@@ -73,8 +75,10 @@ class ListService extends Service {
         const {app}=this;
         try{
             const {content}=await this.findListByListId(listId);
+            const contentJSON=new Set(content);
+            contentJSON.delete(blobId);
             const result=await app.mysql.update('userlist',{
-                content:`${transforArrayRemoveItem(content,blobId)}`,
+                content:JSON.stringify([...contentJSON]),
                 last_edit_time : new Date().toLocaleDateString('fr-CA')
             },{
                 where:{_id:listId}
@@ -90,23 +94,3 @@ class ListService extends Service {
     //根据用户名取消follow某个用户
 }
 module.exports = ListService;
-
-function transforArrayAddItem(strList,item){
-    const ans=strList.concat(item);
-    return '['+ans.map(item=>JSON.stringify(item)).join(',')+']';
-};
-
-function transforArrayRemoveItem(strList,item){
-    const ans=strList.filter(it=>it!=item).map(item=>JSON.stringify(item)).join(',');
-    return '['+ans+']';
-};
-
-function transforArray(str){
-    let s=str.split('');
-    s.shift();s.pop();
-    if(s.length<1){
-        return s;
-    }
-    s=s.join('').split(',').map(item=>JSON.parse(item.trim()));
-    return s;
-}

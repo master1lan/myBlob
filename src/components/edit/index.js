@@ -8,7 +8,7 @@ import { HTMLToString } from '@utils/tools';
 
 
 
-const FixedEditPage = forwardRef(({ content = '', title = '', username }, ref) => {
+const FixedEditPage = forwardRef(({ content = '', title = '', username,autoSave=false }, ref) => {
     const [text, setText] = useState(content);
     const [titleText,setTitle]=useState(title);
     const [timer,setTimer]=useState(null);
@@ -21,7 +21,7 @@ const FixedEditPage = forwardRef(({ content = '', title = '', username }, ref) =
         clearTimeout(timer);
         //直接丢到sessionStorage里面
         sessionStorage.setItem('draft',data());
-        setTimer(setTimeout(blobUpdate, 5000,
+        autoSave&&setTimer(setTimeout(blobUpdate, 5000,
             {
                 username, title: titleText,
                 content: text, description: HTMLToString(document.getElementsByClassName('ProseMirror')[0]), status: 'draft'

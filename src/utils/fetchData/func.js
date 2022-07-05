@@ -16,16 +16,21 @@ export const Datathen = (res, router, dispatch) => {
         });
         dispatch(login({
             username: res.data.username,
-            uuid: res.data.uuid
+            uuid: res.data.uuid,
+            githubUrl: res.data.githubUrl,
+            join_day: res.data.join_day,
+            juejinUrl: res.data.juejinUrl,
+            sfUrl: res.data.sfUrl,
+            signature: res.data.signature
         }))
         router.push("/");
     }
 }
 
 //加密字符串
-export const passwordCrypto=(pass)=>{
-    const key=crypto.generatekey(8);
-    const password=crypto.encrypt(pass,key);
-    return {password,key};
+export const passwordCrypto = (pass) => {
+    const key = crypto.generatekey(8);
+    const password = crypto.encrypt(pass, key);
+    return { password, key };
 }
 

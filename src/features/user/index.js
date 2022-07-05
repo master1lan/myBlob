@@ -29,13 +29,15 @@ export const userSlice = createSlice({
         //登录
         login: (state, action) => {
             state.isLoggedIn = true;
-            state.userInfo.username = action.payload.username;
-            state.userInfo.uuid = action.payload.uuid;
+            state.userInfo={...state.userInfo,...action.payload};
         },
         //登出
         logout: (state) => {
             state.isLoggedIn = false;
-            state.user = null;
+            state.userInfo={username:undefined,uuid:undefined,githubUrl:undefined,sfUrl:undefined};
+            state.blobDrafts=[];
+            state.blobPublishs=[];
+            state.lists=[];
         },
         //用户信息
         setUserInfo: (state, action) => {

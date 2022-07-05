@@ -1,5 +1,6 @@
 import { jwtLogin } from "@utils/middleware";
 
+
 /**
 * 文本框根据输入内容自适应高度
 * @param                {HTMLElement}        输入框元素
@@ -91,3 +92,14 @@ export function HTMLToString(domList){
     }
     return domList.innerText.replaceAll('\n','').trim();
   }
+
+
+
+
+export function PopInfomation({message}){
+    return(
+        <div>
+            
+        </div>
+    )
+}

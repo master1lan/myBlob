@@ -87,13 +87,14 @@ class UserController extends Controller {
     }
     //这个函数将自动保持token的一致性
     const token = await ctx.service.redis.OnlyToken(userInfo.username, userInfo.uuid, tokenLiveTime);
+    
     ctx.body = {
       code: 200,
       msg: "登录成功",
       data: {
         token,
         ...userInfo,
-        password: null
+        password: undefined
       }
     }
   }
@@ -114,7 +115,7 @@ class UserController extends Controller {
       msg: '请求成功',
       data: {
         ...userInfo,
-        password: null,
+        password: undefined,
       }
     }
   }
@@ -146,11 +147,12 @@ class UserController extends Controller {
     const { ctx } = this;
     //因为在中间件之间就将token解析完毕，所以可以直接返回信息
     const token = await ctx.service.redis.OnlyToken(ctx.info.username, ctx.info.uuid, tokenLiveTime);
+    const userInfo = await ctx.service.user.getUserByName(ctx.info.username);
     ctx.body = {
       code: 200,
       msg: "jwt登录成功",
       data: {
-        ...ctx.info,
+        ...userInfo,
         token
       }
     };
