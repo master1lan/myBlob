@@ -7,9 +7,11 @@ module.exports = app => {
   const { router, controller, middleware } = app;
   const _jwt = middleware.jwtErr(app.config.jwt.secret); // 传入加密字符串
   const _crypto=middleware.crypto(); //加密解密字符串
+  //只对内网开发
+  router.get('/api/blob/id', controller.blob.findAllBlobId);//所有文章id,只提供给NEXT
+  router.get('/api/userList/all',controller.userList.findAllListId);//所有用户的收藏夹id，只提供给NEXT
   //文章操作接口
   router.get('/api/blob/search', controller.blob.searchBlob);//查找文章
-  router.get('/api/blob/id', controller.blob.findAllBlobId);//所有文章id
   router.get('/api/blob/', controller.blob.findAllBlob);//所有文章的简短描述
   //文件上传获取接口
   router.post('/api/img/uploadUserLOGO',controller.upload.uploadUserLOGO);  //测试接口！

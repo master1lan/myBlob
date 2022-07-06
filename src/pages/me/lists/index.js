@@ -4,7 +4,9 @@ import { autoTextarea, middlewareWithLogin } from '@utils/tools';
 import { selectUserLists, removeFavorList, addFavorList } from '@features/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef, useEffect } from 'react';
-export default function Index () {
+import Link from 'next/link';
+
+export default function Index() {
     return (
         <div>
             {/* 这里是上面 */}
@@ -20,7 +22,7 @@ export default function Index () {
 function Top() {
     useFetchLists();
     return (
-        <div className={styles.top}>
+        <div >
             <div className={styles.topWrapper}>
                 <div className={styles.h1Wrapper}>
                     <h1>Your lists</h1>
@@ -46,7 +48,7 @@ function ActionButton() {
     )
 }
 
-function AddList({ clickFunc }) {
+export function AddList({ clickFunc }) {
     const [listname, setlistname] = useState('');
     const [description, setdescription] = useState('');
     const textareaRef = useRef('');
@@ -100,12 +102,14 @@ export function ListsContent() {
     return (
         <div className={styles.listsContent}>
             {favorLists.map(item =>
-                <List key={item._id}
+                <List
+                    key={item._id}
                     title={item.title}
                     last_edit_time={item.last_edit_time}
                     many={item.content.length}
                     _id={item._id}
-                />)}
+                />
+            )}
         </div>
     )
 }
@@ -123,31 +127,33 @@ function List({ title = 'title', last_edit_time, many = 0, _id }) {
             dispatch(removeFavorList({ _id }));
         }
     }
-    useEffect(()=>{
-        if(showPop){
-            setTimeout(()=>setShowPop(false),2500);
+    useEffect(() => {
+        if (showPop) {
+            setTimeout(() => setShowPop(false), 2500);
         };
-    },[showPop]);
+    }, [showPop]);
     return (
-        <div className={styles.listWrapper}>
-            <h3>{title}</h3>
-            <div className={styles.listFlex}>
-                <p>{many}篇文章</p>
-                <p>{last_edit_time}最后修改</p>
-                <div className={styles.last_For_Delete}>
-                    {showPop &&<PopInfo clickFunc={ deleteFunc}/>}
-                    <button className={styles.last_delete_button}
-                        onClick={changeshowPop}
-                    >
-                        {/* 这个svg太丑了，后面需要更换 */}
-                        <svg width="25" height="25">
-                            <line y2="20" x2="20" y1="5" x1="5" stroke="#000" fill="none" strokeWidth="2" />
-                            <line stroke="#000" y2="20" x2="5" y1="5" x1="20" fill="none" strokeWidth="2" />
-                        </svg>
-                    </button>
+        <Link href={`/me/lists/${_id}`}>
+            <div className={styles.listWrapper}>
+                <h3>{title}</h3>
+                <div className={styles.listFlex}>
+                    <p>{many}篇文章</p>
+                    <p>{last_edit_time}最后修改</p>
+                    <div className={styles.last_For_Delete}>
+                        {showPop && <PopInfo clickFunc={deleteFunc} />}
+                        <button className={styles.last_delete_button}
+                            onClick={changeshowPop}
+                        >
+                            {/* 这个svg太丑了，后面需要更换 */}
+                            <svg width="25" height="25">
+                                <line y2="20" x2="20" y1="5" x1="5" stroke="#000" fill="none" strokeWidth="2" />
+                                <line stroke="#000" y2="20" x2="5" y1="5" x1="20" fill="none" strokeWidth="2" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
 
@@ -163,4 +169,4 @@ function PopInfo({ clickFunc }) {
 }
 
 //如果不进行ssg渲染则nextjs将会认为这是一个静态页面，只将渲染一次！
-export const getServerSideProps=middlewareWithLogin;
+export const getServerSideProps = middlewareWithLogin;

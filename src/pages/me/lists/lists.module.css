@@ -1,7 +1,30 @@
 
 
 .top{
+    margin-top:30px;
     /* background-color:skyblue; */
+    display:flex;
+    flex-flow: row nowrap;
+    align-items:center;
+    height:85px;
+    font-size:16px;
+    line-height:24px;
+}
+.top>div{
+    margin: 0 !important;
+}
+.top>div:nth-of-type(2)>p{
+    margin:5px 12px;
+}
+.top>div:last-of-type>p:first-of-type{
+    color:rgb(41,41,41);
+}
+
+.top>div:last-of-type>p:last-of-type{
+    color:rgb(117,117,117);
+}
+.topLALA{
+    padding-bottom: 25px;
 }
 
 .topWrapper{
@@ -30,6 +53,9 @@
     .h1Wrapper{
         font-size:12px;
     }
+    .topLALA{
+        border-bottom: 1px solid rgb(230,230,230);
+    }
 }
 
 .topRightWrapper{
@@ -52,7 +78,7 @@
 }
 
 .addList{
-    position: absolute;
+    position: fixed;
     transform: translate(-50%,0);
     z-index: 1;
     top:max(12%,60px);

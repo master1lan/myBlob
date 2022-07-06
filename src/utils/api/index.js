@@ -28,6 +28,7 @@ export default {
     "userDraftedBlob": `${userBlobPath}/getDraftBlob`,
     "userBlobUpdate": `${userBlobPath}/updateBlob`,
     "userBlobDelete": `${userBlobPath}/deleteBlob`,
+    "userListsAll":`${userListsPath}/all`,
     "userLists": `${userListsPath}`,
     "userdirectList": `${userListsPath}/getList`,
     "userListsCreate": `${userListsPath}/newList`,

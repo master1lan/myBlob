@@ -47,15 +47,17 @@ body {
     font-style: normal;
     text-rendering: optimizeLegibility;
 }
+
 ::-webkit-scrollbar {
     display: none;
-  }
+}
+
 .heading-actions {
     display: none !important;
 }
 
 
 :root {
-    overflow-x: hidden ;
+    overflow-x: hidden;
 }
 

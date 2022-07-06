@@ -3,6 +3,19 @@
 const Service = require('egg').Service;
 
 class ListService extends Service {
+    //返回所有收藏夹的id
+    async findAllLists(){
+        const {app}=this;
+        try{
+            const result=await app.mysql.select("userlist",{
+                columns:['_id']
+            });
+            return result;
+        }catch(error){
+            console.log(error);
+            return [];
+        }
+    }
     //根据用户名搜索收藏夹
     async findListsByUser(username) {
         const { app } = this;

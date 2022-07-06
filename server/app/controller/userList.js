@@ -7,6 +7,14 @@ const Controller = require('egg').Controller;
  */
 
 class UserListController extends Controller {
+  //所有用户的收藏夹id
+  async findAllListId(){
+    const {ctx}=this;
+    const result=await ctx.service.list.findAllLists();
+    ctx.body={
+      ids:result
+    };
+  }
   //寻找用户的所有收藏夹
   async findUserLists() {
     const { ctx } = this;
@@ -21,9 +29,9 @@ class UserListController extends Controller {
     const {ctx}=this;
     const {listId}=ctx.request.query;
     const {content}=await ctx.service.list.findListByListId(listId);
-    const promises=await Promise.all(content.map(_id=>ctx.service.blob.findBlobById({_id})))
+    const promises=await Promise.all(content.map(_id=>ctx.service.blob.findBlobById({_id})));
     ctx.body={
-      data:promises
+      data:promises.map(({_id,title,description,username,last_edit_time})=>({_id,title,description,username,last_edit_time}))
     };
   }
   //用户新建收藏夹
@@ -77,7 +85,15 @@ class UserListController extends Controller {
       blobId
     } = ctx.request.body;
     const result=await ctx.service.list.addListById(listId,blobId);
+    if(!result){
+      ctx.body={
+        code:500,
+        msg:"服务器错误"
+      };
+      return;
+    }
     ctx.body={
+      code:200,
       data:result
     };
   }
@@ -86,7 +102,15 @@ class UserListController extends Controller {
     const {ctx}=this;
     const{listId,blobId}=ctx.request.body;
     const result=await ctx.service.list.removeListById(listId,blobId);
+    if(!result){
+      ctx.body={
+        code:500,
+        msg:"服务器错误"
+      };
+      return;
+    }
     ctx.body={
+      code:200,
       data:result
     };
   }

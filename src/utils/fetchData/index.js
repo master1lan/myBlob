@@ -50,7 +50,6 @@ export  function useFetchJWTLogin() {
                 'Authorization':res.data.token,
             }
         }),res=await resNoJson.json();
-        // console.log(res.lists);
         dispatch(setFavorLists(res.lists));
 
     }, []);
@@ -238,6 +237,49 @@ export const uploadImg = async (file) => {
         body: data
     });
     const json = await res.json();
-    // console.log(json.res);
     return json.res[0];
+}
+
+//收藏某篇文章
+export const favorBlob=async(blobId,listId)=>{
+    if(!blobId||!listId){
+        message.error("blobid或者listid错误");
+        return;
+    }
+    const resNoJSON=await fetch(api.userListsFavor,{
+        method:"POST",
+        headers:{
+            "Authorization":localStorage.getItem('jwt'),
+            "Content-Type": "application/json"
+        },
+        body:JSON.stringify({blobId,listId}),
+    });
+    const res=await resNoJSON.json();
+    if(res.code!==200){
+        message.error("服务器错误！");
+    }else{
+        message.success("收藏成功");
+    }
+}
+
+//取消收藏某篇文章
+export const unfavorBlob=async(blobId,listId)=>{
+    if(!blobId||!listId){
+        message.error("blobid或者listid错误");
+        return;
+    };
+    const resNoJSON=await fetch(api.userListsUnfavor,{
+        method:"POST",
+        headers:{
+            "Authorization":localStorage.getItem('jwt'),
+            "Content-Type": "application/json"
+        },
+        body:JSON.stringify({blobId,listId})
+    });
+    const res=await resNoJSON.json();
+    if(res.code!==200){
+        message.error("服务器异常，请稍后重试");
+    }else{
+        message.success("取消收藏成功");
+    }
 }

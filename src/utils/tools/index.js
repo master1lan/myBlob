@@ -96,10 +96,11 @@ export function HTMLToString(domList){
 
 
 
-export function PopInfomation({message}){
-    return(
-        <div>
-            
-        </div>
-    )
+export const isBlobIncludes=(arr,targetList,target)=>{
+    if(!Array.isArray(arr)||!target){
+        return false;
+    }
+    const targetArr=arr.find(list=>list._id===targetList);
+    return targetArr.content.includes(target);
+    
 }
