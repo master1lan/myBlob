@@ -28,10 +28,11 @@ class UserListController extends Controller {
   async findListsById(){
     const {ctx}=this;
     const {listId}=ctx.request.query;
-    const {content}=await ctx.service.list.findListByListId(listId);
+    const {content,...resObj}=await ctx.service.list.findListByListId(listId);
     const promises=await Promise.all(content.map(_id=>ctx.service.blob.findBlobById({_id})));
     ctx.body={
-      data:promises.map(({_id,title,description,username,last_edit_time})=>({_id,title,description,username,last_edit_time}))
+      ...resObj,
+      data:promises.map(({_id,title,description,username,last_edit_time})=>({_id,title,description,username,last_edit_time})),
     };
   }
   //用户新建收藏夹

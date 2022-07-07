@@ -13,16 +13,19 @@
 .top>div{
     margin: 0 !important;
 }
-.top>div:nth-of-type(2)>p{
-    margin:5px 12px;
-}
-.top>div:last-of-type>p:first-of-type{
-    color:rgb(41,41,41);
+.top>div:nth-of-type(2){
+    padding:5px 12px;
 }
 
-.top>div:last-of-type>p:last-of-type{
+.topRight{
+    display:flex;
     color:rgb(117,117,117);
 }
+.topRight>P:first-of-type:after{
+    content:"·";
+    margin:0 5px;
+}
+
 .topLALA{
     padding-bottom: 25px;
 }
@@ -234,4 +237,21 @@
     100%{
         width:0%;
     }
+}
+
+
+.noList{
+    padding:16px 0 70px;
+    text-align:center;
+    box-sizing: border-box;
+}
+
+.noListContent{
+    padding:42px 40px;
+    border:1px dashed rgb(204,204,204);
+    color:rgb(117,117,117);
+}
+.noListContent svg{
+    position:relative;
+    top:8px;
 }

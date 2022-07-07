@@ -1,9 +1,14 @@
 import { Markdown } from '@components/edit';
 import styles from './index.module.css';
-import { UserLOGO, AddLists } from "@components/nav";
+import { UserLOGO,  AddLists,SFLOGO,JUEJINLOGO,GITHUBLOGO } from "@components/nav";
+
 import Head from 'next/head';
 import api from "@utils/api";
-export default function Post({ username, title, content,last_edit_time}) {
+
+import { FavorBlob, idContext } from '@components/article';
+
+
+export default function Post({ username, title, content, last_edit_time, _id }) {
     return (
         <>
             <Head>
@@ -26,10 +31,12 @@ export default function Post({ username, title, content,last_edit_time}) {
                 </div>
                 {/* 右边的 */}
                 <div className={styles.rightContainer}>
-                    <AddLists />
-                    <AddLists />
-                    <AddLists />
-                    <AddLists />
+                    <JUEJINLOGO />
+                    <SFLOGO />
+                    <GITHUBLOGO />
+                    <idContext.Provider value={_id}>
+                        <FavorBlob />
+                    </idContext.Provider>
                 </div>
             </div>
             {/* 第二个框就是标题，然后是内容 */}
@@ -52,13 +59,14 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const { username, title, content,last_edit_time } = await getPostData(params.id);
+    const { username, title, content, last_edit_time } = await getPostData(params.id);
     return {
         props: {
             username,
             title,
             content,
-            last_edit_time
+            last_edit_time,
+            _id: params.id
         }
     }
 }

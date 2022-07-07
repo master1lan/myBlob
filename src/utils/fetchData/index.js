@@ -13,6 +13,7 @@ export  function useFetchJWTLogin() {
     useEffect(async() => {
         const token = localStorage.getItem('jwt');
         if (!token) {
+            Cookie.remove('jwt');
             return;
         }
         let resNoJson = await fetch(api.userLoginWithjwt, {

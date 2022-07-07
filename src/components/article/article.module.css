@@ -1,5 +1,6 @@
 .article{
     /* background-color:skyblue; */
+    margin-top:15px;
     padding-bottom: 10px;
     border-bottom: 1px solid rgb(230,230,230);
 }
@@ -74,6 +75,13 @@
     border:1px solid rgb(230,230,230);
     word-wrap: nowrap;
 }
+
+@media(max-width:720px){
+    .addFavorWrapper{
+        left:0px;
+    }
+}
+
 .addFavorWrapper>p:first-child{
     padding:10px 0 0 30px;
 }

@@ -5,6 +5,7 @@ import { selectUserLists, removeFavorList, addFavorList } from '@features/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Modal from '@utils/modal';
 
 export default function Index() {
     return (
@@ -43,7 +44,10 @@ function ActionButton() {
             <div className={styles.actionButton} onClick={clickFunc}>
                 New list
             </div>
-            {activeTab && <AddList clickFunc={clickFunc} />}
+            <Modal 
+            visible={activeTab}
+            closeModal={clickFunc}
+            > <AddList clickFunc={clickFunc} /></Modal>
         </>
     )
 }

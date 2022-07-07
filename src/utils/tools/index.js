@@ -67,18 +67,18 @@ export function autoTextarea(elem, extra, maxHeight) {
  * 页面路由拦截，用在登录上
  * @param {上下文} context 
  */
-export const middlewareWithLogin=async(context)=>{
-    const isLogin=await jwtLogin(context.req);
-    if(!isLogin){
-        return{
-            redirect:{
-                destination:"/login"
+export const middlewareWithLogin = async (context) => {
+    const isLogin = await jwtLogin(context.req);
+    if (!isLogin) {
+        return {
+            redirect: {
+                destination: "/login"
             }
         }
     }
-    return{
-        props:{}
-    } 
+    return {
+        props: {}
+    }
 }
 
 /**
@@ -86,21 +86,47 @@ export const middlewareWithLogin=async(context)=>{
  * @param {dom节点列表} domList 
  * @returns 
  */
-export function HTMLToString(domList){
-    if(!domList){
-      return '';
+export function HTMLToString(domList) {
+    if (!domList) {
+        return '';
     }
-    return domList.innerText.replaceAll('\n','').trim();
-  }
-
-
-
-
-export const isBlobIncludes=(arr,targetList,target)=>{
-    if(!Array.isArray(arr)||!target){
-        return false;
-    }
-    const targetArr=arr.find(list=>list._id===targetList);
-    return targetArr.content.includes(target);
-    
+    return domList.innerText.replaceAll('\n', '').trim();
 }
+
+
+
+
+export const isBlobIncludes = (() => {
+    const map = new Map();
+    let oldArr;
+    return (arr, targetList, target) => {
+        if (!Array.isArray(arr) || !target) {
+            return false;
+        }
+        if(!oldArr){
+            oldArr=Array.from(arr);
+        }else if(oldArr.length!==arr.length){
+            map=new Map();
+        }else if(JSON.stringify(oldArr)!==JSON.stringify(arr)){
+            map=new Map();
+        }
+        const temp = `${targetList}_${target}`;
+        if (map.has(temp)) {
+            return map.get(temp);
+        }
+        const targetArr = arr.find(list => list._id === targetList);
+        if (!targetArr) {
+            map.set(temp,false);
+            for (let length = arr.length, i = 0; i < length; i++) {
+                if(arr[i].content.includes(target)){
+                    map.set(temp,true);
+                    break;
+                }
+            }
+        } else {
+            const res = targetArr.content.includes(target);
+            map.set(temp, res);
+        }
+        return map.get(temp);
+    }
+})();
