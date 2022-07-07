@@ -4,7 +4,6 @@ import styles from "./article.module.css";
 import { selectUserLists } from "@features/user";
 import { useSelector, useDispatch } from "react-redux";
 import { useRef, useState, useContext, createContext,useEffect } from "react";
-import { useOnClickOutside } from "@utils/hooks";
 import { favorBlob,unfavorBlob } from "@utils/fetchData";
 import { isBlobIncludes } from "@utils/tools";
 import { AddList } from "src/pages/me/lists";
@@ -62,63 +61,32 @@ export function FavorBlob() {
     favorList=useSelector(selectUserLists),
     isFavored=isBlobIncludes(favorList,undefined,blob_id);
     const [isvisible, setVisible] = useState(false);
-    const ref = useRef(null);
-    useOnClickOutside(ref, () => setVisible(false));
-
+    const visibleHandler=()=>setVisible(!isvisible);
     return (
         <div style={{
             cursor: "pointer",
             position: "relative",
             fontSize: "16px",
-        }} onClick={(event) => {
-            event.nativeEvent?.stopImmediatePropagation();
-            setVisible(true);
-        }}>
+        }} onClick={visibleHandler}>
             <Favor isfavored={isFavored} />
-            {isvisible && <AddFavor  />}
+            <Modal
+            visible={isvisible}
+            closeModal={visibleHandler}
+            >
+            <AddFavor  />
+            </Modal>
         </div>
     )
 }
 
 
-const AddFavorStyle={
-    "up":{
-        "top":"-75px"
-    },
-    "place":{
-        "top":"0px"
-    },
-    "down":{
-        "top":"68px"
-    }
-}
+
 
 //收藏夹
 function AddFavor() {
-    const domRef=useRef(null);
-    const [placeStyle,setStyle]=useState("place");
     const lists = useSelector(selectUserLists);
-    useEffect(()=>{
-        const clientHeight=window.innerHeight;
-        function checkLanch(){
-            const domtop=domRef.current.getBoundingClientRect().top,
-            domHeight=domRef.current.getBoundingClientRect().bottom-domtop;
-            if(domtop<50){
-                //小于50，说明需要放入下面
-                placeStyle!=="down"&&setStyle("down");
-            }else if(domtop+domHeight+10>clientHeight){
-                //需要放在上面
-                placeStyle!=="up"&&setStyle("up");
-            }else{
-                //就平放就行
-                placeStyle!=="place"&&setStyle("place");
-            }
-        };
-        window.addEventListener('scroll',checkLanch);
-        return ()=>window.removeEventListener('scroll',checkLanch);
-    },[]);
     return (
-        <div className={styles.addFavorWrapper} ref={domRef} style={AddFavorStyle[placeStyle]} >
+        <div className={styles.addFavorWrapper}  >
             <p>添加至收藏夹</p>
             <div className={styles.addFavor}>
                 {lists.map(item => <div

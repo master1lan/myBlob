@@ -44,10 +44,12 @@ function ActionButton() {
             <div className={styles.actionButton} onClick={clickFunc}>
                 New list
             </div>
-            <Modal 
-            visible={activeTab}
-            closeModal={clickFunc}
-            > <AddList clickFunc={clickFunc} /></Modal>
+            <Modal
+                visible={activeTab}
+                closeModal={clickFunc}
+            >
+                <AddList clickFunc={clickFunc} />
+            </Modal>
         </>
     )
 }

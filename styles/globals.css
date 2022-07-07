@@ -42,7 +42,7 @@ a {
 }
 
 body {
-    font-family: Georgia, serif;
+    font-family:  Arial,Verdana,Sans-serif;
     letter-spacing: 0;
     font-style: normal;
     text-rendering: optimizeLegibility;
@@ -60,4 +60,3 @@ body {
 :root {
     overflow-x: hidden;
 }
-
