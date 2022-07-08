@@ -3,11 +3,12 @@ import Link from "next/link";
 import styles from "./article.module.css";
 import { selectUserLists } from "@features/user";
 import { useSelector, useDispatch } from "react-redux";
-import { useRef, useState, useContext, createContext,useEffect } from "react";
+import { useRef, useState, useContext, createContext } from "react";
 import { favorBlob,unfavorBlob } from "@utils/fetchData";
 import { isBlobIncludes } from "@utils/tools";
 import { AddList } from "src/pages/me/lists";
 import Modal from "@utils/modal";
+import Tooltip from "@utils/tooltip";
 
 //blob_id的context
 export const idContext = createContext();
@@ -61,7 +62,9 @@ export function FavorBlob() {
     favorList=useSelector(selectUserLists),
     isFavored=isBlobIncludes(favorList,undefined,blob_id);
     const [isvisible, setVisible] = useState(false);
-    const visibleHandler=()=>setVisible(!isvisible);
+    const visibleHandler=()=>{
+        setVisible(!isvisible);
+    };
     return (
         <div style={{
             cursor: "pointer",
@@ -69,12 +72,12 @@ export function FavorBlob() {
             fontSize: "16px",
         }} onClick={visibleHandler}>
             <Favor isfavored={isFavored} />
-            <Modal
+            <Tooltip
             visible={isvisible}
             closeModal={visibleHandler}
             >
             <AddFavor  />
-            </Modal>
+            </Tooltip>
         </div>
     )
 }
@@ -100,17 +103,24 @@ function AddFavor() {
     )
 }
 
-
+//创建新收藏夹
 function CreateList(){
     const [isvisible,setVisible]=useState(false);
-    const clickFunc = () =>setVisible(!isvisible);
+    const [isNoScroll,setScroll]=useState(false);
+    const clickFunc = () =>{
+        setScroll(!isNoScroll);
+        setVisible(!isvisible);
+    };
     const modalConfig={
         visible:isvisible,
+        isNoScroll:isNoScroll,
         closeModal:clickFunc
     }
     return(
         <>
-        <div onClick={clickFunc} >Create new list</div>
+        <div 
+        className={styles.createList}
+        onClick={clickFunc} >Create new list</div>
         <Modal {...modalConfig}><AddList clickFunc={clickFunc} /></Modal>
         </>
     )

@@ -38,7 +38,8 @@ function Top() {
 
 function ActionButton() {
     const [activeTab, setActiveTab] = useState(false);
-    const clickFunc = () => setActiveTab(!activeTab);
+    const [isNoScroll,setScroll]=useState(false);
+    const clickFunc = () => {setScroll(!isNoScroll);setActiveTab(!activeTab)};
     return (
         <>
             <div className={styles.actionButton} onClick={clickFunc}>
@@ -47,6 +48,7 @@ function ActionButton() {
             <Modal
                 visible={activeTab}
                 closeModal={clickFunc}
+                isNoScroll={isNoScroll}
             >
                 <AddList clickFunc={clickFunc} />
             </Modal>

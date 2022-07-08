@@ -111,3 +111,7 @@
     overflow: hidden;
     word-break: break-all;
 }
+
+.createList{
+    cursor: pointer;
+}

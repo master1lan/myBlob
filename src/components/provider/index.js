@@ -5,12 +5,12 @@ const viewportContext = createContext({});
 
 const ViewportProvider = ({ children }) => {
     const [typePC,setType]=useState(true);
-    useEffect(()=>{
-        setType(window.innerWidth>orderWidth);
-    },[]);
     const handleWindowResize = () => {
         setType(window.innerWidth>orderWidth);
     };
+    useEffect(()=>{
+        setType(window.innerWidth>orderWidth);
+    },[]);
     useEffect(() => {
         window.addEventListener("resize", handleWindowResize);
         return () => window.removeEventListener("resize", handleWindowResize);

@@ -46,7 +46,12 @@ body {
     letter-spacing: 0;
     font-style: normal;
     text-rendering: optimizeLegibility;
+    position: relative;
+    
 }
+
+
+
 
 ::-webkit-scrollbar {
     display: none;

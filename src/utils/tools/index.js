@@ -107,8 +107,10 @@ export const isBlobIncludes = (() => {
             oldArr=Array.from(arr);
         }else if(oldArr.length!==arr.length){
             map=new Map();
+            oldArr=Array.from(arr);
         }else if(JSON.stringify(oldArr)!==JSON.stringify(arr)){
             map=new Map();
+            oldArr=Array.from(arr);
         }
         const temp = `${targetList}_${target}`;
         if (map.has(temp)) {
