@@ -35,6 +35,7 @@ export const __UNSAFE__Modal__DO_NOT_USE_IN_PRODUCT = (props) => {
     )
 }
 
+//阻止默认行为
 function preventDefault(e) {
     e.preventDefault();
 }

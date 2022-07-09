@@ -16,7 +16,7 @@ const ViewportProvider = ({ children }) => {
         return () => window.removeEventListener("resize", handleWindowResize);
     }, []);
     return (
-        <viewportContext.Provider value={{ typePC }}>
+        <viewportContext.Provider value={{ typePC}}>
             {children}
         </viewportContext.Provider>
     )

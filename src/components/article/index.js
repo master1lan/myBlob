@@ -4,11 +4,11 @@ import styles from "./article.module.css";
 import { selectUserLists } from "@features/user";
 import { useSelector, useDispatch } from "react-redux";
 import { useRef, useState, useContext, createContext } from "react";
-import { favorBlob,unfavorBlob } from "@utils/fetchData";
+import { favorBlob, unfavorBlob } from "@utils/fetchData";
 import { isBlobIncludes } from "@utils/tools";
 import { AddList } from "src/pages/me/lists";
 import Modal from "@utils/modal";
-import Tooltip from "@utils/tooltip";
+import Popover from "@utils/popover";
 
 //blob_id的context
 export const idContext = createContext();
@@ -29,10 +29,10 @@ export default function Index({ title, username, content, _id, time }) {
                     </div>
                 </div>
                 <Link href={`/blob/${_id}`} >
-                <a>
-                    <div><h2 className={styles.h2}>{title}</h2></div>
-                    <div><p className={styles.content}>{content}</p></div>
-                </a>
+                    <a>
+                        <div><h2 className={styles.h2}>{title}</h2></div>
+                        <div><p className={styles.content}>{content}</p></div>
+                    </a>
                 </Link>
                 <div className={styles.underlineWrapper}>
                     <div style={{
@@ -47,7 +47,7 @@ export default function Index({ title, username, content, _id, time }) {
                     </div>
                     <div>
                         {/* 这里只有最后的组件才需要使用blob_id */}
-                        <idContext.Provider value={ _id }>
+                        <idContext.Provider value={_id}>
                             <FavorBlob />
                         </idContext.Provider>
                     </div>
@@ -58,27 +58,14 @@ export default function Index({ title, username, content, _id, time }) {
 }
 //收藏组件
 export function FavorBlob() {
-    const blob_id=useContext(idContext),
-    favorList=useSelector(selectUserLists),
-    isFavored=isBlobIncludes(favorList,undefined,blob_id);
-    const [isvisible, setVisible] = useState(false);
-    const visibleHandler=()=>{
-        setVisible(!isvisible);
-    };
+    const blob_id = useContext(idContext),
+        favorList = useSelector(selectUserLists),
+        isFavored = isBlobIncludes(favorList, undefined, blob_id);
     return (
-        <div style={{
-            cursor: "pointer",
-            position: "relative",
-            fontSize: "16px",
-        }} onClick={visibleHandler}>
+        <Popover
+            content={<AddFavor />}>
             <Favor isfavored={isFavored} />
-            <Tooltip
-            visible={isvisible}
-            closeModal={visibleHandler}
-            >
-            <AddFavor  />
-            </Tooltip>
-        </div>
+        </Popover>
     )
 }
 
@@ -104,51 +91,51 @@ function AddFavor() {
 }
 
 //创建新收藏夹
-function CreateList(){
-    const [isvisible,setVisible]=useState(false);
-    const [isNoScroll,setScroll]=useState(false);
-    const clickFunc = () =>{
+function CreateList() {
+    const [isvisible, setVisible] = useState(false);
+    const [isNoScroll, setScroll] = useState(false);
+    const clickFunc = () => {
         setScroll(!isNoScroll);
         setVisible(!isvisible);
     };
-    const modalConfig={
-        visible:isvisible,
-        isNoScroll:isNoScroll,
-        closeModal:clickFunc
+    const modalConfig = {
+        visible: isvisible,
+        isNoScroll: isNoScroll,
+        closeModal: clickFunc
     }
-    return(
+    return (
         <>
-        <div 
-        className={styles.createList}
-        onClick={clickFunc} >Create new list</div>
-        <Modal {...modalConfig}><AddList clickFunc={clickFunc} /></Modal>
+            <div
+                className={styles.createList}
+                onClick={clickFunc} >Create new list</div>
+            <Modal {...modalConfig}><AddList clickFunc={clickFunc} /></Modal>
         </>
     )
 }
 
 
 //注意这里还没做点击后更新状态
-const FavorFunc=(isFavored,list_id,blob_id,setFavor)=>async()=>{
-    if(isFavored){
-        await unfavorBlob(blob_id,list_id);
-    }else{  
-        await favorBlob(blob_id,list_id);
+const FavorFunc = (isFavored, list_id, blob_id, setFavor) => async () => {
+    if (isFavored) {
+        await unfavorBlob(blob_id, list_id);
+    } else {
+        await favorBlob(blob_id, list_id);
     }
     setFavor(!isFavored);
 }
 
 //单个收藏夹
 function ClickFavor({ title, list_id }) {
-    const blob_id=useContext(idContext),
-    favorList=useSelector(selectUserLists),
-    isFavored=isBlobIncludes(favorList,list_id,blob_id);
+    const blob_id = useContext(idContext),
+        favorList = useSelector(selectUserLists),
+        isFavored = isBlobIncludes(favorList, list_id, blob_id);
     const [clicked, setActive] = useState(isFavored);
 
     return (
         <>
             <input type="checkbox" style={{
                 width: "20px"
-            }} checked={clicked} onChange={FavorFunc(clicked,list_id,blob_id,setActive)} />
+            }} checked={clicked} onChange={FavorFunc(clicked, list_id, blob_id, setActive)} />
             <p className={styles.ClickFavorP}>{title}</p>
         </>
     )
