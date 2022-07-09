@@ -43,10 +43,32 @@ export const usePlacement = (targetELE, contentELE, perfetway = 'LR') => {
      * TB表示只判断上面或者下面
      */
     const [windowWidth, setWidth] = useState(0);
+    const [scrollDistance,setScrollDistance]=useState(0);
     const [distance, setDistance] = useState({});
+    useEffect(()=>{
+        let ticking=false;
+        const handleScroll=()=>{
+            if(!ticking){
+                window.requestAnimationFrame(()=>{
+                    setScrollDistance(window.scrollY);
+                    ticking=false;
+                });
+            };
+            ticking=true;
+        };
+        window.addEventListener('scroll',handleScroll);
+        return ()=>window.removeEventListener('scroll',handleScroll);
+    },[]);
     useEffect(() => {
+        let ticking=false;
         const handleResize = () => {
-            setWidth(window.innerWidth);
+            if(!ticking){
+                window.requestAnimationFrame(()=>{
+                    setWidth(window.innerWidth);
+                    ticking=false;
+                });
+            };
+            ticking=true;
         };
         setWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
@@ -94,7 +116,7 @@ export const usePlacement = (targetELE, contentELE, perfetway = 'LR') => {
                 });
             }
         }
-    }, [windowWidth]);
+    }, [windowWidth,scrollDistance]);
     return distance;
 
 }

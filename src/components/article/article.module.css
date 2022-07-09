@@ -66,11 +66,7 @@
 }
 .addFavorWrapper{
     position: absolute;
-    /* z-index: 1; */
     width:300px;
-    /* left:50%; */
-    /* top:50%; */
-    /* transform: translate(-50%,-80%); */
     background-color: white;
     box-shadow: rgb(230,230,230) 0px 1px 4px;
     border:1px solid rgb(250,250,250);
