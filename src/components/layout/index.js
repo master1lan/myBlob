@@ -14,6 +14,14 @@ export default function Layout({ children }) {
     const router = useRouter();
     useFetchJWTLogin();
     if (router.pathname === '/new-story') {
+        return(
+            <h1 style={{
+                position:"fixed",
+                left:"50%",
+                top:"50%",
+                transform:"translate(-50%,-60%)"
+            }}>此功能已被暂停</h1>
+        )
         return (
             <NweStoryMemo >{children}</NweStoryMemo>
         );
