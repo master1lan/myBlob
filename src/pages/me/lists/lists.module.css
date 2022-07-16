@@ -88,9 +88,9 @@
     left:50%;
     background-color: white;
     box-shadow: rgba(0,0,0,0.15) 0px 2px 10px;
-    width:max(50%,min(400px,80%));
+    width:min(400px,70%);
     border-radius: 10px;
-    padding:56px 0;
+    padding:56px 40px;
     display:flex;
     flex-flow:column nowrap;
     align-items:center;
@@ -173,12 +173,9 @@
 
 .last_For_Delete{
     margin-left:auto;
-    position:relative;
 }
 .sure_Popinfo{
-    position:absolute;
-    right:35px;
-    top:-12.5px;
+   
     width:100px;
     background-color:skyblue;
     border:none;
@@ -199,17 +196,9 @@
     width:40px;
     height:25px;
     color:white;
+    cursor: pointer;
 }
-.sure_Popinfo::after{
-    content:"";
-    position:absolute;
-    height:0px;
-    width:0px;
-    top:12.5px;
-    right:-24.1px;
-    border:12.5px solid ;
-    border-color: transparent transparent transparent skyblue;
-}
+
 
 .last_delete_button{
     background-color:inherit;
@@ -227,17 +216,9 @@
     height:2px;
     margin:2px 0;
     border-radius: 2px;
-    animation:fadeout_ing 2.5s;
 }
 
-@keyframes fadeout_ing{
-    0%{
-        width:80%;
-    }
-    100%{
-        width:0%;
-    }
-}
+
 
 
 .noList{

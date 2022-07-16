@@ -1,12 +1,13 @@
 import { __UNSAFE__Modal__DO_NOT_USE_IN_PRODUCT } from "@utils/modal";
-import { useState, useRef, cloneElement,forwardRef } from "react";
+import { useState, useRef, cloneElement, forwardRef } from "react";
 import { usePlacement } from "@utils/hooks";
 import styles from "./popover.module.css";
 
 export default function Popover({ content, children, ...resProps }) {
     const [visible, setVisible] = useState(false);
     const PopRef = useRef(null);
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e?.stopPropagation();
         setVisible(!visible);
     }
     return (
@@ -35,12 +36,12 @@ export default function Popover({ content, children, ...resProps }) {
 }
 
 
-function __POPOVER__({ children, PopRef,...resProps }) {
-    const contentRef=useRef(null);
-    const distance = usePlacement(PopRef,contentRef);
+function __POPOVER__({ children, PopRef, ...resProps }) {
+    const contentRef = useRef(null);
+    const distance = usePlacement(PopRef, contentRef);
     return (
         <div
-        ref={contentRef}
+            ref={contentRef}
             style={distance}
             {...resProps}
         >

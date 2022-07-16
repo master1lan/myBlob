@@ -93,9 +93,9 @@ export function HTMLToString(domList) {
     return domList.innerText.replaceAll('\n', '').trim();
 }
 
-
-
-
+/**
+ * 闭包实现查询文章是否被收藏
+ */
 export const isBlobIncludes = (() => {
     const map = new Map();
     let oldArr;
@@ -103,14 +103,14 @@ export const isBlobIncludes = (() => {
         if (!Array.isArray(arr) || !target) {
             return false;
         }
-        if(!oldArr){
-            oldArr=Array.from(arr);
-        }else if(oldArr.length!==arr.length){
-            map=new Map();
-            oldArr=Array.from(arr);
-        }else if(JSON.stringify(oldArr)!==JSON.stringify(arr)){
-            map=new Map();
-            oldArr=Array.from(arr);
+        if (!oldArr) {
+            oldArr = Array.from(arr);
+        } else if (oldArr.length !== arr.length) {
+            map = new Map();
+            oldArr = Array.from(arr);
+        } else if (JSON.stringify(oldArr) !== JSON.stringify(arr)) {
+            map = new Map();
+            oldArr = Array.from(arr);
         }
         const temp = `${targetList}_${target}`;
         if (map.has(temp)) {
@@ -118,10 +118,10 @@ export const isBlobIncludes = (() => {
         }
         const targetArr = arr.find(list => list._id === targetList);
         if (!targetArr) {
-            map.set(temp,false);
+            map.set(temp, false);
             for (let length = arr.length, i = 0; i < length; i++) {
-                if(arr[i].content.includes(target)){
-                    map.set(temp,true);
+                if (arr[i].content.includes(target)) {
+                    map.set(temp, true);
                     break;
                 }
             }
@@ -132,3 +132,28 @@ export const isBlobIncludes = (() => {
         return map.get(temp);
     }
 })();
+
+/**
+ * 
+ */
+
+export function isBrowser() {
+    return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+}
+
+/**
+ * 
+ * @param {Element} ele 
+ */
+export function geteleToBodyOffset(ele) {
+    const obj = {
+        offsetTop: ele.offsetTop, offsetLeft: ele.offsetLeft,
+        offsetWidth: ele.offsetWidth, offsetHeight: ele.offsetHeight
+    };
+    while (ele.offsetParent) {
+        ele = ele.offsetParent;
+        obj.offsetTop += ele.offsetTop;
+        obj.offsetLeft += ele.offsetLeft;
+    }
+    return obj;
+}

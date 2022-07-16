@@ -17,6 +17,10 @@ export const userSlice = createSlice({
             juejinUrl: undefined,
             //思否地址
             sfUrl: undefined,
+            //个性签名
+            signature:null,
+            //加入日子
+            join_day:undefined,
         },
         //文章草稿
         blobDrafts: [],

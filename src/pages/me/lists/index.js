@@ -2,6 +2,7 @@ import styles from './lists.module.css';
 import { useFetchLists, createList, removeList } from '@utils/fetchData';
 import { autoTextarea, middlewareWithLogin } from '@utils/tools';
 import { selectUserLists, removeFavorList, addFavorList } from '@features/user';
+import Popover from '@utils/popover';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
@@ -38,8 +39,8 @@ function Top() {
 
 function ActionButton() {
     const [activeTab, setActiveTab] = useState(false);
-    const [isNoScroll,setScroll]=useState(false);
-    const clickFunc = () => {setScroll(!isNoScroll);setActiveTab(!activeTab)};
+    const [isNoScroll, setScroll] = useState(false);
+    const clickFunc = () => { setScroll(!isNoScroll); setActiveTab(!activeTab) };
     return (
         <>
             <div className={styles.actionButton} onClick={clickFunc}>
@@ -126,7 +127,8 @@ export function ListsContent() {
 function List({ title = 'title', last_edit_time, many = 0, _id }) {
     const [showPop, setShowPop] = useState(false);
     const dispatch = useDispatch();
-    const changeshowPop = () => {
+    const changeshowPop = (e) => {
+        e.stopPropagation();
         setShowPop(!showPop);
     }
     const deleteFunc = async () => {
@@ -148,16 +150,14 @@ function List({ title = 'title', last_edit_time, many = 0, _id }) {
                     <p>{many}篇文章</p>
                     <p>{last_edit_time}最后修改</p>
                     <div className={styles.last_For_Delete}>
-                        {showPop && <PopInfo clickFunc={deleteFunc} />}
-                        <button className={styles.last_delete_button}
-                            onClick={changeshowPop}
+                        <Popover
+                            content={<PopInfo clickFunc={deleteFunc} />}
                         >
-                            {/* 这个svg太丑了，后面需要更换 */}
                             <svg width="25" height="25">
                                 <line y2="20" x2="20" y1="5" x1="5" stroke="#000" fill="none" strokeWidth="2" />
                                 <line stroke="#000" y2="20" x2="5" y1="5" x1="20" fill="none" strokeWidth="2" />
                             </svg>
-                        </button>
+                        </Popover>
                     </div>
                 </div>
             </div>
@@ -168,8 +168,10 @@ function List({ title = 'title', last_edit_time, many = 0, _id }) {
 //popinfo组件
 function PopInfo({ clickFunc }) {
     return (
-        <div className={styles.sure_Popinfo}>
-            <div className={styles.popInfo_ing}></div>
+        <div
+            className={styles.sure_Popinfo}
+        >
+            
             <p>确认删除？</p>
             <button onClick={clickFunc}>确认</button>
         </div>

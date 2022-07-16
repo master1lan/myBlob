@@ -98,6 +98,15 @@ class UserController extends Controller {
       }
     }
   }
+  //获取所有用户名字
+  async getAllUserName(){
+    const {ctx}=this;
+    const res=await ctx.service.user.getAllUserName();
+    ctx.body={
+      data:res,
+    };
+  }
+
   //获取用户信息
   async getUserInfo() {
     const { ctx } = this;

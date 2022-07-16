@@ -2,6 +2,19 @@
 
 const Service = require('egg').Service;
 class UserService extends Service{
+    //返回所有用户名字
+    async getAllUserName(){
+        const {app}=this;
+        try{
+            const result=await app.mysql.select('user',{
+                columns:['username']
+            });
+            return result;
+        }catch(err){
+            return [];
+        }
+    }
+
     //通过用户名获取用户信息
     async getUserByName(username){
         const {app}=this;

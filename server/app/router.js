@@ -10,6 +10,7 @@ module.exports = app => {
   //只对内网开发
   router.get('/api/blob/id', controller.blob.findAllBlobId);//所有文章id,只提供给NEXT
   router.get('/api/userList/all',controller.userList.findAllListId);//所有用户的收藏夹id，只提供给NEXT
+  router.get('api/user/all',controller.user.getAllUserName);//所有用户的名字
   //文章操作接口
   router.get('/api/blob/search', controller.blob.searchBlob);//查找文章
   router.get('/api/blob/', controller.blob.findAllBlob);//所有文章的简短描述

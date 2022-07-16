@@ -1,10 +1,16 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState, useLayoutEffect } from "react"
+import { isBrowser, geteleToBodyOffset } from "@utils/tools";
 /**
  * hook封装
  */
+export const useSSREffect = isBrowser() ? useLayoutEffect : useEffect;
 
-
-
+/**
+ * 
+ * @param {ref} ref 
+ * @param {Function} callback
+ * 点击外部收起modal，此方法已废弃 
+ */
 export const useOnClickOutside = (ref, callback) => {
     const handler = (event) => {
         if (!ref.current?.contains(event.target)) {
@@ -27,7 +33,7 @@ export const useClientRect = (ele) => {
         };
     }, []);
     //只有当react组件didMount时，才能取得元素的clientRect
-    useEffect(() => {
+    useSSREffect(() => {
         if (ele.current) {
             updateClientRect();
         }
@@ -42,81 +48,84 @@ export const usePlacement = (targetELE, contentELE, perfetway = 'LR') => {
      * LR表示只判断左边或者右边
      * TB表示只判断上面或者下面
      */
-    const [windowWidth, setWidth] = useState(0);
-    const [scrollDistance,setScrollDistance]=useState(0);
+    const [windowWidth, setWidth] = useState();
+    const [scrollDistance, setScrollDistance] = useState(0);
     const [distance, setDistance] = useState({});
-    useEffect(()=>{
-        let ticking=false;
-        const handleScroll=()=>{
-            if(!ticking){
-                window.requestAnimationFrame(()=>{
-                    setScrollDistance(window.scrollY);
-                    ticking=false;
-                });
-            };
-            ticking=true;
-        };
-        window.addEventListener('scroll',handleScroll);
-        return ()=>window.removeEventListener('scroll',handleScroll);
-    },[]);
-    useEffect(() => {
-        let ticking=false;
-        const handleResize = () => {
-            if(!ticking){
-                window.requestAnimationFrame(()=>{
-                    setWidth(window.innerWidth);
-                    ticking=false;
-                });
-            };
-            ticking=true;
-        };
+    useSSREffect(() => {
         setWidth(window.innerWidth);
+    }, []);
+    perfetway !== 'LR' && useSSREffect(() => {
+        let ticking = false;
+        const handleScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    setScrollDistance(window.scrollY);
+                    ticking = false;
+                });
+            };
+            ticking = true;
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+    useSSREffect(() => {
+        let ticking = false;
+        const handleResize = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    setWidth(window.innerWidth);
+                    ticking = false;
+                });
+            };
+            ticking = true;
+        };
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-    useEffect(() => {
+    useSSREffect(() => {
         const { innerWidth } = window,
             targetRECT = targetELE.current,
-            contentRECT = contentELE.current;
+            contentRECT = contentELE.current,
+            targetOffset = geteleToBodyOffset(targetRECT),
+            contentOffset = geteleToBodyOffset(contentRECT);
         if (perfetway === 'LR') {
             //左右，判断放在左边还是右边更合适
-            const L = targetRECT.offsetLeft - contentRECT.offsetWidth,
-                R = innerWidth - (targetRECT.offsetLeft + targetRECT.offsetWidth + contentRECT.offsetWidth);
+            const L = targetOffset.offsetLeft - contentOffset.offsetWidth,
+                R = innerWidth - (targetOffset.offsetLeft + targetOffset.offsetWidth + contentOffset.offsetWidth);
             if (L >= R) {
                 //放在左边
                 setDistance({
-                    transform: `translate(${targetRECT.offsetLeft - contentRECT.offsetWidth
-                        }px,${targetRECT.offsetTop - Math.floor(contentRECT.offsetHeight / 3)
+                    transform: `translate(${targetOffset.offsetLeft - contentOffset.offsetWidth
+                        }px,${targetOffset.offsetTop - Math.floor(contentOffset.offsetHeight / 3)
                         }px)`
                 });
             } else {
                 //放在右边
                 setDistance({
-                    transform: `translate(${targetRECT.offsetLeft + targetRECT.offsetWidth
-                        }px,${targetRECT.offsetTop - Math.floor(contentRECT.offsetHeight / 3)
+                    transform: `translate(${targetOffset.offsetLeft + targetOffset.offsetWidth
+                        }px,${targetOffset.offsetTop - Math.floor(contentOffset.offsetHeight / 3)
                         }px)`
                 });
             }
         } else {
-            const T=targetRECT.getBoundingClientRect().top-contentRECT.offsetHeight;
-            if (T>0) {
+            const T = targetRECT.getBoundingClientRect().top - contentOffset.offsetHeight;
+            if (T > 0) {
                 //放在上面
                 setDistance({
-                    transform: `translate(${targetRECT.offsetLeft+ (targetRECT.offsetWidth>>1)-(contentRECT.offsetWidth>>1)
-                        }px,${
-                            targetRECT.offsetTop-contentRECT.offsetHeight
+                    transform: `translate(${targetOffset.offsetLeft + (targetOffset.offsetWidth >> 1) - (contentOffset.offsetWidth >> 1)
+                        }px,${targetOffset.offsetTop - contentOffset.offsetHeight
                         }px)`
                 });
             } else {
                 //放在下面
                 setDistance({
-                    transform: `translate(${targetRECT.offsetLeft+ (targetRECT.offsetWidth>>1)-(contentRECT.offsetWidth>>1)
-                        }px,${targetRECT.offsetTop + targetRECT.offsetHeight
+                    transform: `translate(${targetOffset.offsetLeft + (targetOffset.offsetWidth >> 1) - (contentOffset.offsetWidth >> 1)
+                        }px,${targetOffset.offsetTop + targetOffset.offsetHeight
                         }px)`
                 });
             }
         }
-    }, [windowWidth,scrollDistance]);
+    }, [windowWidth, scrollDistance]);
     return distance;
 
 }

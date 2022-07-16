@@ -1,14 +1,17 @@
-import { UserLOGO, Favor } from "@components/nav";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { useState, useContext, createContext } from "react";
+
 import styles from "./article.module.css";
+
+import { UserLOGO, Favor } from "@components/nav";
 import { selectUserLists } from "@features/user";
-import { useSelector, useDispatch } from "react-redux";
-import { useRef, useState, useContext, createContext } from "react";
 import { favorBlob, unfavorBlob } from "@utils/fetchData";
 import { isBlobIncludes } from "@utils/tools";
 import { AddList } from "src/pages/me/lists";
 import Modal from "@utils/modal";
 import Popover from "@utils/popover";
+
 
 //blob_id的context
 export const idContext = createContext();

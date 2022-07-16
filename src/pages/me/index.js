@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { selectUserInfo } from "@features/user";
 import { useFetchPublishBlobs, useFetchLists } from "@utils/fetchData";
 import { middlewareWithLogin } from '@utils/tools';
+import { UserInfo } from "@components/me";
 
 
 const contentList_title = ['文章', '收藏', '私信', '消息', '个人信息'];
@@ -15,7 +16,7 @@ const contentList_content = [
     <ListsContent />,
     <div>占位</div>,
     <div>消息占位</div>,
-    <div>个人信息占位</div>
+    <UserInfo />
 ];
 
 export default function Index() {
