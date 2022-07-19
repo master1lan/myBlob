@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Image from "next/image";
 import styles from "./nav.module.css";
 import { URL } from "@utils/api";
-
 function Nav({ href = '/', children }) {
     return (
         <div style={{

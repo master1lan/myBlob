@@ -28,7 +28,6 @@ module.exports = app => {
   router.get('/api/user/get_userinfo', controller.user.getUserInfo); // 获取用户信息
   router.post('/api/user/edit_userinfo', _jwt, controller.user.editUserInfo); // 修改用户信息
   router.get('/api/user/login_jwt', _jwt, controller.user.loginWithjwt); //使用jwt登录
-
   //用户个人博客操作接口
   router.get('/api/userBlob/getPublishBlob', _jwt, controller.userBlob.getUserBlobPublished);  //已发布文章
   router.get('/api/userBlob/getDraftBlob', _jwt, controller.userBlob.getUserBlobDrafted);  //未发表文章
