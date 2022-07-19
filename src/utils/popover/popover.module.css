@@ -1,0 +1,12 @@
+.popover{
+    cursor:pointer;
+    position: relative;
+    font-size: 16px;
+}
+.popoverWrapper{
+    position: absolute;
+    z-index: 1;
+}
+.popoverWrapper>*{
+    position: relative !important; 
+}
