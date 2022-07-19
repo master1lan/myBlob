@@ -66,13 +66,23 @@ export const userSlice = createSlice({
         //移除收藏夹
         removeFavorList: (state, action) => {
             state.lists = state.lists.filter(item=>item._id !== action.payload._id);
-        }
+        },
+        //收藏某篇文章
+        favorBlobToList:(state,action)=>{
+            const list=state.lists.find(item=>item._id===action.payload.list_id);
+            list.content.push(action.payload.blob_id);
+        },
+        //取消收藏某篇文章
+        unfavorBlobToList:(state,action)=>{
+            const list=state.lists.find(item=>item._id===action.payload.list_id);
+            list.content=list.content.filter(item=>item!==action.payload.blob_id);
+        },
     }
 });
 
 export const { login, logout,
     setUserInfo, setDraftBlobs, setPublishBlobs, setFavorLists,
-    addFavorList, removeFavorList } = userSlice.actions;
+    addFavorList, removeFavorList,favorBlobToList,unfavorBlobToList } = userSlice.actions;
 //获取用户信息
 export const selectUserInfo = state => state.user.userInfo;
 //获取用户已发表文章

@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { useState, useContext, createContext } from "react";
 
 import styles from "./article.module.css";
 
 import { UserLOGO, Favor } from "@components/nav";
-import { selectUserLists } from "@features/user";
+import { selectUserLists,favorBlobToList,unfavorBlobToList } from "@features/user";
 import { favorBlob, unfavorBlob } from "@utils/fetchData";
 import { isBlobIncludes } from "@utils/tools";
 import { AddList } from "src/pages/me/lists";
@@ -120,13 +120,16 @@ function CreateList() {
 
 
 //注意这里还没做点击后更新状态
-const FavorFunc = (isFavored, list_id, blob_id, setFavor) => async () => {
+const FavorFunc = (isFavored, list_id, blob_id, setFavor,dispatch) => async () => {
     if (isFavored) {
         await unfavorBlob(blob_id, list_id);
+        dispatch(unfavorBlobToList({list_id,blob_id}));
     } else {
         await favorBlob(blob_id, list_id);
+        dispatch(favorBlobToList({list_id,blob_id}));
     }
     setFavor(!isFavored);
+    
 }
 
 //单个收藏夹
@@ -135,12 +138,12 @@ function ClickFavor({ title, list_id }) {
         favorList = useSelector(selectUserLists),
         isFavored = isBlobIncludes(favorList, list_id, blob_id);
     const [clicked, setActive] = useState(isFavored);
-
+    const dispatch = useDispatch();
     return (
         <>
             <input type="checkbox" style={{
                 width: "20px"
-            }} checked={clicked} onChange={FavorFunc(clicked, list_id, blob_id, setActive)} />
+            }} checked={clicked} onChange={FavorFunc(clicked, list_id, blob_id, setActive,dispatch)} />
             <p className={styles.ClickFavorP}>{title}</p>
         </>
     )
