@@ -38,3 +38,5 @@ index.html
 
 # 开发环境环境变量
 .env.production
+
+yarn.lock
