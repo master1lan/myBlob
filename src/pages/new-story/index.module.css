@@ -1,0 +1,41 @@
+.main{
+    max-width: 740px;
+    margin: 0 auto;
+}
+.input{
+    display:block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 48px;
+    border: 0px;
+    padding: 5px 25px;
+    border-radius: 0.3rem;
+    margin: 10px 0 10px;
+    font-weight: 400;
+    letter-spacing: 0.01rem;
+    font-size: 1.4rem;
+    color:#4a4a4a;
+    font-style: normal;
+}
+
+.top {
+    height: 85px;
+    top: 0px;
+    position: sticky;
+    width: 100%;
+    background-color: white;
+    margin:0 auto;
+    opacity: 0.9;
+    z-index: 1;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px -2px 10px;
+}
+.mainmain{
+    box-sizing: border-box;
+    flex-flow: column nowrap;
+    padding: 10px 20px 0;
+    background-color: white;
+}
+
+.section{
+    padding: 0 25px;
+}

@@ -1,0 +1,61 @@
+.publish{
+    color:#fff !important;
+}
+.button{
+    background-color:#1a8917;
+    border-color: #1a8917;
+    border-radius: 10px;
+    height:30px;
+    padding:0 6px;
+    border:0px;
+}
+.button:hover{
+    background-color: #0c6b08
+}
+
+.logo{
+    box-sizing: border-box;
+    width: 40px;
+    height:40px;
+    margin: 0 auto;
+}
+.actionButtonA{
+    display:block;
+    height: 20px;
+    padding:8px 16px;
+    background-color: rgb(26,137,23);
+    border-radius: 99em;
+    font-size: 14px;
+    line-height: 20px;
+    color:white;
+}
+
+
+.followButton{
+    color:white;
+    background-color: rgb(15,115,12);
+    border:0;
+    height: 36px;
+    width:72px;
+    padding:8px 16px;
+    border-radius: 99em;
+}
+
+.userHome{
+    color:black;
+    background-color:inherit;
+    height:36px;
+    font-size: 14px;
+    font-weight: 900;
+    padding: 0 10px;
+    border:1.5px solid black;
+    border-radius:99em;
+    cursor:pointer;
+}
+.userHome>svg{
+    width:14px;
+    height: 14px;
+}
+.userHome>svg>path{
+    fill:black;
+}
