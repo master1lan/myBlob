@@ -2,7 +2,7 @@ import styles from "./message.module.css";
 import React, { useEffect } from "react";
 import { render } from "react-dom";
 import { nanoid } from "@reduxjs/toolkit";
-
+import { useSSREffect } from "@utils/hooks";
 //图标
 const svgType = (() => {
     const map = new Map([
@@ -28,7 +28,7 @@ const svgType = (() => {
 
 //单个message 
 const Message = ({ msg, type, onClose }) => {
-    useEffect(() => {
+    useSSREffect(() => {
         const t = setTimeout(onClose, 3000);
         return () => {
             t && clearTimeout(t);
@@ -37,7 +37,7 @@ const Message = ({ msg, type, onClose }) => {
     return (
         <div className={styles.message}>
             <div>
-                <svg className={styles.svgIcon} viewBox='20 20' >
+                <svg className={styles.svgIcon}  >
                     <path fill="none" d={svgType(type)}></path>
                 </svg>
             </div>

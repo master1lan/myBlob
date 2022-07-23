@@ -11,50 +11,53 @@ import { useSSREffect } from '@utils/hooks';
 //我靠，不能使用cookie，必须使用localstorage
 export function useFetchJWTLogin() {
     const dispatch = useDispatch();
-    useEffect(async () => {
-        const token = localStorage.getItem('jwt');
-        if (!token) {
-            Cookie.remove('jwt');
-            return;
-        }
-        let resNoJson = await fetch(api.userLoginWithjwt, {
-            headers: {
-                'Authorization': token
+    useSSREffect(() => {
+        const fn=async () => {
+            const token = localStorage.getItem('jwt');
+            if (!token) {
+                Cookie.remove('jwt');
+                return;
             }
-        }), res = await resNoJson.json();
-        //登录失败
-        if (res.code !== 200) {
-            dispatch(logout());
-            localStorage.removeItem('jwt');
-            return;
-        }
-        //登录成功
-
-        //设置cookies
-        Cookie.set('jwt', res.data.token, {
-            'sameSite': "strict"
-        });
-        //暂时先这样写
-        dispatch(login({
-            username: res.data.username,
-            uuid: res.data.uuid,
-            githubUrl: res.data.githubUrl,
-            join_day: res.data.join_day,
-            juejinUrl: res.data.juejinUrl,
-            sfUrl: res.data.sfUrl,
-            signature: res.data.signature,
-            logoUrl: res.data.logoUrl
-        }));
-        //设置localstorage
-        localStorage.setItem('jwt', res.data.token);
-        //获取用户收藏夹
-        resNoJson = await fetch(api.userLists, {
-            headers: {
-                'Authorization': res.data.token,
+            let resNoJson = await fetch(api.userLoginWithjwt, {
+                headers: {
+                    'Authorization': token
+                }
+            }), res = await resNoJson.json();
+            //登录失败
+            if (res.code !== 200) {
+                dispatch(logout());
+                localStorage.removeItem('jwt');
+                return;
             }
-        }), res = await resNoJson.json();
-        dispatch(setFavorLists(res.lists));
+            //登录成功
 
+            //设置cookies
+            Cookie.set('jwt', res.data.token, {
+                'sameSite': "strict"
+            });
+            //暂时先这样写
+            dispatch(login({
+                username: res.data.username,
+                uuid: res.data.uuid,
+                githubUrl: res.data.githubUrl,
+                join_day: res.data.join_day,
+                juejinUrl: res.data.juejinUrl,
+                sfUrl: res.data.sfUrl,
+                signature: res.data.signature,
+                logoUrl: res.data.logoUrl
+            }));
+            //设置localstorage
+            localStorage.setItem('jwt', res.data.token);
+            //获取用户收藏夹
+            resNoJson = await fetch(api.userLists, {
+                headers: {
+                    'Authorization': res.data.token,
+                }
+            }), res = await resNoJson.json();
+            dispatch(setFavorLists(res.lists));
+
+        };
+        fn();
     }, []);
 }
 
@@ -117,7 +120,7 @@ export const UpdateUserInfo = async (formData) => {
 //获取用户未发表博客
 export function useFetchDraftBlobs() {
     const dispatch = useDispatch();
-    useEffect(() => {
+    useSSREffect(() => {
         fetch(api.userDraftedBlob, {
             headers: {
                 'Authorization': Cookie.get('jwt')
@@ -131,7 +134,7 @@ export function useFetchDraftBlobs() {
 //获取用户已发表博客
 export function useFetchPublishBlobs() {
     const dispatch = useDispatch();
-    useEffect(() => {
+    useSSREffect(() => {
         fetch(api.userPublishedBlob, {
             headers: {
                 'Authorization': Cookie.get('jwt')
@@ -145,7 +148,7 @@ export function useFetchPublishBlobs() {
 //获取用户收藏夹
 export function useFetchLists() {
     const dispatch = useDispatch();
-    useEffect(() => {
+    useSSREffect(() => {
         fetch(api.userLists, {
             headers: {
                 'Authorization': Cookie.get('jwt')
@@ -315,28 +318,30 @@ export const unfavorBlob = async (blobId, listId) => {
 
 //推荐更多相关博客
 export const useRecommendMoreBlobs = (BlobNum = 3) => {
-    const [blobs,setBlobs]=useState([]);
-    useSSREffect(()=>{
-        const fn=async()=>{
-            const resNoJSON=await fetch(`${api.recommendBlobs}?recommendNum=${BlobNum}`),
-            res=await resNoJSON.json(); 
+    const [blobs, setBlobs] = useState([]);
+    useSSREffect(() => {
+        const fn = async () => {
+            const resNoJSON = await fetch(`${api.recommendBlobs}?recommendNum=${BlobNum}`),
+                res = await resNoJSON.json();
             setBlobs(res.blobs);
         };
         fn();
-    },[]);
+    }, []);
     return blobs;
 }
 
 //推荐更多博主
 export const useRecommendMoreUsers = (UserNum = 3) => {
-    const [users,setUsers]=useState([]);
-    useSSREffect(()=>{
-        const fn=async()=>{
-            const resNoJSON=await fetch(`${api.recommendUsers}?recommendNum=${UserNum}`),
-            res=await resNoJSON.json(); 
-            setUsers(res.users);
+    const [users, setUsers] = useState([]);
+    useSSREffect(() => {
+        const isMounting=true;
+        const fn = async () => {
+            const resNoJSON = await fetch(`${api.recommendUsers}?recommendNum=${UserNum}`),
+                res = await resNoJSON.json();
+            isMounting&&setUsers(res.users);
         };
         fn();
-    },[]);
+        return ()=>isMounting=false;
+    }, []);
     return users;
 }

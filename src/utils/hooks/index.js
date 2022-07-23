@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, useLayoutEffect } from "react"
-import { isBrowser, geteleToBodyOffset } from "@utils/tools";
+import { isBrowser, geteleToBodyOffset, thorttleFn, debounce } from "@utils/tools";
 import { useRouter } from "next/router";
 import api from "@utils/api";
 /**
@@ -19,7 +19,7 @@ export const useOnClickOutside = (ref, callback) => {
             callback();
         }
     }
-    useEffect(() => {
+    useSSREffect(() => {
         document.addEventListener("click", handler);
         return () => document.removeEventListener("click", handler);
     }, [callback, ref]);
@@ -50,7 +50,7 @@ export const usePlacement = (targetELE, contentELE, perfetway = 'LR') => {
      * LR表示只判断左边或者右边
      * TB表示只判断上面或者下面
      */
-    const [windowWidth, setWidth] = useState();
+    const [windowWidth, setWidth] = useState(1024);
     const [scrollDistance, setScrollDistance] = useState(0);
     const [distance, setDistance] = useState({});
     useSSREffect(() => {
@@ -80,9 +80,10 @@ export const usePlacement = (targetELE, contentELE, perfetway = 'LR') => {
                 });
             };
             ticking = true;
-        };
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        },
+        handleThort=debounce(handleResize,100);
+        window.addEventListener('resize', handleThort);
+        return () => window.removeEventListener('resize', handleThort);
     }, []);
     useSSREffect(() => {
         const { innerWidth } = window,

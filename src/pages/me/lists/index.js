@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Modal from '@utils/modal';
+import { useSSREffect } from '@utils/hooks';
 
 export default function Index() {
     return (
@@ -62,7 +63,7 @@ export function AddList({ clickFunc }) {
     const [description, setdescription] = useState('');
     const textareaRef = useRef('');
     const dispatch = useDispatch();
-    useEffect(() => {
+    useSSREffect(() => {
         autoTextarea(textareaRef.current);
     }, []);
     const listnameChange = (e) => {
@@ -137,7 +138,7 @@ function List({ title = 'title', last_edit_time, many = 0, _id }) {
             dispatch(removeFavorList({ _id }));
         }
     }
-    useEffect(() => {
+    useSSREffect(() => {
         if (showPop) {
             setTimeout(() => setShowPop(false), 2500);
         };

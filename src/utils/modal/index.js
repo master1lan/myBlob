@@ -1,6 +1,7 @@
 import { memo, useEffect } from "react";
 import styles from "./modal.module.css";
 import { createPortal } from 'react-dom';
+import { useSSREffect } from "@utils/hooks";
 
 
 export const __UNSAFE__Modal__DO_NOT_USE_IN_PRODUCT = (props) => {
@@ -60,7 +61,7 @@ function disableScroll() {
 
 export default memo(function Modal(props) {
     const { isNoScroll = false, children, ...resProps } = props;
-    useEffect(() => {
+    useSSREffect(() => {
         isNoScroll && disableScroll();
         return () => isNoScroll && enableScroll();
     }, [isNoScroll]);

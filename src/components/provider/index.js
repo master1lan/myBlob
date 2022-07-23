@@ -1,3 +1,4 @@
+import { useSSREffect } from "@utils/hooks";
 import { useContext, useEffect, useState, createContext } from "react";
 const orderWidth = 1080;
 
@@ -8,10 +9,10 @@ const ViewportProvider = ({ children }) => {
     const handleWindowResize = () => {
         setType(window.innerWidth>orderWidth);
     };
-    useEffect(()=>{
+    useSSREffect(()=>{
         setType(window.innerWidth>orderWidth);
     },[]);
-    useEffect(() => {
+    useSSREffect(() => {
         window.addEventListener("resize", handleWindowResize);
         return () => window.removeEventListener("resize", handleWindowResize);
     }, []);

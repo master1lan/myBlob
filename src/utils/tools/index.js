@@ -160,7 +160,7 @@ export function geteleToBodyOffset(ele) {
 
 
 /**
- * 节流函数
+ * 节流函数,指连续触发事件但是在 n 秒中只执行一次函数
  */
 
 export function thorttleFn(fn,absTime=3000){
@@ -176,3 +176,18 @@ export function thorttleFn(fn,absTime=3000){
         }
     }
 }
+
+
+/**
+ * 防抖函数,触发事件后 n 秒后才执行函数，如果在 n 秒内又触发了事件，则会重新计算函数执行时间
+ */
+
+export function debounce(fn, delay) {
+    // 维护一个 timer，用来记录当前执行函数状态
+    let timer = null;
+    return function() {
+      // 清理掉正在执行的函数，并重新执行
+      clearTimeout(timer);
+      timer = setTimeout(()=>{fn.apply(this,arguments)}, delay);
+    }
+  }

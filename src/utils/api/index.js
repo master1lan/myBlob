@@ -2,9 +2,9 @@ const isDevMode = process.env.NODE_ENV === 'development';
 const localHost = '127.0.0.1:7001';
 const proHost = '106.52.210.180:7001';
 
-// const hostname = isDevMode ? localHost : proHost;
+const hostname = isDevMode ? localHost : proHost;
 
-const hostname=localHost;
+// const hostname=localHost;
 const baseUrl = `http://${hostname}/api`,
     articlePath = `${baseUrl}/blob`,
     userPath = `${baseUrl}/user`,
