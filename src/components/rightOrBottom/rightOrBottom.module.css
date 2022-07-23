@@ -1,0 +1,79 @@
+.right{
+    width:100%;
+    position: relative;
+}
+.rightLogo{
+    height: 200px;
+    background-color:black;
+}
+
+.rightWrapper{
+    position: sticky;
+    top:0px;
+}
+
+.rightTop{
+    background-color:skyblue;
+    padding-bottom:24px ;
+    
+}
+.rightBottom{
+    /* position:sticky; */
+    /* top:0px; */
+    background-color:cadetblue;
+}
+
+.userInfo>*:not(:first-child){
+    margin-top: 16px;
+}
+
+.userRecommend{
+    padding: 0 10px;
+}
+
+.userRecommendItem{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.userRecommendItemContainer{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    margin: 10px 0 0 0;
+}
+
+.userRecommendItemContainer>*:first-child{
+    margin-right:10px;
+}
+
+.section{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    height:56px;
+}
+.section>*{
+    margin:5px 3px !important;
+}
+
+.bottom{
+    width:100%;
+    display:flex;
+    flex-flow:row nowrap;
+    align-items:center;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
+}
+
+
+
+.dot{
+    display: inline-block;
+    width:10px;
+    height:10px;
+    background-color:green;
+    border-radius: 10px;
+    margin:0 10px;
+}

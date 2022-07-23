@@ -1,0 +1,107 @@
+/* newstory */
+.mainContainer {
+    position: relative;
+    margin-bottom: 40px;
+}
+/* home */
+.container {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.left {
+    box-sizing: border-box;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
+.mainWrapper{
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+
+.main {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column nowrap;
+    max-width:840px;
+    /* margin:0 24px; */
+    padding:0 24px;
+    flex: 1;
+    background-color: white;
+}
+
+.right {
+    box-sizing: border-box;
+    border-left: 1px solid rgb(230, 230, 230);
+    width: 420px;
+    background-color: white;
+    display: flex;
+    padding:0 32px;
+    position: relative;
+}
+
+
+.top {
+    height: 65px;
+    top: 0px;
+    position: sticky;
+    width: 100%;
+    background-color: white;
+    margin:0 auto;
+    opacity: 0.9;
+}
+
+
+
+/* 普通大屏 */
+@media(min-width:1080px) {
+    .left {
+        border-right: 1px solid rgb(230, 230, 230);
+        flex-shrink: 0;
+        width: 90px;
+    }
+}
+
+/* 直接给你缩！ */
+@media(max-width:1240px) {
+    .right {
+        width: 320px;
+    }
+}
+
+@media(max-width:1080px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left {
+        flex-direction: row;
+        height: 56px;
+        top: 0px;
+        position: fixed;
+        width: 100%;
+        z-index: 1;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px -2px 10px;
+    }
+
+    .main {
+        padding:56px 24px 70px;
+        width: 100%;
+    }
+
+    .right {
+        flex-direction: row;
+        position: fixed;
+        bottom: 0px;
+        height: 70px;
+        width: 100%;
+        border-left: 0px;
+        padding:0;
+    }
+}
+
