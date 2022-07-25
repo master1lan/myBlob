@@ -20,7 +20,7 @@ export async function getStaticPaths(){
 }
 
 export async function getStaticProps({params}){
-    // const 
+    // console.log(params);
     return {
         props:{
 

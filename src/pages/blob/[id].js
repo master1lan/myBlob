@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import { viewBlob } from '@features/blob';
 import { FavorBlob, idContext } from '@components/article';
 import { FetchUserInfo } from '@utils/fetchData';
-import { thorttleFn } from '@utils/tools';
 
 
 export default function Post({ title, logoUrl, username, last_edit_time, _id, content, githubUrl, signature, sfUrl, juejinUrl }) {
@@ -31,7 +30,7 @@ export default function Post({ title, logoUrl, username, last_edit_time, _id, co
                 {/* 左边的玩意 */}
                 <div className={styles.leftContainer}>
                     <div className={styles.leftContainerWrapper}>
-                        <UserLOGO height={50} src={logoUrl} />
+                        <UserLOGO height={50} src={logoUrl} href={`/@${username}`} />
                     </div>
                     <div className={styles.pContainer}>
                         <p><span>{username}</span></p>

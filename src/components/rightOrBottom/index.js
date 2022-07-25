@@ -19,10 +19,11 @@ export default function Aside() {
     return typePC ? <Right /> : <Bottom />
 }
 
+const __DecidePathName=['/blob/[id]','/[id]'];
 
 function Right() {
     const router = useRouter();
-    const flag = router.pathname === '/blob/[id]';
+    const flag = __DecidePathName.includes(router.pathname);
     return (
         <div className={styles.right}>
             <div className={styles.rightLogo}></div>
