@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import styles from "./modal.module.css";
 import { createPortal } from 'react-dom';
 import { useSSREffect } from "@utils/hooks";

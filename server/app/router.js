@@ -29,7 +29,7 @@ module.exports = app => {
   router.post('/api/user/edit_userinfo', _jwt, controller.user.editUserInfo); // 修改用户信息
   router.get('/api/user/login_jwt', _jwt, controller.user.loginWithjwt); //使用jwt登录
   
-  //用户个人博客操作接口
+  //用户博客操作接口
   router.get('/api/userBlob/getPublishBlob', _jwt, controller.userBlob.getUserBlobPublished);  //已发布文章
   router.get('/api/userBlob/getDraftBlob', _jwt, controller.userBlob.getUserBlobDrafted);  //未发表文章
   router.post('/api/userBlob/updateBlob', _jwt, controller.userBlob.userBlobUpdate);  //更新文章
@@ -42,5 +42,8 @@ module.exports = app => {
   router.post('/api/userList/deleteList',_jwt,controller.userList.deleteList); //删除收藏夹
   router.post('/api/userList/favorBlob',_jwt,controller.userList.favorBlob); //在收藏夹收藏某篇文章
   router.post('/api/userList/unfavorBlob',_jwt,controller.userList.unfavorBlob); //在收藏夹取消收藏某篇文章
+
+  //访客操作接口
+  router.get('/api/visited/getPublishBlobById',controller.visited.findPublishBlobById);//获取对方发表文章列表
   
 };

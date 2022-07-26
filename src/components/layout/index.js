@@ -13,6 +13,9 @@ import styles from "./layout.module.css";
 export default function Layout({ children }) {
     const router = useRouter();
     useFetchJWTLogin();
+    if(router.pathname==='/test'){
+        return <>{children}</>
+    }
     if (router.pathname === '/new-story') {
         return (
             <h1 style={{

@@ -11,7 +11,8 @@ const baseUrl = `http://${hostname}/api`,
     userBlobPath = `${baseUrl}/userBlob`,
     userListsPath = `${baseUrl}/userList`,
     uploadPath = `${baseUrl}/img`,
-    recommendPath=`${baseUrl}/next`;
+    recommendPath=`${baseUrl}/next`,
+    visitedPath=`${baseUrl}/visited`
 
 export const URL=`http://${hostname}`; 
 
@@ -40,4 +41,5 @@ export default {
     "uploadImg": `${uploadPath}/uploadImg`,
     "recommendBlobs":`${recommendPath}/getBlobsRecommend`,
     "recommendUsers":`${recommendPath}/getUsersRecommend`,
+    "visitedKnowUserBlobs":`${visitedPath}/getPublishBlobById`
 }

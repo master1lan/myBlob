@@ -40,3 +40,6 @@ index.html
 .env.production
 
 yarn.lock
+
+# testing
+/src/pages/test.js

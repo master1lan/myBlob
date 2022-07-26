@@ -2,16 +2,17 @@ import { UserLOGO, Favor } from "@components/nav";
 import api from "@utils/api";
 import styles from "./lists.module.css";
 import Article from "@components/article";
-
-
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "@features/user";
 
 export default function Index({ username, data, title, last_edit_time, description }) {
+    const {logoUrl} = useSelector(selectUserInfo);
     return (
         <div>
             {/* 这里是上部 */}
             <div className={styles.topLALA}>
                 <div className={styles.top}>
-                    <UserLOGO height={50} />
+                    <UserLOGO height={50} src={logoUrl} />
                     <div>
                         <p>{username}</p>
                         <div className={styles.topRight}>

@@ -345,3 +345,9 @@ export const useRecommendMoreUsers = (UserNum = 3) => {
     }, []);
     return users;
 }
+//访问别人主页获得别人的发表博客
+export  const FetchUserBlobsById=async(id)=>{
+    const resNoJSON=await fetch(`${api.visitedKnowUserBlobs}?id=${id}`),
+    res=await resNoJSON.json();
+    return res.data;
+}
