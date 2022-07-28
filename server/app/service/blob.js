@@ -44,12 +44,13 @@ class BlobService extends Service{
     }
     //所有博客的_id和简短描述
     async recommendBlobs(offset=0){
+        offset=Number(offset);
         const {app}=this;
         try{
             const result=await app.mysql.select('markdown',{
                 where:{status:'publish'},
                 columns:['_id','description','username','title','last_edit_time'],
-                limit:10, //返回的数据量
+                limit:5, //返回的数据量
                 offset,
             });
             return result;

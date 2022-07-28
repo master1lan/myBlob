@@ -49,15 +49,16 @@ class HomeController extends Controller {
   //所有文章的简短描述
   async recommendBlobs() {
     const { ctx } = this;
-    const { offset=0 } = ctx.request.query;
+    const { offset = 0 } = ctx.request.query;
     const data = await ctx.service.blob.recommendBlobs(offset);
     const res = await Promise.all(data.map(async acticle => {
       const { logoUrl } = await ctx.service.user.getUserByName(acticle.username);
       return { ...acticle, logoUrl };
     }));
     ctx.body = {
-      data:res,
-      offset:10
+      data: res,
+      offset: res.length,
+      isFinish:res.length<5
     };
   }
 }

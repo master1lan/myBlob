@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState, useLayoutEffect } from "react"
+import { useEffect, useMemo, useState, useLayoutEffect, useRef, useReducer } from "react"
 import { isBrowser, geteleToBodyOffset, thorttleFn, debounce } from "@utils/tools";
-import { useRouter } from "next/router";
 import api from "@utils/api";
+import { FetchRecommendBlobs } from "@utils/fetchData";
 /**
  * hook封装
  */
@@ -81,7 +81,7 @@ export const usePlacement = (targetELE, contentELE, perfetway = 'LR') => {
             };
             ticking = true;
         },
-        handleThort=debounce(handleResize,100);
+            handleThort = debounce(handleResize, 100);
         window.addEventListener('resize', handleThort);
         return () => window.removeEventListener('resize', handleThort);
     }, []);
@@ -132,4 +132,43 @@ export const usePlacement = (targetELE, contentELE, perfetway = 'LR') => {
     return distance;
 }
 
-
+/**
+ * 无限加载
+ */
+export const useScrollFetchBlobs = ({ list, offset = 0, ...resProps }) => {
+    const ScrollRef = useRef(null);
+    const [CanWeFetch, setCanWeFetch] = useState(true);
+    const [data, setData] = useReducer((state, action) => {
+        switch (action.type) {
+            case 'APPEND': {
+                return {
+                    ...state,
+                    list: [...state.list, ...action.payload.list],
+                    offset: state.offset + action.payload.list.length
+                }
+            }
+            default: return state;
+        }
+    }, { list, offset, ...resProps });
+    const lazyLoad = async () => {
+        const { clientHeight: wrapperHeight } = ScrollRef.current;
+        const { scrollTop, clientHeight } = document.documentElement;
+        if (CanWeFetch && (wrapperHeight - scrollTop <= clientHeight)) {
+            const { res, isOver } = await FetchRecommendBlobs(data.offset);
+            if (isOver) {
+                setCanWeFetch(false);
+            }
+            setData({
+                type: 'APPEND',
+                payload: {
+                    list: res,
+                }
+            });
+        }
+    };
+    useSSREffect(() => {
+        if (CanWeFetch) document.addEventListener('scroll', lazyLoad);
+        return () => document.removeEventListener('scroll', lazyLoad);
+    }, [CanWeFetch]);
+    return { ScrollRef, data };
+}

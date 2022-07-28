@@ -1,29 +1,33 @@
 import Article from "@components/article";
 import api from "@utils/api";
+import { FetchRecommendBlobs } from "@utils/fetchData";
+import { useScrollFetchBlobs } from "@utils/hooks";
+
 export default function Home({ sectionList }) {
+    const {ScrollRef,data}=useScrollFetchBlobs({list:sectionList,offset:sectionList.length});
     return (
         <>
             <div style={{
-                height:"200px",
-                backgroundColor:"black",
+                height: "200px",
+                backgroundColor: "black",
             }}>
             </div>
-            {sectionList.map(section=><Article
-             {...section}
-             />)}
+            <div ref={ScrollRef}>
+                {data.list.map(section => <Article
+                    {...section}
+                />)}
+                
+            </div>
         </>
     )
 }
 
+
+
+
+
 export async function getServerSideProps() {
-    const data = await fetch(api.articles);
-    const json = await data.json();
-    const res=json.data.map(article=>{return {
-        ...article,
-        key:article._id,
-        content:article.description,
-        time:article.last_edit_time,
-    }});
+   const {res}=await FetchRecommendBlobs(0);
     return {
         props: {
             sectionList: res

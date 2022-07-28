@@ -12,7 +12,7 @@ import { useSSREffect } from '@utils/hooks';
 export function useFetchJWTLogin() {
     const dispatch = useDispatch();
     useSSREffect(() => {
-        const fn=async () => {
+        const fn = async () => {
             const token = localStorage.getItem('jwt');
             if (!token) {
                 Cookie.remove('jwt');
@@ -60,6 +60,23 @@ export function useFetchJWTLogin() {
         fn();
     }, []);
 }
+
+//首页推荐流
+export async function FetchRecommendBlobs(offset = 0) {
+    const data = await fetch(`${api.articles}?offset=${offset}`),
+        json = await data.json(),
+        res = json.data.map(article => {
+            return {
+                ...article,
+                key: article._id,
+                content: article.description,
+                time: article.last_edit_time,
+            }
+        });
+    return {res,isOver:json.isFinish};
+}
+
+
 
 //登录函数
 export const FetchLogin = (router, dispatch) => (data) => {
@@ -334,20 +351,20 @@ export const useRecommendMoreBlobs = (BlobNum = 3) => {
 export const useRecommendMoreUsers = (UserNum = 3) => {
     const [users, setUsers] = useState([]);
     useSSREffect(() => {
-        const isMounting=true;
+        const isMounting = true;
         const fn = async () => {
             const resNoJSON = await fetch(`${api.recommendUsers}?recommendNum=${UserNum}`),
                 res = await resNoJSON.json();
-            isMounting&&setUsers(res.users);
+            isMounting && setUsers(res.users);
         };
         fn();
-        return ()=>isMounting=false;
+        return () => isMounting = false;
     }, []);
     return users;
 }
 //访问别人主页获得别人的发表博客
-export  const FetchUserBlobsById=async(id)=>{
-    const resNoJSON=await fetch(`${api.visitedKnowUserBlobs}?id=${id}`),
-    res=await resNoJSON.json();
+export const FetchUserBlobsById = async (id) => {
+    const resNoJSON = await fetch(`${api.visitedKnowUserBlobs}?id=${id}`),
+        res = await resNoJSON.json();
     return res.data;
 }
