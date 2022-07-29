@@ -5,7 +5,7 @@ const orderWidth = 1080;
 const viewportContext = createContext({});
 
 const ViewportProvider = ({ children }) => {
-    const [typePC,setType]=useState(true);
+    const [typePC,setType]=useState(false);
     const handleWindowResize = () => {
         setType(window.innerWidth>orderWidth);
     };

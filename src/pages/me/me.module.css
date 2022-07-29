@@ -26,6 +26,7 @@
 
 .topBottom:last-of-type{
     margin-left:auto;
+    margin-right:0;
 }
 .topFlex{
     display: flex;

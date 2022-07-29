@@ -67,7 +67,10 @@
     box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px;
 }
 
-
+.section_h3{
+    margin-left: 3px;
+    cursor:pointer;
+}
 
 .dot{
     display: inline-block;

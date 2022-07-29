@@ -8,14 +8,14 @@ import { selectUserInfo } from "@features/user";
 import { useFetchPublishBlobs, useFetchLists } from "@utils/fetchData";
 import { middlewareWithLogin } from '@utils/tools';
 import { UserInfo } from "@components/meinfo";
-
+import {NeverDoComponent } from "@components/default";
 
 const contentList_title = ['文章', '收藏', '私信', '消息', '个人信息'];
 const contentList_content = [
     <StroiesContent />,
     <ListsContent />,
-    <div>占位</div>,
-    <div>消息占位</div>,
+    <NeverDoComponent>你还没接收到私信哦</NeverDoComponent>,
+    <NeverDoComponent>你还没有接收到信息哦</NeverDoComponent>,
     <UserInfo />
 ];
 

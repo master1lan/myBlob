@@ -16,7 +16,10 @@ import Link from "next/link";
  */
 export default function Aside() {
     const { typePC } = useViewport();
-    return typePC ? <Right /> : <Bottom />
+    if(typePC){
+        return <Right />
+    }
+    return <Bottom />
 }
 
 const __DecidePathName=['/blob/[id]','/[id]'];
@@ -84,9 +87,7 @@ function Section({ username, logoUrl, _id, title }) {
                 <UserLOGO src={logoUrl} />
                 <p><span>{username}</span></p>
             </div>
-            <h3 style={{
-                marginLeft: '3px',
-            }}>
+            <h3 className={styles.section_h3}>
                 <Link href={`/blob/${_id}`}>
                     <p><span>{title}</span></p>
                 </Link>
@@ -102,7 +103,7 @@ function UserRecommend() {
     return (
         <div className={styles.userRecommend}>
             <p>Who to follow</p>
-            {usersArr.map(user=><UserRecommendItem key={user.uuid} {...user} />)}
+            {usersArr?.map(user=><UserRecommendItem key={user.uuid} {...user} />)}
         </div>
     )
 }

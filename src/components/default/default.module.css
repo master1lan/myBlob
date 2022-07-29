@@ -1,0 +1,10 @@
+.defaultWrapper{
+    padding:16px;
+    text-align:center;
+    box-sizing: border-box;
+    border:1px dashed rgb(204,204,204);
+    color:rgb(117,117,117);
+}
+.p{
+    padding: 30px 10px;
+}

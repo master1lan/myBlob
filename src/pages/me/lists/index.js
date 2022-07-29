@@ -3,8 +3,9 @@ import { useFetchLists, createList, removeList } from '@utils/fetchData';
 import { autoTextarea, middlewareWithLogin } from '@utils/tools';
 import { selectUserLists, removeFavorList, addFavorList } from '@features/user';
 import Popover from '@utils/popover';
+import DEFAULT from "@components/default";
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import Modal from '@utils/modal';
 import { useSSREffect } from '@utils/hooks';
@@ -120,6 +121,12 @@ export function ListsContent() {
                     _id={item._id}
                 />
             )}
+            {!favorLists?.length &&
+                <DEFAULT>
+                    <p className={styles.default_p}>
+                        没有收藏夹哦，点击右上角的<span className={styles.default_spen}>New list</span>按钮创建收藏夹吧！
+                    </p>
+                </DEFAULT>}
         </div>
     )
 }
@@ -172,7 +179,7 @@ function PopInfo({ clickFunc }) {
         <div
             className={styles.sure_Popinfo}
         >
-            
+
             <p>确认删除？</p>
             <button onClick={clickFunc}>确认</button>
         </div>

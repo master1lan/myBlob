@@ -81,3 +81,14 @@
 .h3.content{
     color:rgb(117,117,117);
 }
+
+.default_p{
+    padding:45px 0;
+}
+
+.default_spen{
+    border:1px solid grey;
+    border-radius: 99rem;
+    padding:5px 10px;
+    margin:0 10px;
+}

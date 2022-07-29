@@ -96,13 +96,16 @@ class UserController extends Controller {
     //这个函数将自动保持token的一致性
     const token = await ctx.service.redis.OnlyToken(userInfo.username, userInfo.uuid, tokenLiveTime);
     
+    //2022-7-29增加返回收藏夹列表
+    const lists=await ctx.service.list.findListsByUser(username);
     ctx.body = {
       code: 200,
       msg: "登录成功",
       data: {
         token,
         ...userInfo,
-        password: undefined
+        password: undefined,
+        lists
       }
     }
   }

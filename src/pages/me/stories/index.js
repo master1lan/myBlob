@@ -6,8 +6,9 @@ import { useSelector } from "react-redux";
 import { selectUserBlobsPublish, selectUserBlobDraft } from "@features/user";
 import { useFetchDraftBlobs, useFetchPublishBlobs } from "@utils/fetchData";
 import { middlewareWithLogin } from '@utils/tools';
+import DEFAULT from "@components/default";
 
-const Lists=[
+const Lists = [
     <StroiesContent />,
     <DraftContent />
 ]
@@ -64,6 +65,7 @@ function DraftContent() {
     return (
         <div>
             {lists.map(item => <Article key={item._id} title={item.title} description={item.description} _id={item._id} />)}
+            {!lists?.length &&<__DEFAULT />}
         </div>
     )
 }
@@ -74,6 +76,7 @@ export function StroiesContent() {
     return (
         <div>
             {lists.map(item => <Article key={item._id} title={item.title} description={item.description} _id={item._id} />)}
+            {!lists?.length &&<__DEFAULT />}
         </div>
     )
 }
@@ -95,6 +98,16 @@ function Article({ title = '标题丢失', description = '描述丢失', _id = '
                 </div>
             </Link>
         </div>
+    )
+}
+//缺省组件
+function __DEFAULT(){
+    return(
+        <DEFAULT>
+            <p className={styles.default_p}>
+                还没有写过博客哦，点击右上角的<spen className={styles.default_spen}>Write a story</spen>按钮开始写博客吧！
+            </p>
+        </DEFAULT>
     )
 }
 

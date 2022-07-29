@@ -219,9 +219,6 @@
     border-radius: 2px;
 }
 
-
-
-
 .noList{
     padding:16px 0 70px;
     text-align:center;
@@ -236,4 +233,14 @@
 .noListContent svg{
     position:relative;
     top:8px;
+}
+.default_p{
+    padding:45px 0;
+}
+
+.default_spen{
+    border:1px solid grey;
+    border-radius: 99rem;
+    padding:5px 10px;
+    margin:0 10px;
 }

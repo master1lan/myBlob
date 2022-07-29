@@ -5,12 +5,13 @@ import { useState, useContext, createContext } from "react";
 import styles from "./article.module.css";
 
 import { UserLOGO, Favor } from "@components/nav";
-import { selectUserLists,favorBlobToList,unfavorBlobToList } from "@features/user";
+import { selectUserLists,favorBlobToList,unfavorBlobToList, selectIsLoginIn } from "@features/user";
 import { favorBlob, unfavorBlob } from "@utils/fetchData";
 import { isBlobIncludes } from "@utils/tools";
 import { AddList } from "src/pages/me/lists";
 import Modal from "@utils/modal";
 import Popover from "@utils/popover";
+import { useRouter } from "next/router";
 
 
 //blob_id的context
@@ -79,7 +80,13 @@ export function FavorBlob() {
 
 //收藏夹
 function AddFavor() {
-    const lists = useSelector(selectUserLists);
+    const lists = useSelector(selectUserLists),
+    isLoginIn=useSelector(selectIsLoginIn),
+    router=useRouter();
+    if(!isLoginIn){
+        router.push('/login');
+        return null;
+    }
     return (
         <div className={styles.addFavorWrapper}  >
             <p>添加至收藏夹</p>

@@ -85,6 +85,9 @@ export const userSlice = createSlice({
 export const { login, logout,
     setUserInfo, setDraftBlobs, setPublishBlobs, setFavorLists,
     addFavorList, removeFavorList,favorBlobToList,unfavorBlobToList } = userSlice.actions;
+
+//查看用户是否登录
+export const selectIsLoginIn=state=>state.user.isLoggedIn;
 //获取用户信息
 export const selectUserInfo = state => state.user.userInfo;
 //获取用户已发表文章

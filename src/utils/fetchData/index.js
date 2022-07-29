@@ -351,14 +351,16 @@ export const useRecommendMoreBlobs = (BlobNum = 3) => {
 export const useRecommendMoreUsers = (UserNum = 3) => {
     const [users, setUsers] = useState([]);
     useSSREffect(() => {
-        const isMounting = true;
+        let isMounting = false;
         const fn = async () => {
             const resNoJSON = await fetch(`${api.recommendUsers}?recommendNum=${UserNum}`),
                 res = await resNoJSON.json();
-            isMounting && setUsers(res.users);
+            if(!isMounting){
+                setUsers(res.users);
+            }
         };
         fn();
-        return () => isMounting = false;
+        return () => isMounting = true;
     }, []);
     return users;
 }

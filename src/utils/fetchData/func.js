@@ -1,7 +1,7 @@
 import Cookie from 'js-cookie';
 import crypto from '@utils/crypto';
 import message from '@utils/message';
-import { login } from "@features/user";
+import { login, setFavorLists } from "@features/user";
 
 //在登录和注册函数中使用
 export const Datathen = (res, router, dispatch) => {
@@ -23,7 +23,10 @@ export const Datathen = (res, router, dispatch) => {
             sfUrl: res.data.sfUrl,
             signature: res.data.signature,
             logoUrl:res.data.logoUrl
-        }))
+        }));
+        if(res.data.lists){
+            dispatch(setFavorLists(res.data.lists));
+        }
         router.push("/");
     }
 }
