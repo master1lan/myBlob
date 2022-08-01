@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useSelector,useDispatch } from "react-redux";
-import { useState, useContext, createContext } from "react";
+import { useState, useContext, createContext, memo } from "react";
 
 import styles from "./article.module.css";
 
@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 //blob_id的context
 export const idContext = createContext();
 
-export default function Index({ title, username, content, _id, time,logoUrl }) {
+export default memo (function Index({ title, username, content, _id, time,logoUrl }) {
     return (
         <div className={styles.article}>
             <div className={styles.container}>
@@ -61,7 +61,7 @@ export default function Index({ title, username, content, _id, time,logoUrl }) {
             </div>
         </div>
     )
-}
+});
 //收藏组件
 export function FavorBlob() {
     const blob_id = useContext(idContext),

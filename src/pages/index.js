@@ -1,5 +1,4 @@
 import Article from "@components/article";
-import api from "@utils/api";
 import { FetchRecommendBlobs } from "@utils/fetchData";
 import { __useScrollFetchBlobs_version_1 } from "@utils/hooks";
 
