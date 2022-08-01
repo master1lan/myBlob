@@ -20,6 +20,7 @@ module.exports = app => {
   router.get('/api/blob/', controller.blob.recommendBlobs);//首页的文章流
 
   //文件上传获取接口
+  
   router.post('/api/img/uploadImg',controller.upload.uploadImg); //上传图片
 
   //用户操作接口

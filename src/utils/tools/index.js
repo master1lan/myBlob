@@ -191,3 +191,28 @@ export function debounce(fn, delay) {
       timer = setTimeout(()=>{fn.apply(this,arguments)}, delay);
     }
   }
+
+
+/**
+ * 重复触发fn，在第一个完成之前忽略其他fn。
+ */
+export function SingleRun(handler){
+    let flag=true,times=0;
+    return (...res)=>{
+        return new Promise((resolve,reject)=>{
+            if(flag){
+                flag=false;
+                resolve(handler.call(this,res));
+            }else{
+                reject('fetching!');
+            }
+        }).then((res)=>{
+            flag=true;
+            return Promise.resolve(res);
+        },reason=>{
+            //
+        });
+    }
+}
+
+

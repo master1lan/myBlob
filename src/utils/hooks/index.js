@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState, useLayoutEffect, useRef, useReducer } from "react"
-import { isBrowser, geteleToBodyOffset, thorttleFn, debounce } from "@utils/tools";
+import { isBrowser, geteleToBodyOffset, thorttleFn, debounce, fetchDebounce, SingleRun, SingleFetchEvent } from "@utils/tools";
 import api from "@utils/api";
 import { FetchRecommendBlobs } from "@utils/fetchData";
+import { useCallback } from "react";
 /**
  * hook封装
  */
@@ -135,40 +136,52 @@ export const usePlacement = (targetELE, contentELE, perfetway = 'LR') => {
 /**
  * 无限加载
  */
-export const useScrollFetchBlobs = ({ list, offset = 0, ...resProps }) => {
+export const __useScrollFetchBlobs_version_1 = ({ list, offset = 0, ...resProps }) => {
+    /**版本一
+     * 使用了promise的特性，加上有些属性直接使用js变量方法，有点hack的意思
+     * */
     const ScrollRef = useRef(null);
-    const [CanWeFetch, setCanWeFetch] = useState(true);
-    const [data, setData] = useReducer((state, action) => {
-        switch (action.type) {
-            case 'APPEND': {
-                return {
-                    ...state,
-                    list: [...state.list, ...action.payload.list],
-                    offset: state.offset + action.payload.list.length
-                }
-            }
-            default: return state;
-        }
-    }, { list, offset, ...resProps });
-    const lazyLoad = async () => {
-        const { clientHeight: wrapperHeight } = ScrollRef.current;
-        const { scrollTop, clientHeight } = document.documentElement;
-        if (CanWeFetch && (wrapperHeight - scrollTop <= clientHeight)) {
-            const { res, isOver } = await FetchRecommendBlobs(data.offset);
-            if (isOver) {
-                setCanWeFetch(false);
-            }
-            setData({
-                type: 'APPEND',
-                payload: {
-                    list: res,
-                }
-            });
-        }
-    };
+    const [data, setData] = useState(list);
     useSSREffect(() => {
-        if (CanWeFetch) document.addEventListener('scroll', lazyLoad);
-        return () => document.removeEventListener('scroll', lazyLoad);
-    }, [CanWeFetch]);
-    return { ScrollRef, data };
+        let __offset = offset, CanWeFetch = true;
+        const task = SingleRun(FetchRecommendBlobs);
+        const lazyLoad = async () => {
+            if (!CanWeFetch) {
+                return;
+            }
+            const { clientHeight: wrapperHeight } = ScrollRef.current;
+            const { scrollTop, clientHeight } = document.documentElement;
+            if ((wrapperHeight - scrollTop <= clientHeight)) {
+                const result = await task(__offset);
+                if (!result) {
+                    return;
+                }
+                const { res, isOver } = result;
+                if (!res?.length) {
+                    CanWeFetch = false;
+                    return;
+                }
+                if (isOver) {
+                    CanWeFetch = false;
+                }
+                __offset += res.length;
+                setData((data) => [...data, ...res]);
+            }
+        };
+        let ticking=false;
+        const handleScroll =() => {
+            if (!ticking) {
+                window.requestAnimationFrame(async() => {
+                    await lazyLoad();
+                    ticking = false;
+                });
+            };
+            ticking = true;
+        };
+        document.addEventListener('scroll', handleScroll);
+        return () => document.removeEventListener('scroll', handleScroll);
+    }, []);
+    return { ScrollRef, data }
 }
+
+

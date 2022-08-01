@@ -13,6 +13,6 @@ run/
 typings/
 .nyc_output/
 .env
-
-
+app/public/uuserlogo/*
+app/public/upload/*
 config/*.prod.*
